@@ -1,0 +1,12 @@
+{
+  "name": "multiocular",
+  "version": "0.0.0",
+  "description": "",
+  "engines": {
+    "node": "^20.0.0 || >=22.0.0"
+  },
+  "keywords": [],
+  "author": "Andrey Sitnik <andrey@sitnik.ru>",
+  "license": "MIT",
+  "repository": "multiocular-com/multiocular"
+}
