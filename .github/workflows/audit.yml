@@ -31,9 +31,14 @@ jobs:
             registry.npmjs.org:443
       - name: Checkout the repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - name: Initialize Node.js
-        uses: ./.github/actions/init-node
+      - name: Install pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
         with:
-          install: false
+          version: 10
+      - name: Install Node.js
+        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
+        with:
+          node-version: 24
+          cache: pnpm
       - name: Check dependencies for vulnerabilities
         run: node --run test:audit
