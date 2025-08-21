@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "noUncheckedIndexedAccess": true,
+    "experimentalDecorators": true,
+    "noImplicitOverride": true,
+    "verbatimModuleSyntax": true,
+    "moduleResolution": "NodeNext",
+    "erasableSyntaxOnly": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "target": "ES2024",
+    "module": "NodeNext",
+    "strict": true,
+    "noEmit": true,
+    "types": ["node"],
+    "lib": ["es2024", "dom"]
+  },
+  "include": ["**/*.ts", "**/*.cts", "web/**/*.svelte", "web/.storybook/*.ts"],
+  "exclude": ["*/dist"]
+}

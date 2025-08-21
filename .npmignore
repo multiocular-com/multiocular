@@ -1,1 +1,8 @@
+.devcontainer/
+scripts/
 .editorconfig
+.gitignore
+.prettierrc.json
+eslint.config.ts
+nano-staged.json
+tsconfig.json
