@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      clean-publish:
-        specifier: ^5.2.2
-        version: 5.2.2
     devDependencies:
       '@logux/eslint-config':
         specifier: 56.1.0
@@ -24,6 +20,9 @@ importers:
       better-node-test:
         specifier: 0.7.1
         version: 0.7.1
+      clean-publish:
+        specifier: ^5.2.2
+        version: 5.2.2
       eslint:
         specifier: 9.33.0
         version: 9.33.0(jiti@2.5.1)
