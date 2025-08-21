@@ -1,0 +1,39 @@
+name: Vulnerability Audit
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/audit.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/audit.yml'
+  schedule:
+    - cron: '00 23 * * *' # Runs at midnight UTC every day
+permissions:
+  contents: read
+jobs:
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
+            nodejs.org:443
+            release-assets.githubusercontent.com:443
+            objects.githubusercontent.com:443
+            raw.githubusercontent.com:443
+            registry.npmjs.org:443
+      - name: Checkout the repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Initialize Node.js
+        uses: ./.github/actions/init-node
+        with:
+          install: false
+      - name: Check dependencies for vulnerabilities
+        run: node --run test:audit
