@@ -1,4 +1,4 @@
-Tool to review the diffs on dependencies updates to prevent supply chain attacks
+Review diffs on dependencies updates to prevent supply chain attacks
 
 *Usage:*
   `multiocular [options]`
