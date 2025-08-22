@@ -1,6 +1,6 @@
-import { findProjectRoot } from './index.ts'
+import { type FilePath, findProjectRoot } from './index.ts'
 
-const root = findProjectRoot(process.cwd())
+const root = findProjectRoot(process.cwd() as FilePath)
 
 if (!root) {
   process.stderr.write(

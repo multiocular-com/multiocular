@@ -1,15 +1,17 @@
 import { existsSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 
-export function findProjectRoot(start: string): null | string {
-  let current = resolve(start)
+import type { FilePath } from '../../utils/types.js'
+
+export function findProjectRoot(start: FilePath): FilePath | null {
+  let current = start
   let hasParent = true
 
   do {
-    let git = resolve(current, '.git')
+    let git = resolve(current, '.git') as FilePath
     if (existsSync(git)) return current
 
-    let parent = dirname(current)
+    let parent = dirname(current) as FilePath
     hasParent = current !== parent
     current = parent
   } while (hasParent)
