@@ -19,4 +19,3 @@
 - Always at the end of your work always run:
   - `pnpm format`
   - `pnpm test`
-- The code should work on Mac/Linux/Windows.
