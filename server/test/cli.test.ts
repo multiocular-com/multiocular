@@ -71,3 +71,5 @@ test('exits with error when no .git folder found', async () => {
     await rm(tempDir, { force: true, recursive: true })
   }
 })
+
+// TODO: test that it works in subdir
