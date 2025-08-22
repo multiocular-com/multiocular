@@ -1,13 +1,18 @@
 import { strict as assert } from 'node:assert'
 import { spawn } from 'node:child_process'
+import { mkdtemp, rm } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { test } from 'node:test'
 
 function runCli(
-  args: string[]
+  args: string[],
+  cwd = process.cwd()
 ): Promise<{ code: null | number; stderr: string; stdout: string }> {
   return new Promise(resolve => {
-    let child = spawn('server/bin.ts', args, {
-      cwd: process.cwd(),
+    let binPath = join(import.meta.dirname, '../bin.ts')
+    let child = spawn(binPath, args, {
+      cwd,
       env: { ...process.env, FORCE_COLOR: undefined, NO_COLOR: '1' },
       stdio: ['pipe', 'pipe', 'pipe']
     })
@@ -33,7 +38,7 @@ test('shows version with -v and --version', async () => {
   for (let arg of ['-v', '--version']) {
     let result = await runCli([arg])
     assert.equal(result.code, 0)
-    assert.match(result.stdout, /^\d+\.\d+\.\d+\n$/)
+    assert.match(result.stdout, /^v\d+\.\d+\.\d+\n$/)
     assert.equal(result.stderr, '')
   }
 })
