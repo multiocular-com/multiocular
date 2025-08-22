@@ -1,11 +1,15 @@
+import { exec } from 'node:child_process'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import { promisify } from 'node:util'
 
 import { format, print, printError } from './print.ts'
 
+const execAsync = promisify(exec)
+
 export interface Config {
   command: 'help' | 'run' | 'version'
-  mode: 'changes' | 'commit'
+  mode: 'changed' | 'commit'
   output: 'json' | 'server' | 'text'
 }
 
@@ -22,18 +26,31 @@ async function printHelp(): Promise<void> {
   print(format(await readFile(helpPath, 'utf-8')).trim())
 }
 
+async function detectModeFromGit(): Promise<Config['mode']> {
+  try {
+    let { stdout } = await execAsync('git status --porcelain')
+    return stdout.trim() ? 'changed' : 'commit'
+  } catch {
+    return 'commit'
+  }
+}
+
 export async function parseArgs(args: string[]): Promise<Config> {
   let config: Config = {
     command: 'run',
-    mode: 'changes',
+    mode: 'commit',
     output: 'server'
   }
 
+  let mode = false
+
   for (let arg of args) {
     if (arg === '--changed') {
-      config.mode = 'changes'
+      config.mode = 'changed'
+      mode = true
     } else if (arg === '--commit') {
       config.mode = 'commit'
+      mode = true
     } else if (arg === '--help' || arg === '-h') {
       await printHelp()
       process.exit(0)
@@ -50,6 +67,10 @@ export async function parseArgs(args: string[]): Promise<Config> {
       printError(format('Unknown argument `' + arg + '`'))
       process.exit(1)
     }
+  }
+
+  if (!mode) {
+    config.mode = await detectModeFromGit()
   }
 
   return config
