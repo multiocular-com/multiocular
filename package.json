@@ -12,10 +12,13 @@
   "repository": "multiocular-com/multiocular",
   "scripts": {
     "test": "pnpm run /^test:/",
+    "format": "pnpm run /^format:/",
+    "update-env": "node ./scripts/update-env.ts",
+    "format:js": "eslint --fix .",
+    "format:prettier": "prettier --experimental-cli --write .",
     "test:js": "eslint .",
     "test:types": "svelte-check",
-    "test:audit": "pnpm audit --prod",
-    "update-env": "node ./scripts/update-env.ts"
+    "test:audit": "pnpm audit --prod"
   },
   "devDependencies": {
     "@logux/eslint-config": "56.1.0",
