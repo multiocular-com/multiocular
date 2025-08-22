@@ -1,5 +1,7 @@
+#!/usr/bin/env node
+
 import { parseArgs } from './cli/args.ts'
-import { printError } from './cli/print.ts'
+import { format, printError } from './cli/print.ts'
 import { type FilePath, findProjectRoot } from './index.ts'
 
 const config = await parseArgs(process.argv.slice(2))
@@ -9,7 +11,7 @@ if (config.command === 'run') {
 
   if (!root) {
     printError(
-      'Could not find project root directory containing a VCS folder (.git, .hg, or .svn)\nMake sure you are running the command from within a version-controlled project'
+      format('Could not find project root directory containing a .git folder')
     )
     process.exit(1)
   }

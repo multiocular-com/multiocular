@@ -6,15 +6,11 @@ function runCli(
   args: string[]
 ): Promise<{ code: null | number; stderr: string; stdout: string }> {
   return new Promise(resolve => {
-    let child = spawn(
-      'node',
-      ['--import', 'jiti/register', 'server/bin.ts', ...args],
-      {
-        cwd: process.cwd(),
-        env: { ...process.env, FORCE_COLOR: undefined, NO_COLOR: '1' },
-        stdio: ['pipe', 'pipe', 'pipe']
-      }
-    )
+    let child = spawn('server/bin.ts', args, {
+      cwd: process.cwd(),
+      env: { ...process.env, FORCE_COLOR: undefined, NO_COLOR: '1' },
+      stdio: ['pipe', 'pipe', 'pipe']
+    })
 
     let stderr = ''
     let stdout = ''
