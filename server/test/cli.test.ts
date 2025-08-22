@@ -58,3 +58,16 @@ test('exits with error for unknown arguments', async () => {
   assert.match(result.stderr, /Unknown argument --invalid/)
   assert.equal(result.stdout, '')
 })
+
+test('exits with error when no .git folder found', async () => {
+  let tempDir = await mkdtemp(join(tmpdir(), 'multiocular-test-'))
+  try {
+    let result = await runCli([], tempDir)
+
+    assert.equal(result.code, 1)
+    assert.match(result.stderr, /Could not find project root directory/)
+    assert.equal(result.stdout, '')
+  } finally {
+    await rm(tempDir, { force: true, recursive: true })
+  }
+})

@@ -14,7 +14,7 @@ async function printVersion(): Promise<void> {
   let packageData = JSON.parse(await readFile(packagePath, 'utf-8')) as {
     version: string
   }
-  print(packageData.version)
+  print('v' + packageData.version)
 }
 
 async function printHelp(): Promise<void> {
