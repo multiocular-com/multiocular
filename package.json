@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": "multiocular-com/multiocular",
   "scripts": {
-    "test": "pnpm run /^test:/",
+    "test": "FORCE_COLOR=1 pnpm run /^test:/",
     "format": "pnpm run /^format:/",
     "update-env": "node ./scripts/update-env.ts",
     "format:js": "eslint --fix .",
