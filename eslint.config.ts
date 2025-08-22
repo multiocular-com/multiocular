@@ -11,7 +11,13 @@ export default [
       '@typescript-eslint/no-base-to-string': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-unsafe-type-assertion': 'off'
+      '@typescript-eslint/no-unsafe-type-assertion': 'off',
+      'n/no-unsupported-features/node-builtins': [
+        'error',
+        {
+          allowExperimental: true
+        }
+      ]
     }
   },
   {

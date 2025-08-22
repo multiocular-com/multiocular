@@ -1,0 +1,26 @@
+Tool to review the diffs on dependencies updates to prevent supply chain attacks
+
+Usage:
+  multiocular [options]
+  multiocular [ -h | --help | -v | --version ]
+
+Output options:
+  `--json`    Output dependencies diffs in JSON format and exit
+  `--text`
+  `--server`  Start web server to review dependencies diffs (default)
+
+Mode options:
+  `--changed` Calculate diffs between last commit and changed lock files
+  `--commit`  Calculate diffs between previous and last commit
+
+  On missing options it use `--changed` on uncommitted changes
+
+Examples:
+  `multiocular`
+    Run web server to manually review dependencies
+
+  `multiocular --text`
+    Review dependencies diffs in terminal
+
+  `multiocular --json | [other tool]`
+    Process diffs by some other tool
