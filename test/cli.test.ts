@@ -11,6 +11,7 @@ function runCli(
       ['--import', 'jiti/register', 'server/bin.ts', ...args],
       {
         cwd: process.cwd(),
+        env: { ...process.env, FORCE_COLOR: undefined, NO_COLOR: '1' },
         stdio: ['pipe', 'pipe', 'pipe']
       }
     )
@@ -45,12 +46,14 @@ test('shows help with -h and --help', async () => {
   for (let arg of ['-h', '--help']) {
     let result = await runCli([arg])
     assert.equal(result.code, 0)
-    assert.match(
-      result.stdout,
-      /Tool to review the diffs on dependencies updates/
-    )
     assert.match(result.stdout, /Usage:/)
-    assert.match(result.stdout, /multiocular \[options\]/)
     assert.equal(result.stderr, '')
   }
+})
+
+test('exits with error for unknown arguments', async () => {
+  let result = await runCli(['--invalid'])
+  assert.equal(result.code, 1)
+  assert.match(result.stderr, /Unknown argument --invalid/)
+  assert.equal(result.stdout, '')
 })

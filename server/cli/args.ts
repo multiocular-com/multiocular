@@ -1,6 +1,8 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
+import { format, print, printError } from './print.ts'
+
 export interface Config {
   command: 'help' | 'run' | 'version'
   mode: 'changes' | 'commit'
@@ -12,12 +14,12 @@ async function printVersion(): Promise<void> {
   let packageData = JSON.parse(await readFile(packagePath, 'utf-8')) as {
     version: string
   }
-  process.stdout.write(packageData.version + '\n')
+  print(packageData.version)
 }
 
 async function printHelp(): Promise<void> {
   let helpPath = join(import.meta.dirname, 'help.txt')
-  process.stdout.write(await readFile(helpPath, 'utf-8'))
+  print(format(await readFile(helpPath, 'utf-8')).trim())
 }
 
 export async function parseArgs(args: string[]): Promise<Config> {
@@ -27,9 +29,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
     output: 'server'
   }
 
-  for (let i = 0; i < args.length; i++) {
-    let arg = args[i]
-
+  for (let arg of args) {
     if (arg === '--changed') {
       config.mode = 'changes'
     } else if (arg === '--commit') {
@@ -47,7 +47,8 @@ export async function parseArgs(args: string[]): Promise<Config> {
       await printVersion()
       process.exit(0)
     } else {
-      throw new Error(`Unknown argument: ${arg}`)
+      printError(format('Unknown argument `' + arg + '`'))
+      process.exit(1)
     }
   }
 
