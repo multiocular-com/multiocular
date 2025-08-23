@@ -1,10 +1,11 @@
 import { strict as assert } from 'node:assert'
-import { mkdtemp, rm } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
-import { test } from 'node:test'
+import { afterEach, test } from 'node:test'
 
-import { runCli } from './utils.ts'
+import { removeProject, runCli, startProject } from './utils.ts'
+
+afterEach(async () => {
+  await removeProject()
+})
 
 test('shows version with -v and --version', async () => {
   for (let arg of ['-v', '--version']) {
@@ -32,16 +33,12 @@ test('exits with error for unknown arguments', async () => {
 })
 
 test('exits with error when no .git folder found', async () => {
-  let tempDir = await mkdtemp(join(tmpdir(), 'multiocular-test-'))
-  try {
-    let result = await runCli([], tempDir)
+  await startProject({ git: false })
+  let result = await runCli([])
 
-    assert.equal(result.code, 1)
-    assert.match(result.stderr, /Could not find project root directory/)
-    assert.equal(result.stdout, '')
-  } finally {
-    await rm(tempDir, { force: true, recursive: true })
-  }
+  assert.equal(result.code, 1)
+  assert.match(result.stderr, /Could not find project root directory/)
+  assert.equal(result.stdout, '')
 })
 
 // TODO: test that it works in subdir
