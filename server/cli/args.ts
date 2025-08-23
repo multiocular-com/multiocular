@@ -7,6 +7,17 @@ import { format, print, printError } from './print.ts'
 
 const execAsync = promisify(exec)
 
+export type CliArg =
+  | '--changed'
+  | '--commit'
+  | '--help'
+  | '--json'
+  | '--server'
+  | '--text'
+  | '--version'
+  | '-h'
+  | '-v'
+
 export interface Config {
   command: 'help' | 'run' | 'version'
   mode: 'changed' | 'commit'

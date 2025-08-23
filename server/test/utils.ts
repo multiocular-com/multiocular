@@ -3,6 +3,8 @@ import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
+import type { CliArg } from '../index.ts'
+
 let currentProject: string | undefined
 
 const TEST_ENV = {
@@ -59,9 +61,9 @@ export async function removeProject(): Promise<void> {
 }
 
 export function runCli(
-  args: string[],
-  cwd = currentProject || process.cwd()
+  ...args: CliArg[]
 ): Promise<{ code: null | number; stderr: string; stdout: string }> {
+  let cwd = currentProject || process.cwd()
   return new Promise(resolve => {
     let child = spawn(BIN_PATH, args, {
       cwd,
@@ -84,4 +86,26 @@ export function runCli(
       resolve({ code, stderr, stdout })
     })
   })
+}
+
+export async function cliGood(...args: CliArg[]): Promise<string> {
+  let result = await runCli(...args)
+  if (result.code !== 0) {
+    throw new Error(`Expected exit code 0, got ${result.code}`)
+  }
+  if (result.stderr !== '') {
+    throw new Error(`Expected empty stderr, got: ${result.stderr}`)
+  }
+  return result.stdout
+}
+
+export async function cliBad(...args: CliArg[]): Promise<string> {
+  let result = await runCli(...args)
+  if (result.code === 0) {
+    throw new Error('Expected non-zero exit code, got 0')
+  }
+  if (result.stdout !== '') {
+    throw new Error(`Expected empty stdout, got: ${result.stdout}`)
+  }
+  return result.stderr
 }

@@ -1,7 +1,6 @@
-import { strict as assert } from 'node:assert'
 import { afterEach, beforeEach, test } from 'node:test'
 
-import { removeProject, run, runCli, startProject } from './utils.ts'
+import { cliGood, removeProject, run, startProject } from './utils.ts'
 
 beforeEach(async () => {
   await startProject()
@@ -20,8 +19,6 @@ test('analyzes dependency changes between git commits', async () => {
   await run('git add .')
   await run('git commit -m "Update postcss to 8.5.6"')
 
-  let result = await runCli(['--json'])
-
-  assert.equal(result.code, 0)
+  await cliGood('--json')
   // TODO: test output when we will have implementation
 })

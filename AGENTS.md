@@ -18,6 +18,4 @@
 
 ## Testing
 
-- Always at the end of your work always run:
-  - `pnpm format`
-  - `pnpm test`
+- Always run `pnpm format` and `pnpm test`.
