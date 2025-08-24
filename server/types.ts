@@ -9,9 +9,12 @@ export type ChangeId = Brand<string, 'ChangeId'>
 export type Diff = Brand<string, 'Diff'>
 export type DiffSize = Brand<number, 'DiffSize'>
 
-export interface LoadedFile {
-  content: FileContent
-  path: FilePath
+export type LoadedFile = { content: FileContent; path: FilePath }
+export type MissingFile = { missing: true; path: FilePath }
+export type File = LoadedFile | MissingFile
+
+export function isLoaded(file: File): file is LoadedFile {
+  return !('missing' in file)
 }
 
 export interface Dependency {
@@ -23,7 +26,7 @@ export interface Dependency {
 
 export interface Change {
   after: Version
-  before: Version
+  before: false | Version
   id: ChangeId
   name: DependencyName
   type: 'npm'

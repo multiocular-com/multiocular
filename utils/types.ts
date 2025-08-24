@@ -8,7 +8,11 @@ export type Brand<T, B> = { [__brand]: B } & T
 export type Debrand<T> = T extends (infer U)[]
   ? Debrand<U>[]
   : T extends { [__brand]: any }
-    ? { [K in keyof Omit<T, typeof __brand>]: Debrand<T[K]> }
+    ? T extends string
+      ? string
+      : T extends number
+        ? number
+        : { [K in keyof Omit<T, typeof __brand>]: Debrand<T[K]> }
     : T extends object
       ? { [K in keyof T]: Debrand<T[K]> }
       : T

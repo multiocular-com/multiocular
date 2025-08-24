@@ -1,5 +1,6 @@
 import type { Config } from '../cli/args.ts'
 import type { FilePath } from '../types.ts'
+import { isLoaded } from '../types.ts'
 import { diffLoaders } from './diffs/index.ts'
 import { getChangedFiles, loadFile } from './git.ts'
 import { $step, addDiff, declareUnloadedChanges } from './stores.ts'
@@ -22,8 +23,8 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
           Promise.all(selected.map(file => loadFile(root, afterCommit, file)))
         ])
         return calculateVersionDiff(
-          loader.load(beforeContent),
-          loader.load(afterContent)
+          loader.load(beforeContent.filter(isLoaded)),
+          loader.load(afterContent.filter(isLoaded))
         )
       })
     )

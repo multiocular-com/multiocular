@@ -1,6 +1,13 @@
+import { strict as assert } from 'node:assert'
 import { afterEach, beforeEach, test } from 'node:test'
 
-import { cliJsonEqual, removeProject, run, startProject } from './utils.ts'
+import {
+  cliJson,
+  cliJsonEqual,
+  removeProject,
+  run,
+  startProject
+} from './utils.ts'
 
 beforeEach(async () => {
   await startProject()
@@ -10,7 +17,7 @@ afterEach(async () => {
   await removeProject()
 })
 
-test('analyzes dependency changes', async () => {
+test('shows dependency changes', async () => {
   await run('pnpm add nanoid@5.1.4')
   await run('git add .')
   await run('git commit -m "Add nanoid"')
@@ -25,4 +32,13 @@ test('analyzes dependency changes', async () => {
       type: 'npm'
     }
   ])
+})
+
+test('shows new dependency', async () => {
+  await run('pnpm add nanoid@5.1.5')
+  let list = await cliJson()
+  assert.equal(list.length, 1)
+  assert.equal(list[0]!.name, 'nanoid')
+  assert.equal(list[0]!.before, false)
+  assert.match(list[0]!.diff, /"name": "nanoid"/)
 })

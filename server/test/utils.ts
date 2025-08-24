@@ -118,11 +118,13 @@ export async function cliBad(...args: CliArg[]): Promise<string> {
   return result.stderr
 }
 
+export async function cliJson(...args: CliArg[]): Promise<MultiocularJSON> {
+  return JSON.parse(await cliGood('--json', ...args))
+}
+
 export async function cliJsonEqual(
   expected: MultiocularJSON,
   ...args: CliArg[]
 ): Promise<void> {
-  let output = await cliGood('--json', ...args)
-  let actual = JSON.parse(output)
-  assert.deepEqual(actual, expected)
+  assert.deepEqual(await cliJson(...args), expected)
 }

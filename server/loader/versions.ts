@@ -1,5 +1,15 @@
 import type { Change, ChangeId, Dependency } from '../types.ts'
 
+function createChangeId(
+  after: Dependency,
+  before: Dependency | undefined
+): ChangeId {
+  if (before) {
+    return `${after.type}:${after.name}@${before.version}>${after.version}` as ChangeId
+  }
+  return `${after.type}:${after.name}@${after.version}` as ChangeId
+}
+
 function compareVersions(a: string, b: string): number {
   let aParts = a.split('.').map(Number)
   let bParts = b.split('.').map(Number)
@@ -49,15 +59,13 @@ export function calculateVersionDiff(
         compareVersions(b.version, after.version)
       )[0]
 
-      if (closest) {
-        changes.push({
-          after: after.version,
-          before: closest.version,
-          id: `${after.type}:${after.name}:${closest.version}>${after.version}` as ChangeId,
-          name: after.name,
-          type: after.type
-        })
-      }
+      changes.push({
+        after: after.version,
+        before: closest ? closest.version : false,
+        id: createChangeId(after, closest),
+        name: after.name,
+        type: after.type
+      })
     }
   }
 

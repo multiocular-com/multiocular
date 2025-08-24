@@ -3,43 +3,77 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { promisify } from 'node:util'
 
-import type { FilePath, LoadedFile } from '../types.ts'
+import type { File, FilePath, LoadedFile, MissingFile } from '../types.ts'
 
 const execAsync = promisify(exec)
 
+class GitError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'GitError'
+  }
+}
+
 async function git(args: string, root: FilePath): Promise<string> {
-  let result = await execAsync(`git ${args}`, {
-    cwd: root,
-    encoding: 'utf8'
-  })
-  return result.stdout
+  try {
+    let result = await execAsync(`git ${args}`, {
+      cwd: root,
+      encoding: 'utf8'
+    })
+    return result.stdout
+  } catch (error) {
+    if (error instanceof Error && 'stderr' in error) {
+      throw new GitError(error.stderr as string)
+    }
+    throw error
+  }
+}
+
+function toFiles(stdout: string): FilePath[] {
+  return stdout
+    .trim()
+    .split('\n')
+    .filter(file => file.length > 0) as FilePath[]
 }
 
 export async function loadFile(
   root: FilePath,
   commit: false | string,
   file: FilePath
-): Promise<LoadedFile> {
-  let content: string
+): Promise<File> {
   let path = join(root, file)
   if (!commit) {
-    content = (await readFile(path)).toString()
+    let content = (await readFile(path)).toString()
+    return { content, path } as LoadedFile
   } else {
-    content = await git(`show ${commit}:${file}`, root)
+    try {
+      let content = await git(`show ${commit}:${file}`, root)
+      return { content, path } as LoadedFile
+    } catch (error) {
+      if (error instanceof GitError) {
+        if (
+          error.message.includes('does not exist') ||
+          error.message.includes('exists on disk, but not in')
+        ) {
+          return {
+            missing: true,
+            path
+          } as MissingFile
+        }
+      }
+      throw error
+    }
   }
-  return {
-    content,
-    path
-  } as LoadedFile
 }
 
 export async function getChangedFiles(
   root: FilePath,
   between: string
 ): Promise<FilePath[]> {
-  let list = await git(`diff --name-only ${between}`, root)
-  return list
-    .trim()
-    .split('\n')
-    .filter(file => file.length > 0) as FilePath[]
+  let files = toFiles(await git(`diff --name-only ${between}`, root))
+  if (between === 'HEAD') {
+    let untracked = await git('ls-files --others --exclude-standard', root)
+    files.push(...toFiles(untracked))
+  }
+  return files
 }
