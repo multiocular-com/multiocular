@@ -8,12 +8,13 @@ import { calculateVersionDiff } from './versions.ts'
 import { versionsLoaders } from './versions/index.ts'
 
 export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
-  let changedMode = config.mode === 'changed'
-
   $step.set('versions')
-  let changed = await getChangedFiles(root, changedMode ? 'HEAD' : 'HEAD^ HEAD')
-  let beforeCommit = changedMode ? 'HEAD' : 'HEAD^'
-  let afterCommit = changedMode ? false : 'HEAD'
+  let changed = await getChangedFiles(
+    root,
+    config.source === 'changed' ? 'HEAD' : 'HEAD^ HEAD'
+  )
+  let beforeCommit = config.source === 'changed' ? 'HEAD' : 'HEAD^'
+  let afterCommit = config.source === 'changed' ? false : 'HEAD'
   let changes = (
     await Promise.all(
       Object.values(versionsLoaders).map(async loader => {

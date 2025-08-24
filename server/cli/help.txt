@@ -7,7 +7,7 @@ Review diffs on dependencies updates to prevent supply chain attacks
 *Output options:*
   `--json`    Output dependencies diffs in JSON format and exit
   `--text`    Output diffs in human readable text and exit
-  `--server`  Start web server to review dependencies diffs (default)
+  `--web`     Start web server to review dependencies diffs (default)
 
 *Mode options:*
   `--changed` Calculate diffs between last commit and changed lock files

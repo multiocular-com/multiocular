@@ -12,15 +12,15 @@ export type CliArg =
   | '--commit'
   | '--help'
   | '--json'
-  | '--server'
   | '--text'
   | '--version'
+  | '--web'
   | '-h'
   | '-v'
 
 export interface Config {
-  mode: 'changed' | 'commit'
-  output: 'json' | 'server' | 'text'
+  output: 'json' | 'text' | 'web'
+  source: 'changed' | 'commit'
 }
 
 async function printVersion(): Promise<void> {
@@ -36,7 +36,7 @@ async function printHelp(): Promise<void> {
   print(format(await readFile(helpPath, 'utf-8')).trim())
 }
 
-async function detectModeFromGit(): Promise<Config['mode']> {
+async function detectModeFromGit(): Promise<Config['source']> {
   try {
     let { stdout } = await execAsync('git status --porcelain')
     return stdout.trim() ? 'changed' : 'commit'
@@ -47,26 +47,26 @@ async function detectModeFromGit(): Promise<Config['mode']> {
 
 export async function parseArgs(args: string[]): Promise<Config> {
   let config: Config = {
-    mode: 'commit',
-    output: 'server'
+    output: 'web',
+    source: 'commit'
   }
 
-  let mode = false
+  let source = false
 
   for (let arg of args) {
     if (arg === '--changed') {
-      config.mode = 'changed'
-      mode = true
+      config.source = 'changed'
+      source = true
     } else if (arg === '--commit') {
-      config.mode = 'commit'
-      mode = true
+      config.source = 'commit'
+      source = true
     } else if (arg === '--help' || arg === '-h') {
       await printHelp()
       process.exit(0)
     } else if (arg === '--json') {
       config.output = 'json'
-    } else if (arg === '--server') {
-      config.output = 'server'
+    } else if (arg === '--web') {
+      config.output = 'web'
     } else if (arg === '--text') {
       config.output = 'text'
     } else if (arg === '--version' || arg === '-v') {
@@ -78,8 +78,8 @@ export async function parseArgs(args: string[]): Promise<Config> {
     }
   }
 
-  if (!mode) {
-    config.mode = await detectModeFromGit()
+  if (!source) {
+    config.source = await detectModeFromGit()
   }
 
   return config
