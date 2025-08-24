@@ -11,7 +11,6 @@ afterEach(async () => {
 })
 
 test('analyzes dependency changes', async () => {
-  await run('pnpm init')
   await run('pnpm add nanoid@5.1.4')
   await run('git add .')
   await run('git commit -m "Add nanoid"')
