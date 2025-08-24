@@ -16,8 +16,6 @@ test('analyzes dependency changes', async () => {
   await run('git add .')
   await run('git commit -m "Add nanoid"')
   await run('pnpm add nanoid@5.1.5')
-  await run('git add .')
-  await run('git commit -m "Update nanoid"')
 
   await cliJsonEqual([
     {
