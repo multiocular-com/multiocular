@@ -14,7 +14,7 @@
     "test": "FORCE_COLOR=1 pnpm run /^test:/",
     "format": "pnpm run /^format:/",
     "update-env": "node ./scripts/update-env.ts",
-    "format:js": "eslint --fix .",
+    "format:js": "eslint --fix --cache --concurrency auto .",
     "format:prettier": "prettier --experimental-cli --write .",
     "test:js": "eslint . --cache --concurrency auto",
     "test:unit": "bnt **/*.test.ts",
