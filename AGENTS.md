@@ -18,4 +18,4 @@
 
 ## Testing
 
-- Always run `pnpm format` and `pnpm test`.
+- Always run `./scripts/format.sh` and `pnpm test`.

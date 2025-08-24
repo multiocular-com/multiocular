@@ -16,7 +16,7 @@
     "update-env": "node ./scripts/update-env.ts",
     "format:js": "eslint --fix .",
     "format:prettier": "prettier --experimental-cli --write .",
-    "test:js": "eslint .",
+    "test:js": "eslint . --cache --concurrency auto",
     "test:unit": "bnt **/*.test.ts",
     "test:types": "svelte-check",
     "test:audit": "pnpm audit --prod"
