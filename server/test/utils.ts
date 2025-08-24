@@ -128,3 +128,38 @@ export async function cliJsonEqual(
 ): Promise<void> {
   assert.deepEqual(await cliJson(...args), expected)
 }
+
+type PartialMultiocularJSON = {
+  [K in keyof MultiocularJSON[0]]?: MultiocularJSON[0][K] | RegExp
+}[]
+
+export async function cliJsonMatch(
+  expected: PartialMultiocularJSON,
+  ...args: CliArg[]
+): Promise<void> {
+  let actual = await cliJson(...args)
+  let actualJson = JSON.stringify(actual, null, 2)
+  assert.equal(
+    actual.length,
+    expected.length,
+    `Expect ${expected.length} diffs\n${actualJson}`
+  )
+  for (let i = 0; i < expected.length; i++) {
+    for (let [key, expectedValue] of Object.entries(expected[i]!)) {
+      let actualValue = actual[i]![key as keyof MultiocularJSON[0]]
+      if (expectedValue instanceof RegExp) {
+        assert.match(
+          String(actualValue),
+          expectedValue,
+          `${i}>${key} should match ${expectedValue}\n${actualJson}`
+        )
+      } else {
+        assert.equal(
+          actualValue,
+          expectedValue,
+          `${i}>${key} should equal ${expectedValue}\n${actualJson}`
+        )
+      }
+    }
+  }
+}

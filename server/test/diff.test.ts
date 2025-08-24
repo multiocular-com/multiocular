@@ -1,9 +1,8 @@
-import { strict as assert } from 'node:assert'
 import { afterEach, beforeEach, test } from 'node:test'
 
 import {
-  cliJson,
   cliJsonEqual,
+  cliJsonMatch,
   removeProject,
   run,
   startProject
@@ -36,9 +35,11 @@ test('shows dependency changes', async () => {
 
 test('shows new dependency', async () => {
   await run('pnpm add nanoid@5.1.5')
-  let list = await cliJson()
-  assert.equal(list.length, 1)
-  assert.equal(list[0]!.name, 'nanoid')
-  assert.equal(list[0]!.before, false)
-  assert.match(list[0]!.diff, /"name": "nanoid"/)
+  await cliJsonMatch([
+    {
+      before: false,
+      diff: /"name": "nanoid"/,
+      name: 'nanoid'
+    }
+  ])
 })
