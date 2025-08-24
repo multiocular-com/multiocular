@@ -1,5 +1,5 @@
 import { exec, spawn } from 'node:child_process'
-import { mkdtemp, rm } from 'node:fs/promises'
+import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
@@ -49,6 +49,10 @@ export async function startProject(
     await run('git config user.name "Test User"')
     await run('git config user.email "test@example.com"')
     await run('git config commit.gpgsign false')
+
+    await writeFile(join(currentProject, '.gitignore'), 'node_modules\n')
+    await run('git add .gitignore')
+    await run('git commit -m "Initial commit"')
   }
 
   return currentProject
