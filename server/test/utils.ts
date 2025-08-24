@@ -4,6 +4,8 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
+import type { Debrand } from '../../utils/types.ts'
+import type { MultiocularJSON } from '../cli/output.ts'
 import type { CliArg } from '../index.ts'
 
 let currentProject: string | undefined
@@ -116,7 +118,7 @@ export async function cliBad(...args: CliArg[]): Promise<string> {
 }
 
 export async function cliJsonEqual(
-  expected: unknown,
+  expected: Debrand<MultiocularJSON>,
   ...args: CliArg[]
 ): Promise<void> {
   let output = await cliGood('--json', ...args)
