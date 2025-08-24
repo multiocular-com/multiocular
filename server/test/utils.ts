@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict'
 import { exec, spawn } from 'node:child_process'
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
@@ -112,4 +113,13 @@ export async function cliBad(...args: CliArg[]): Promise<string> {
     throw new Error(`Expected empty stdout, got: ${result.stdout}`)
   }
   return result.stderr
+}
+
+export async function cliJsonEqual(
+  expected: unknown,
+  ...args: CliArg[]
+): Promise<void> {
+  let output = await cliGood('--json', ...args)
+  let actual = JSON.parse(output)
+  assert.deepEqual(actual, expected)
 }

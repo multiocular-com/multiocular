@@ -1,7 +1,6 @@
-import assert from 'node:assert/strict'
 import { afterEach, beforeEach, test } from 'node:test'
 
-import { cliGood, removeProject, run, startProject } from './utils.ts'
+import { cliJsonEqual, removeProject, run, startProject } from './utils.ts'
 
 beforeEach(async () => {
   await startProject()
@@ -20,7 +19,7 @@ test('analyzes dependency changes', async () => {
   await run('git add .')
   await run('git commit -m "Update nanoid"')
 
-  assert.deepEqual(JSON.parse(await cliGood('--json')), [
+  await cliJsonEqual([
     {
       after: '5.1.5',
       before: '5.1.4',
