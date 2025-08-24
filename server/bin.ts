@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
 import { parseArgs } from './cli/args.ts'
-import { type FilePath, findProjectRoot } from './index.ts'
+import {
+  type Argument,
+  type FilePath,
+  findProjectRoot,
+  loadDiffs,
+  outputProcess
+} from './index.ts'
 
-const config = await parseArgs(process.argv.slice(2))
+let config = await parseArgs(process.argv.slice(2) as Argument[])
+let root = findProjectRoot(process.cwd() as FilePath)
+loadDiffs(root, config)
+outputProcess(config)
 
-if (config.command === 'run') {
-  let root = findProjectRoot(process.cwd() as FilePath)
-  process.stdout.write(root + '\n')
-
-  // start sync server
-  // init storage
-  // extract current versions
-  // extract prev versions
-  // find changes
-  // extract diffs
-}
+// TODO: start sync server
+// TODO: init storage

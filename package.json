@@ -16,13 +16,19 @@
     "update-env": "node ./scripts/update-env.ts",
     "format:js": "eslint --fix --cache --concurrency auto .",
     "format:prettier": "prettier --experimental-cli --write .",
-    "test:js": "eslint . --cache --concurrency auto",
+    "test:js": "eslint --cache --concurrency auto .",
     "test:unit": "bnt **/*.test.ts",
     "test:types": "svelte-check",
     "test:audit": "pnpm audit --prod"
   },
+  "dependencies": {
+    "libnpmdiff": "^8.0.6",
+    "nanostores": "^1.0.1",
+    "yaml": "^2.8.1"
+  },
   "devDependencies": {
     "@logux/eslint-config": "56.1.0",
+    "@types/libnpmdiff": "^2.0.3",
     "@types/node": "24.3.0",
     "@types/ws": "8.18.1",
     "better-node-test": "0.7.2",

@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { promisify } from 'node:util'
 
+import type { Argument } from '../types.ts'
 import { format, print, printError } from './print.ts'
 
 const execAsync = promisify(exec)
@@ -19,7 +20,6 @@ export type CliArg =
   | '-v'
 
 export interface Config {
-  command: 'help' | 'run' | 'version'
   mode: 'changed' | 'commit'
   output: 'json' | 'server' | 'text'
 }
@@ -46,9 +46,8 @@ async function detectModeFromGit(): Promise<Config['mode']> {
   }
 }
 
-export async function parseArgs(args: string[]): Promise<Config> {
+export async function parseArgs(args: Argument[]): Promise<Config> {
   let config: Config = {
-    command: 'run',
     mode: 'commit',
     output: 'server'
   }
