@@ -9,9 +9,9 @@ const execAsync = promisify(exec)
 
 export type CliArg =
   | '--changed'
-  | '--commit'
   | '--help'
   | '--json'
+  | '--last-commit'
   | '--text'
   | '--version'
   | '--web'
@@ -20,7 +20,7 @@ export type CliArg =
 
 export interface Config {
   output: 'json' | 'text' | 'web'
-  source: 'changed' | 'commit'
+  source: 'changed' | 'last-commit'
 }
 
 async function printVersion(): Promise<void> {
@@ -39,16 +39,16 @@ async function printHelp(): Promise<void> {
 async function detectModeFromGit(): Promise<Config['source']> {
   try {
     let { stdout } = await execAsync('git status --porcelain')
-    return stdout.trim() ? 'changed' : 'commit'
+    return stdout.trim() ? 'changed' : 'last-commit'
   } catch {
-    return 'commit'
+    return 'last-commit'
   }
 }
 
 export async function parseArgs(args: string[]): Promise<Config> {
   let config: Config = {
     output: 'web',
-    source: 'commit'
+    source: 'last-commit'
   }
 
   let source = false
@@ -57,8 +57,8 @@ export async function parseArgs(args: string[]): Promise<Config> {
     if (arg === '--changed') {
       config.source = 'changed'
       source = true
-    } else if (arg === '--commit') {
-      config.source = 'commit'
+    } else if (arg === '--last-commit') {
+      config.source = 'last-commit'
       source = true
     } else if (arg === '--help' || arg === '-h') {
       await printHelp()

@@ -10,8 +10,8 @@ Review diffs on dependencies updates to prevent supply chain attacks
   `--web`     Start web server to review dependencies diffs (default)
 
 *Mode options:*
-  `--changed` Calculate diffs between last commit and changed lock files
-  `--commit`  Calculate diffs between previous and last commit
+  `--changed`      Calculate diffs between last commit and changed lock files
+  `--last-commit`  Calculate diffs between previous and last commit
 
   On missing options it use `--changed` on uncommitted changes
 
