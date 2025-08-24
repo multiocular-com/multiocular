@@ -8,6 +8,7 @@ import type { MultiocularJSON } from '../cli/output.ts'
 import type { CliArg } from '../index.ts'
 
 let currentProject: string | undefined
+let currentDirectory: string | undefined
 
 const TEST_ENV = {
   ...process.env,
@@ -59,6 +60,7 @@ export async function startProject(
     await run('git commit -m "Initial commit"')
   }
 
+  currentDirectory = currentProject
   return currentProject
 }
 
@@ -66,12 +68,20 @@ export async function removeProject(): Promise<void> {
   if (!currentProject) return
   await rm(currentProject, { force: true, recursive: true })
   currentProject = undefined
+  currentDirectory = undefined
+}
+
+export function cd(directory: string): void {
+  if (!currentProject) {
+    throw new Error('No current project. Call startProject() first.')
+  }
+  currentDirectory = join(currentProject, directory)
 }
 
 export function runCli(
   ...args: CliArg[]
 ): Promise<{ code: null | number; stderr: string; stdout: string }> {
-  let cwd = currentProject || process.cwd()
+  let cwd = currentDirectory || process.cwd()
   return new Promise(resolve => {
     let child = spawn(BIN_PATH, args, {
       cwd,

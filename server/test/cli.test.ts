@@ -1,7 +1,17 @@
 import { strict as assert } from 'node:assert'
+import { mkdir } from 'node:fs/promises'
+import { join } from 'node:path'
 import { afterEach, test } from 'node:test'
 
-import { cliBad, cliGood, removeProject, startProject } from './utils.ts'
+import {
+  cd,
+  cliBad,
+  cliGood,
+  cliJsonMatch,
+  removeProject,
+  run,
+  startProject
+} from './utils.ts'
 
 afterEach(async () => {
   await removeProject()
@@ -27,4 +37,45 @@ test('exits with error when no .git folder found', async () => {
   assert.match(await cliBad(), /Could not find project root directory/)
 })
 
-// TODO: test that it works in subdir
+test('allows to change update source', async () => {
+  await startProject()
+  await run('pnpm add nanoid@5.1.4')
+  await run('git add .')
+  await run('git commit -m "Add nanoid"')
+  await run('pnpm add nanoid@5.1.5')
+
+  await cliJsonMatch([{ after: '5.1.5' }], '--changed')
+  await cliJsonMatch([{ after: '5.1.4' }], '--last-commit')
+  await cliJsonMatch([{ after: '5.1.5' }])
+})
+
+test('works from subdirectory', async () => {
+  let project = await startProject()
+  await run('pnpm add nanoid@5.1.5')
+  await mkdir(join(project, 'src'))
+  cd('src')
+  await cliJsonMatch([{ after: '5.1.5' }])
+})
+
+test('allows to change output format', async () => {
+  await startProject()
+  await run('pnpm add nanoid@5.1.4')
+  await run('git add .')
+  await run('git commit -m "Add nanoid"')
+  await run('pnpm add nanoid@5.1.5')
+  assert.equal(
+    await cliGood('--text'),
+    'diff --git a/package.json b/package.json\n' +
+      'index v5.1.4..v5.1.5 100644\n' +
+      '--- a/package.json\n' +
+      '+++ b/package.json\n' +
+      '@@ -1,6 +1,6 @@\n' +
+      ' {\n' +
+      '   "name": "nanoid",\n' +
+      '-  "version": "5.1.4",\n' +
+      '+  "version": "5.1.5",\n' +
+      '   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n' +
+      '   "keywords": [\n' +
+      '     "uuid",\n'
+  )
+})
