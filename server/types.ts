@@ -2,7 +2,6 @@ import type { Brand } from '../utils/types.ts'
 
 export type FilePath = Brand<string, 'FilePath'>
 export type FileContent = Brand<string, 'FileContent'>
-export type Argument = Brand<string, 'Argument'>
 export type Version = Brand<string, 'Version'>
 export type DependencyName = Brand<string, 'DependencyName'>
 export type ChangeId = Brand<string, 'ChangeId'>
@@ -35,3 +34,24 @@ export interface Change {
 export type ChangeDiff = {
   diff: Diff
 } & Change
+
+export function filePath(value: string): FilePath {
+  return value as FilePath
+}
+
+export function diff(value: string): Diff {
+  return value as Diff
+}
+
+export function loadedFile(path: string, content: Buffer | string): LoadedFile {
+  return { content: content.toString(), path } as LoadedFile
+}
+
+export function missingFile(path: string): MissingFile {
+  return { missing: true, path } as MissingFile
+}
+
+export function splitDependency(dependency: string): [DependencyName, Version] {
+  let [name, version] = dependency.split('@')
+  return [name as DependencyName, version as Version]
+}

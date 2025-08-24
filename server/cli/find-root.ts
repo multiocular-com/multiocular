@@ -2,17 +2,17 @@ import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 
 import { format, printError } from '../cli/print.ts'
-import type { FilePath } from '../types.js'
+import { filePath, type FilePath } from '../types.ts'
 
 export function findProjectRoot(start: FilePath): FilePath {
   let current = start
   let hasParent = true
 
   do {
-    let git = join(current, '.git') as FilePath
+    let git = filePath(join(current, '.git'))
     if (existsSync(git)) return current
 
-    let parent = dirname(current) as FilePath
+    let parent = filePath(dirname(current))
     hasParent = current !== parent
     current = parent
   } while (hasParent)

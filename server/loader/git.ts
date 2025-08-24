@@ -3,7 +3,8 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { promisify } from 'node:util'
 
-import type { File, FilePath, LoadedFile, MissingFile } from '../types.ts'
+import type { File, FilePath } from '../types.ts'
+import { loadedFile, missingFile } from '../types.ts'
 
 const execAsync = promisify(exec)
 
@@ -43,22 +44,17 @@ export async function loadFile(
 ): Promise<File> {
   let path = join(root, file)
   if (!commit) {
-    let content = (await readFile(path)).toString()
-    return { content, path } as LoadedFile
+    return loadedFile(path, await readFile(path))
   } else {
     try {
-      let content = await git(`show ${commit}:${file}`, root)
-      return { content, path } as LoadedFile
+      return loadedFile(path, await git(`show ${commit}:${file}`, root))
     } catch (error) {
       if (error instanceof GitError) {
         if (
           error.message.includes('does not exist') ||
           error.message.includes('exists on disk, but not in')
         ) {
-          return {
-            missing: true,
-            path
-          } as MissingFile
+          return missingFile(path)
         }
       }
       throw error
