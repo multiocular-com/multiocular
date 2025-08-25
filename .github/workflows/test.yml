@@ -81,4 +81,4 @@ jobs:
       - name: Install dependencies
         run: pnpm install --ignore-scripts
       - name: Run unit tests
-        run: pnpm test:unit
+        run: pnpm test:real
