@@ -3,14 +3,12 @@ on:
   release:
     types:
       - published
+permissions:
+  contents: read
+  id-token: write
 jobs:
   publish:
     runs-on: ubuntu-latest
-    needs:
-      - test
-    permissions:
-      contents: read
-      id-token: write
     steps:
       - name: Harden the runner
         uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
