@@ -20,15 +20,19 @@ const TEST_ENV = {
 
 const BIN_PATH = join(import.meta.dirname, '../bin.ts')
 
-export function run(command: string): Promise<string> {
+function getProject(): string {
   if (!currentProject) {
     throw new Error('No current project. Call startProject() first.')
   }
+  return currentProject
+}
+
+export function run(command: string): Promise<string> {
   return new Promise((resolve, reject) => {
     exec(
       command,
       {
-        cwd: currentProject,
+        cwd: getProject(),
         env: TEST_ENV
       },
       (error, stdout) => {
@@ -72,10 +76,7 @@ export async function removeProject(): Promise<void> {
 }
 
 export function cd(directory: string): void {
-  if (!currentProject) {
-    throw new Error('No current project. Call startProject() first.')
-  }
-  currentDirectory = join(currentProject, directory)
+  currentDirectory = join(getProject(), directory)
 }
 
 export function runCli(
