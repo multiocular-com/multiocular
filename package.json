@@ -19,6 +19,11 @@
     "type": "git",
     "url": "git+https://github.com/multiocular-com/multiocular.git"
   },
+  "bin": "./server/bin.ts",
+  "exports": {
+    "./server": "./server/index.ts",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "test": "FORCE_COLOR=1 pnpm run /^test:/",
     "format": "pnpm run /^format:/",
