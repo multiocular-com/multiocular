@@ -5,6 +5,7 @@
 - Import only specific functions. Don’t import everything.
 - Don’t use `export default`.
 - Always use `.ts` in TS files imports.
+- Use discriminant union in types: `{ missing: true } | { missing: false, content: string }` instead of `{ missing: boolean, content?: string }`.
 
 ## Architecture
 
