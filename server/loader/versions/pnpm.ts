@@ -1,7 +1,7 @@
 import { basename } from 'node:path'
 import { parse } from 'yaml'
 
-import { type Dependency, splitDependency } from '../../types.ts'
+import { dependency, type Dependency } from '../../types.ts'
 import type { VersionsLoader } from './common.ts'
 
 interface PnpmLock9 {
@@ -28,14 +28,16 @@ export const pnpm = {
     for (let file of lockFiles) {
       let lock = parse(file.content)
       if (isLockFile9(lock)) {
-        for (let dependency in lock.packages) {
-          let [name, version] = splitDependency(dependency)
-          dependencies.push({
-            name,
-            source: file.path,
-            type: 'npm',
-            version
-          })
+        for (let pkg in lock.packages) {
+          let [name, version] = pkg.split('@')
+          dependencies.push(
+            dependency({
+              name: name!,
+              source: file.path,
+              type: 'npm',
+              version: version!
+            })
+          )
         }
       } else {
         throw new Error('Unknown pnpm lock file')
