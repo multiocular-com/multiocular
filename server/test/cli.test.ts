@@ -86,3 +86,14 @@ test('allows to change output format', async () => {
       '     "uuid",\n'
   )
 })
+
+test('is ready for no changes', async () => {
+  await startProject()
+  await run('pnpm add nanoid@5.1.4')
+  await run('git add .')
+  await run('git commit -m "Add nanoid"')
+  await run('echo "# Test" > README.md')
+
+  assert.equal(await cliGood('--text', '--changed'), 'No changes found\n')
+  await cliJsonMatch([], '--json')
+})
