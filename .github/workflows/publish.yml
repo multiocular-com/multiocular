@@ -80,7 +80,7 @@ jobs:
             elif [[ "$READ_SECTION" == true ]]; then
               CHANGELOG+="$line"$'\n'
             fi
-          done < "docs/CHANGELOG.md"
+          done < "CHANGELOG.md"
           CHANGELOG=$(echo "$CHANGELOG" | awk '/./ {$1=$1;print}')
           echo "changelog_content<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
