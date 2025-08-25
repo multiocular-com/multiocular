@@ -1,6 +1,6 @@
 # ꙮ Multiocular
 
-A tool to review dependencies changes to prevent supply chain attack.
+A Node.js tool to review dependencies changes to prevent supply chain attack.
 
 ```diff
 $ npm update

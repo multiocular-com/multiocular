@@ -1,12 +1,18 @@
 {
   "name": "multiocular",
   "version": "0.0.0",
-  "description": "",
+  "description": "Review dependencies changes to prevent supply chain attack",
   "type": "module",
   "engines": {
     "node": "^22.0.0 || >=24.0.0"
   },
-  "keywords": [],
+  "keywords": [
+    "security",
+    "supply chain attack",
+    "dependencies",
+    "npm",
+    "pnpm"
+  ],
   "author": "Andrey Sitnik <andrey@sitnik.ru>",
   "license": "MIT",
   "repository": "multiocular-com/multiocular",
