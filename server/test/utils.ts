@@ -18,7 +18,9 @@ const TEST_ENV = {
   SSH_AUTH_SOCK: ''
 }
 
-const BIN_PATH = join(import.meta.dirname, '../bin.ts')
+const BIN_PATH = process.env.TEST_BIN
+  ? join(process.cwd(), process.env.TEST_BIN)
+  : join(import.meta.dirname, '../bin.ts')
 
 function getProject(): string {
   if (!currentProject) {

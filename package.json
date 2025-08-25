@@ -31,9 +31,8 @@
     "update-env": "node ./scripts/update-env.ts",
     "format:js": "eslint --fix --cache --concurrency auto .",
     "format:prettier": "prettier --experimental-cli --write .",
-    "test:build": "pnpm build",
+    "test:real": "pnpm build && TEST_BIN=./dist/server/bin.js pnpm bnt",
     "test:js": "eslint --cache --concurrency auto .",
-    "test:unit": "bnt **/*.test.ts",
     "test:types": "svelte-check",
     "test:audit": "pnpm audit --prod"
   },
