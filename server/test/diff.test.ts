@@ -26,7 +26,19 @@ test('shows dependency changes', async () => {
     {
       after: '5.1.5',
       before: '5.1.4',
-      diff: 'diff --git a/package.json b/package.json\nindex v5.1.4..v5.1.5 100644\n--- a/package.json\n+++ b/package.json\n@@ -1,6 +1,6 @@\n {\n   "name": "nanoid",\n-  "version": "5.1.4",\n+  "version": "5.1.5",\n   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n   "keywords": [\n     "uuid",',
+      diff:
+        'diff --git npm:nanoid@5.1.4/package.json npm:nanoid@5.1.5/package.json\n' +
+        'index v5.1.4..v5.1.5 100644\n' +
+        '--- npm:nanoid@5.1.4/package.json\n' +
+        '+++ npm:nanoid@5.1.5/package.json\n' +
+        '@@ -1,6 +1,6 @@\n' +
+        ' {\n' +
+        '   "name": "nanoid",\n' +
+        '-  "version": "5.1.4",\n' +
+        '+  "version": "5.1.5",\n' +
+        '   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n' +
+        '   "keywords": [\n' +
+        '     "uuid",',
       name: 'nanoid',
       type: 'npm'
     }

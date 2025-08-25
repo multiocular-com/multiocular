@@ -1,3 +1,5 @@
+import { styleText } from 'node:util'
+
 import type { Debrand } from '../../utils/types.ts'
 import { $diffs, $step } from '../loader/stores.ts'
 import type { ChangeDiff } from '../types.ts'
@@ -5,6 +7,22 @@ import type { Config } from './args.ts'
 import { print } from './print.ts'
 
 export type MultiocularJSON = Debrand<Omit<ChangeDiff, 'id'>[]>
+
+function colorizedDiff(diffText: string): string {
+  return diffText
+    .split('\n')
+    .map(line => {
+      if (line.startsWith('+++') || line.startsWith('---')) {
+        return styleText('yellow', line)
+      } else if (line.startsWith('+')) {
+        return styleText('green', line)
+      } else if (line.startsWith('-')) {
+        return styleText('red', line)
+      }
+      return line
+    })
+    .join('\n')
+}
 
 export function outputProcess(config: Config): void {
   let unbindStep = $step.listen(step => {
@@ -21,7 +39,7 @@ export function outputProcess(config: Config): void {
         print(JSON.stringify(json, null, 2))
       } else {
         for (let diff of $diffs.get()) {
-          print(diff.diff)
+          print(colorizedDiff(diff.diff))
         }
       }
     }

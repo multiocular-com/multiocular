@@ -72,10 +72,10 @@ test('allows to change output format', async () => {
   await run('pnpm add nanoid@5.1.5')
   assert.equal(
     await cliGood('--text'),
-    'diff --git a/package.json b/package.json\n' +
+    'diff --git npm:nanoid@5.1.4/package.json npm:nanoid@5.1.5/package.json\n' +
       'index v5.1.4..v5.1.5 100644\n' +
-      '--- a/package.json\n' +
-      '+++ b/package.json\n' +
+      '--- npm:nanoid@5.1.4/package.json\n' +
+      '+++ npm:nanoid@5.1.5/package.json\n' +
       '@@ -1,6 +1,6 @@\n' +
       ' {\n' +
       '   "name": "nanoid",\n' +
