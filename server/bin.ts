@@ -7,6 +7,3 @@ let config = await parseArgs(process.argv.slice(2))
 let root = findProjectRoot(filePath(process.cwd()))
 loadDiffs(root, config)
 outputProcess(config)
-
-// TODO: start sync server
-// TODO: init storage
