@@ -15,7 +15,10 @@
   ],
   "author": "Andrey Sitnik <andrey@sitnik.ru>",
   "license": "MIT",
-  "repository": "multiocular-com/multiocular",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/multiocular-com/multiocular.git"
+  },
   "scripts": {
     "test": "FORCE_COLOR=1 pnpm run /^test:/",
     "format": "pnpm run /^format:/",
