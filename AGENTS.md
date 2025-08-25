@@ -16,6 +16,7 @@
 
 - Never change `eslint.config.ts`. Always change code to fix found issues.
 - Never use `as any`.
+- Always merge type and regular import.
 
 ## Testing
 
