@@ -1,8 +1,8 @@
-import type { Brand } from '../utils/types.ts'
+import type { Brand, Debrand } from '../utils/types.ts'
 
 export type FilePath = Brand<string, 'FilePath'>
 export type FileContent = Brand<string, 'FileContent'>
-export type Version = Brand<string, 'Version'>
+export type DependencyVersion = Brand<string, 'DependencyVersion'>
 export type DependencyName = Brand<string, 'DependencyName'>
 export type ChangeId = Brand<string, 'ChangeId'>
 export type Diff = Brand<string, 'Diff'>
@@ -20,12 +20,12 @@ export interface Dependency {
   name: DependencyName
   source: FilePath
   type: 'npm'
-  version: Version
+  version: DependencyVersion
 }
 
 export interface Change {
-  after: Version
-  before: false | Version
+  after: DependencyVersion
+  before: DependencyVersion | false
   id: ChangeId
   name: DependencyName
   type: 'npm'
@@ -51,7 +51,6 @@ export function missingFile(path: string): MissingFile {
   return { missing: true, path } as MissingFile
 }
 
-export function splitDependency(dependency: string): [DependencyName, Version] {
-  let [name, version] = dependency.split('@')
-  return [name as DependencyName, version as Version]
+export function dependency(object: Debrand<Dependency>): Dependency {
+  return object as Dependency
 }
