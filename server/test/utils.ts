@@ -20,7 +20,7 @@ const TEST_ENV = {
 
 const BIN_PATH = join(import.meta.dirname, '../bin.ts')
 
-export function run(command: string): Promise<void> {
+export function run(command: string): Promise<string> {
   if (!currentProject) {
     throw new Error('No current project. Call startProject() first.')
   }
@@ -31,11 +31,11 @@ export function run(command: string): Promise<void> {
         cwd: currentProject,
         env: TEST_ENV
       },
-      error => {
+      (error, stdout) => {
         if (error) {
           reject(error)
         } else {
-          resolve()
+          resolve(stdout.trim())
         }
       }
     )
@@ -82,8 +82,18 @@ export function runCli(
   ...args: CliArg[]
 ): Promise<{ code: null | number; stderr: string; stdout: string }> {
   let cwd = currentDirectory || process.cwd()
+  let processedArgs: string[] = []
+
+  for (let arg of args) {
+    if (arg.startsWith('--commit ')) {
+      processedArgs.push('--commit', arg.slice('--commit '.length))
+    } else {
+      processedArgs.push(arg)
+    }
+  }
+
   return new Promise(resolve => {
-    let child = spawn(BIN_PATH, args, {
+    let child = spawn(BIN_PATH, processedArgs, {
       cwd,
       env: TEST_ENV,
       stdio: ['pipe', 'pipe', 'pipe']
@@ -109,10 +119,12 @@ export function runCli(
 export async function cliGood(...args: CliArg[]): Promise<string> {
   let result = await runCli(...args)
   if (result.code !== 0) {
-    throw new Error(`Expected exit code 0, got ${result.code}`)
+    throw new Error(
+      `Expected exit code 0, got ${result.code}\n${result.stderr}`
+    )
   }
   if (result.stderr !== '') {
-    throw new Error(`Expected empty stderr, got: ${result.stderr}`)
+    throw new Error(`Expected empty stderr, got:\n${result.stderr}`)
   }
   return result.stdout
 }

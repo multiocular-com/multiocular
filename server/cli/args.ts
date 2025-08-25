@@ -17,11 +17,14 @@ export type CliArg =
   | '--web'
   | '-h'
   | '-v'
+  | `--commit ${string}`
 
-export interface Config {
+export type Config = {
   output: 'json' | 'text' | 'web'
-  source: 'changed' | 'last-commit'
-}
+} & (
+  | { commit: string; source: 'commit' }
+  | { source: 'changed' | 'last-commit' }
+)
 
 async function printVersion(): Promise<void> {
   let packagePath = join(import.meta.dirname, '../../package.json')
@@ -36,7 +39,7 @@ async function printHelp(): Promise<void> {
   print(format(await readFile(helpPath, 'utf-8')).trim())
 }
 
-async function detectModeFromGit(): Promise<Config['source']> {
+async function detectModeFromGit(): Promise<'changed' | 'last-commit'> {
   try {
     let { stdout } = await execAsync('git status --porcelain')
     return stdout.trim() ? 'changed' : 'last-commit'
@@ -46,29 +49,34 @@ async function detectModeFromGit(): Promise<Config['source']> {
 }
 
 export async function parseArgs(args: string[]): Promise<Config> {
-  let config: Config = {
-    output: 'web',
-    source: 'last-commit'
-  }
+  let output: Config['output'] = 'web'
+  let source:
+    | { commit: string; source: 'commit' }
+    | { source: 'changed' | 'last-commit' }
+    | undefined
 
-  let source = false
-
-  for (let arg of args) {
+  for (let i = 0; i < args.length; i++) {
+    let arg = args[i]!
     if (arg === '--changed') {
-      config.source = 'changed'
-      source = true
+      source = { source: 'changed' }
     } else if (arg === '--last-commit') {
-      config.source = 'last-commit'
-      source = true
+      source = { source: 'last-commit' }
+    } else if (arg === '--commit') {
+      let commit = args[++i]
+      if (!commit || commit.startsWith('-')) {
+        printError(format('--commit requires a commit hash'))
+        process.exit(1)
+      }
+      source = { commit, source: 'commit' }
     } else if (arg === '--help' || arg === '-h') {
       await printHelp()
       process.exit(0)
     } else if (arg === '--json') {
-      config.output = 'json'
+      output = 'json'
     } else if (arg === '--web') {
-      config.output = 'web'
+      output = 'web'
     } else if (arg === '--text') {
-      config.output = 'text'
+      output = 'text'
     } else if (arg === '--version' || arg === '-v') {
       await printVersion()
       process.exit(0)
@@ -78,9 +86,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
     }
   }
 
-  if (!source) {
-    config.source = await detectModeFromGit()
-  }
+  if (!source) source = { source: await detectModeFromGit() }
 
-  return config
+  return { output, ...source }
 }

@@ -32,6 +32,11 @@ test('exits with error for unknown arguments', async () => {
   assert.match(await cliBad('--invalid'), /Unknown argument --invalid/)
 })
 
+test('exits with error when --commit has no hash', async () => {
+  // @ts-expect-error We are testing invalid argument
+  assert.match(await cliBad('--commit'), /--commit requires a commit hash/)
+})
+
 test('exits with error when no .git folder found', async () => {
   await startProject({ git: false })
   assert.match(await cliBad(), /Could not find project root directory/)
@@ -42,10 +47,12 @@ test('allows to change update source', async () => {
   await run('pnpm add nanoid@5.1.4')
   await run('git add .')
   await run('git commit -m "Add nanoid"')
+  let commit = await run('git rev-parse HEAD')
   await run('pnpm add nanoid@5.1.5')
 
   await cliJsonMatch([{ after: '5.1.5' }], '--changed')
   await cliJsonMatch([{ after: '5.1.4' }], '--last-commit')
+  await cliJsonMatch([{ after: '5.1.4' }], `--commit ${commit}`)
   await cliJsonMatch([{ after: '5.1.5' }])
 })
 

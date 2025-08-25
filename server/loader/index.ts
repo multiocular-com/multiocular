@@ -9,12 +9,22 @@ import { versionsLoaders } from './versions/index.ts'
 
 export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
   $step.set('versions')
-  let changed = await getChangedFiles(
-    root,
-    config.source === 'changed' ? 'HEAD' : 'HEAD^ HEAD'
-  )
-  let beforeCommit = config.source === 'changed' ? 'HEAD' : 'HEAD^'
-  let afterCommit = config.source === 'changed' ? false : 'HEAD'
+  let beforeCommit: false | string
+  let afterCommit: false | string
+
+  if (config.source === 'changed') {
+    beforeCommit = 'HEAD'
+    afterCommit = false
+  } else if (config.source === 'commit') {
+    beforeCommit = `${config.commit}^`
+    afterCommit = config.commit
+  } else {
+    beforeCommit = 'HEAD^'
+    afterCommit = 'HEAD'
+  }
+
+  let changedRange = afterCommit ? `${beforeCommit} ${afterCommit}` : 'HEAD'
+  let changed = await getChangedFiles(root, changedRange)
   let changes = (
     await Promise.all(
       Object.values(versionsLoaders).map(async loader => {
