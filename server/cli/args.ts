@@ -49,7 +49,7 @@ async function detectModeFromGit(): Promise<'changed' | 'last-commit'> {
 }
 
 export async function parseArgs(args: string[]): Promise<Config> {
-  let output: Config['output'] = 'web'
+  let output: Config['output'] = 'text'
   let source:
     | { commit: string; source: 'commit' }
     | { source: 'changed' | 'last-commit' }
