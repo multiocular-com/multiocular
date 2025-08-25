@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import { spawn } from 'node:child_process'
 import {
   chmod,
   copyFile,
@@ -12,36 +11,24 @@ import {
   writeFile
 } from 'node:fs/promises'
 import { dirname, join, relative } from 'node:path'
+import tsBlankSpace from 'ts-blank-space'
 
 const ROOT = join(import.meta.dirname, '..')
 const DIST = join(ROOT, 'dist')
 const IGNORE = new Set(['dist', 'docs', 'node_modules', 'scripts'])
 
-function run(bin: string, ...args: string[]): Promise<void> {
-  return new Promise(resolve => {
-    let child = spawn(bin, args, {
-      cwd: ROOT,
-      env: process.env
-    })
-    child.on('close', () => {
-      resolve()
-    })
-  })
-}
-
-async function replaceExtension(dir: string): Promise<void> {
+async function compileTypeScript(dir: string, to: string): Promise<void> {
   let entries = await readdir(dir)
   for (let entry of entries) {
-    if (entry === 'node_modules' || entry === 'scripts') {
+    if (IGNORE.has(entry)) {
       continue
     }
     let path = join(dir, entry)
     let stats = await stat(path)
     if (stats.isDirectory()) {
-      await replaceExtension(path)
-    } else if (entry.endsWith('.js')) {
-      let content = await readFile(path, 'utf8')
-      let fixedContent = content
+      await compileTypeScript(path, to)
+    } else if (entry.endsWith('.ts')) {
+      let compiled = tsBlankSpace((await readFile(path)).toString())
         .replace(/from\s+['"]([^'"]+)\.ts['"]/g, "from '$1.js'")
         .replace(/import\s+['"]([^'"]+)\.ts['"]/g, "import '$1.js'")
         .replace(
@@ -51,7 +38,10 @@ async function replaceExtension(dir: string): Promise<void> {
         .replace(/export\s+{[^}]*}\s+from\s+['"]([^'"]+)\.ts['"]/g, match =>
           match.replace(/\.ts(['"])/, '.js$1')
         )
-      await writeFile(path, fixedContent, 'utf8')
+      let relativePath = relative(ROOT, path)
+      let toPath = join(to, relativePath).replace(/\.ts$/, '.js')
+      await mkdir(dirname(toPath), { recursive: true })
+      await writeFile(toPath, compiled, 'utf8')
     }
   }
 }
@@ -98,8 +88,7 @@ async function preparePackageJson(): Promise<void> {
 }
 
 await rm(DIST, { force: true, recursive: true })
-await run('pnpm', 'tsc', '--project', join(ROOT, 'tsconfig.build.json'))
+await compileTypeScript('.', DIST)
 await chmod(join(DIST, 'server', 'bin.js'), 0o755)
-await replaceExtension(DIST)
 await copyNonTsFiles('.', ROOT, DIST)
 await preparePackageJson()

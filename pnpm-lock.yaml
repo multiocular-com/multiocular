@@ -72,6 +72,9 @@ importers:
       svgo:
         specifier: 4.0.0
         version: 4.0.0
+      ts-blank-space:
+        specifier: ^0.6.2
+        version: 0.6.2
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -1842,6 +1845,10 @@ packages:
     engines: {node: '>=18.12'}
     peerDependencies:
       typescript: '>=4.8.4'
+
+  ts-blank-space@0.6.2:
+    resolution: {integrity: sha512-hZjcHdHrveEKI67v8OzI90a1bizgoDkY7ekE4fH89qJhZgxvmjfBOv98aibCU7OpKbvV3R9p/qd3DrzZqT1cFQ==}
+    engines: {node: '>=18.0.0'}
 
   ts-declaration-location@1.0.7:
     resolution: {integrity: sha512-EDyGAwH1gO0Ausm9gV6T2nUvBgXT5kGoCMJPllOaooZ+4VvJiKBdZE7wK18N1deEowhcUptS+5GXZK8U/fvpwA==}
@@ -3872,6 +3879,10 @@ snapshots:
   treeverse@3.0.0: {}
 
   ts-api-utils@2.1.0(typescript@5.9.2):
+    dependencies:
+      typescript: 5.9.2
+
+  ts-blank-space@0.6.2:
     dependencies:
       typescript: 5.9.2
 
