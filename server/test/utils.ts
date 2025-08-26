@@ -71,7 +71,7 @@ export async function startProject(
 ): Promise<string> {
   currentProject = await mkdtemp(join(tmpdir(), 'multiocular-test-'))
 
-  await run('pnpm init')
+  await run('npm init -y')
 
   if (options.git !== false) {
     await run('git init')
