@@ -28,7 +28,7 @@ export interface Change {
   before: DependencyVersion | false
   id: ChangeId
   name: DependencyName
-  type: 'npm'
+  type: Dependency['type']
 }
 
 export type ChangeDiff = {
