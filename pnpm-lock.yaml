@@ -43,7 +43,7 @@ importers:
         specifier: 9.1.7
         version: 9.1.7
       jiti:
-        specifier: ^2.5.1
+        specifier: 2.5.1
         version: 2.5.1
       nano-staged:
         specifier: 0.8.0
@@ -73,7 +73,7 @@ importers:
         specifier: 4.0.0
         version: 4.0.0
       ts-blank-space:
-        specifier: ^0.6.2
+        specifier: 0.6.2
         version: 0.6.2
       typescript:
         specifier: 5.9.2
