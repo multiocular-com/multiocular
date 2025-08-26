@@ -84,3 +84,12 @@ test('shows dependency changes with npm', async () => {
     }
   ])
 })
+
+test('handles deleted lockfile after adding dependency', async () => {
+  await run('pnpm add nanoid@5.1.4')
+  await run('git add .')
+  await run('git commit -m "Add nanoid"')
+  await run('rm pnpm-lock.yaml')
+
+  await cliJsonMatch([])
+})

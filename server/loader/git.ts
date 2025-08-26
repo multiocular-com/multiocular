@@ -66,7 +66,9 @@ export async function getChangedFiles(
   root: FilePath,
   between: string
 ): Promise<FilePath[]> {
-  let files = toFiles(await git(`diff --name-only ${between}`, root))
+  let files = toFiles(
+    await git(`diff --name-only --diff-filter=AM ${between}`, root)
+  )
   if (between === 'HEAD') {
     let untracked = await git('ls-files --others --exclude-standard', root)
     files.push(...toFiles(untracked))
