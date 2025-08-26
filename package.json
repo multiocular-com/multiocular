@@ -46,6 +46,7 @@
     "@logux/eslint-config": "56.1.0",
     "@types/libnpmdiff": "2.0.3",
     "@types/node": "24.3.0",
+    "@types/npmcli__arborist": "^6.3.1",
     "@types/ws": "8.18.1",
     "arborist": "link:@types/npmcli/arborist",
     "better-node-test": "0.7.2",

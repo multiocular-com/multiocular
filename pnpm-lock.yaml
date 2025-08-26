@@ -30,6 +30,9 @@ importers:
       '@types/node':
         specifier: 24.3.0
         version: 24.3.0
+      '@types/npmcli__arborist':
+        specifier: ^6.3.1
+        version: 6.3.1
       '@types/ws':
         specifier: 8.18.1
         version: 8.18.1
@@ -257,6 +260,9 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
+  '@npm/types@1.0.2':
+    resolution: {integrity: sha512-KXZccTDEnWqNrrx6JjpJKU/wJvNeg9BDgjS0XhmlZab7br921HtyVbsYzJr4L+xIvjdJ20Wh9dgxgCI2a5CEQw==}
+
   '@npmcli/agent@3.0.0':
     resolution: {integrity: sha512-S79NdEgDQd/NGCay6TCoVzXSj74skRZIKJcpJjC5lOq34SZzyI6MqtiiWoiVWoVrTcGjNeC4ipbh1VIHlpfF5Q==}
     engines: {node: ^18.17.0 || >=20.5.0}
@@ -359,6 +365,9 @@ packages:
   '@tybys/wasm-util@0.10.0':
     resolution: {integrity: sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ==}
 
+  '@types/cacache@19.0.0':
+    resolution: {integrity: sha512-O4V427CUunRaoaoG6awmIbamf/gTmsys9PHJNb2ujB+tGtSiDkAtkT+M8Lc04jhDxVBIWnBkFoKjFyne4zjKEw==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
@@ -379,6 +388,12 @@ packages:
 
   '@types/npm-registry-fetch@8.0.8':
     resolution: {integrity: sha512-VL/chssZawBkaQ5gFD5njblJce/ny9OICBlWAG9X6/m/ypPNJMWYiM22SY2mhLIGoknd4AyEJyi+FGyrBnsr+A==}
+
+  '@types/npmcli__arborist@6.3.1':
+    resolution: {integrity: sha512-CUADRvIKRFwVuiroLQ0wWzOpeOcL8OacCbODtZZxMOA+PBg1au/D8ry/zBnQWdEH+i0IXKeNL2Nt0er30bYWng==}
+
+  '@types/npmcli__package-json@4.0.4':
+    resolution: {integrity: sha512-6QjlFUSHBmZJWuC08bz1ZCx6tm4t+7+OJXAdvM6tL2pI7n6Bh5SIp/YxQvnOLFf8MzCXs2ijyFgrzaiu1UFBGA==}
 
   '@types/npmlog@7.0.0':
     resolution: {integrity: sha512-hJWbrKFvxKyWwSUXjZMYTINsSOY6IclhvGOZ97M8ac2tmR9hMwmTnYaMdpGhvju9ctWLTPhCS+eLfQNluiEjQQ==}
@@ -2151,6 +2166,8 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
+  '@npm/types@1.0.2': {}
+
   '@npmcli/agent@3.0.0':
     dependencies:
       agent-base: 7.1.4
@@ -2323,6 +2340,10 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
+  '@types/cacache@19.0.0':
+    dependencies:
+      '@types/node': 24.3.0
+
   '@types/estree@1.0.8': {}
 
   '@types/json-schema@7.0.15': {}
@@ -2349,6 +2370,16 @@ snapshots:
       '@types/npm-package-arg': 6.1.4
       '@types/npmlog': 7.0.0
       '@types/ssri': 7.1.5
+
+  '@types/npmcli__arborist@6.3.1':
+    dependencies:
+      '@npm/types': 1.0.2
+      '@types/cacache': 19.0.0
+      '@types/node': 24.3.0
+      '@types/npmcli__package-json': 4.0.4
+      '@types/pacote': 11.1.8
+
+  '@types/npmcli__package-json@4.0.4': {}
 
   '@types/npmlog@7.0.0':
     dependencies:
