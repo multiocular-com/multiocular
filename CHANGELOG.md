@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.1.4
+
+- Fixed git dependencies support in npm.
+
 ## 0.1.3
 
 - Fixed case with 2 different major versions in one projects.
