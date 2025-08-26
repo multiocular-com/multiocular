@@ -37,32 +37,40 @@ export function calculateVersionDiff(
 
   for (let after of afterVersions) {
     if (!findMatching(beforeVersions, after)) {
-      let candidates: Dependency[] = []
-
-      for (let before of beforeVersions) {
-        if (before.name === after.name) {
-          if (!findMatching(afterVersions, before)) {
-            candidates.push(before)
-          }
-        }
-      }
+      let candidates = beforeVersions.filter(i => {
+        return (
+          i.name === after.name &&
+          // Until we have more types
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          i.type === after.type &&
+          i.version !== after.version // Because later we will add after anyway
+        )
+      })
 
       if (candidates.length === 0) {
-        for (let before of beforeVersions) {
-          if (before.name === after.name) {
-            candidates.push(before)
-          }
-        }
+        changes.push({
+          after: after.version,
+          before: false,
+          id: createChangeId(after, undefined),
+          name: after.name,
+          type: after.type
+        })
+        continue
       }
 
-      let closest = candidates.sort((a, b) =>
-        compareVersions(b.version, after.version)
-      )[0]
+      // Sort all version by semver
+      let allVersions = [...candidates, after].sort((a, b) => {
+        return compareVersions(a.version, b.version)
+      })
+
+      // Find the after version position and get the previous element
+      let afterIndex = allVersions.findIndex(v => v === after)
+      let previous = afterIndex > 0 ? allVersions[afterIndex - 1] : undefined
 
       changes.push({
         after: after.version,
-        before: closest ? closest.version : false,
-        id: createChangeId(after, closest),
+        before: previous ? previous.version : false,
+        id: createChangeId(after, previous),
         name: after.name,
         type: after.type
       })

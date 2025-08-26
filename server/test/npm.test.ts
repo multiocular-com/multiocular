@@ -94,8 +94,7 @@ test('handles deleted lockfile after adding dependency', async () => {
   await cliJsonEqual([])
 })
 
-test('shows dependency changes in pnpm monorepo with different nanoid versions', async () => {
-  //TODO: we should show 4.0.0→4.0.1 and 5.1.4→5.1.5 separately.
+test('supports separated major updates', async () => {
   await writeProjectFile('project-a/package.json', {
     name: 'project-a',
     private: true
@@ -117,7 +116,7 @@ test('shows dependency changes in pnpm monorepo with different nanoid versions',
   await cliJsonMatch([
     {
       after: '4.0.1',
-      before: '5.1.4',
+      before: '4.0.0',
       name: 'nanoid'
     },
     {
