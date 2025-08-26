@@ -126,3 +126,22 @@ test('supports separated major updates', async () => {
     }
   ])
 })
+
+test('shows dependency changes with git commits', async () => {
+  let beforeCommit = 'c0b7b0c33797d4397310bafe517d7e8b65bbf3cc'
+  let afterCommit = '27ee2c4b80dc6ddf7916b6ec933f462945ddf3bc'
+
+  await run(`pnpm add nanoid@ai/nanoid#${beforeCommit}`)
+  await run('git add .')
+  await run('git commit -m "Add nanoid from git"')
+  await run(`pnpm add nanoid@ai/nanoid#${afterCommit}`)
+
+  await cliJsonMatch([
+    {
+      after: `https://codeload.github.com/ai/nanoid/tar.gz/${afterCommit}`,
+      before: `https://codeload.github.com/ai/nanoid/tar.gz/${beforeCommit}`,
+      name: 'nanoid',
+      type: 'npm'
+    }
+  ])
+})
