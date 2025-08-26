@@ -1,7 +1,7 @@
 import { styleText } from 'node:util'
 
 import type { Debrand } from '../../utils/types.ts'
-import { $diffs, $step } from '../loader/stores.ts'
+import { $sortedDiffs, $step } from '../loader/stores.ts'
 import type { ChangeDiff } from '../types.ts'
 import type { Config } from './args.ts'
 import { print } from './print.ts'
@@ -28,7 +28,7 @@ export function outputProcess(config: Config): void {
   let unbindStep = $step.listen(step => {
     if (step === 'done') {
       unbindStep()
-      let diffs = $diffs.get()
+      let diffs = $sortedDiffs.get()
       if (config.output === 'json') {
         let json = diffs.map(diff => ({
           after: diff.after,

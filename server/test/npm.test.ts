@@ -116,12 +116,12 @@ test('shows dependency changes in pnpm monorepo with different nanoid versions',
 
   await cliJsonMatch([
     {
-      after: '5.1.5',
+      after: '4.0.1',
       before: '5.1.4',
       name: 'nanoid'
     },
     {
-      after: '4.0.1',
+      after: '5.1.5',
       before: '5.1.4',
       name: 'nanoid'
     }

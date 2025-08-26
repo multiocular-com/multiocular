@@ -1,4 +1,4 @@
-import { atom } from 'nanostores'
+import { atom, computed } from 'nanostores'
 
 import type { ChangeDiff, ChangeId, Diff, DiffSize } from '../types.ts'
 
@@ -11,6 +11,10 @@ export const $step = atom<'diffs' | 'done' | 'versions'>('versions')
 export const $loading = atom<ChangeStatus[]>([])
 
 export const $diffs = atom<ChangeDiff[]>([])
+
+export const $sortedDiffs = computed($diffs, diffs =>
+  [...diffs].sort((a, b) => a.id.localeCompare(b.id))
+)
 
 function changeStatus(changed: ChangeStatus): void {
   $loading.set(
