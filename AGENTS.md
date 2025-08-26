@@ -21,3 +21,4 @@
 ## Testing
 
 - Always run `./scripts/format.sh` and `pnpm test`.
+- Run specific test by `pnpm bnt path/to/test.test.ts -t 'test name'`
