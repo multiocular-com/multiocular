@@ -44,7 +44,17 @@ export const npm = {
           }
 
           let pathParts = packagePath.split('/')
-          let name = pathParts.at(-1)!
+          let name: string
+
+          // Handle scoped packages like node_modules/@types/node
+          if (
+            pathParts.length >= 3 &&
+            pathParts[pathParts.length - 2]!.startsWith('@')
+          ) {
+            name = `${pathParts[pathParts.length - 2]}/${pathParts[pathParts.length - 1]}`
+          } else {
+            name = pathParts.at(-1)!
+          }
 
           dependencies.push(
             dependency({ name, source: file.path, type: 'npm', version })

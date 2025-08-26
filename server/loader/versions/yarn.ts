@@ -3,6 +3,7 @@ import { parse } from 'yaml'
 
 import { dependency, type Dependency } from '../../types.ts'
 import type { VersionsLoader } from './common.ts'
+import { splitPackage } from './common.ts'
 
 type ParsedDependency = {
   name: string
@@ -51,33 +52,8 @@ function parseYarn1Lock(content: string): ParsedDependency[] {
     let entryData = entries[entry]
     if (!entryData?.version) continue
 
-    // Yarn 1 format: "@scope/package@^1.0.0" or "package@^1.0.0"
-    let name: string
-    let cleanEntry = entry
-    if (cleanEntry.startsWith('"')) {
-      cleanEntry = cleanEntry.slice(1)
-    }
-    if (cleanEntry.endsWith('"')) {
-      cleanEntry = cleanEntry.slice(0, -1)
-    }
-
-    let lastAtIndex = cleanEntry.lastIndexOf('@')
-    if (lastAtIndex > 0) {
-      // Scoped package like @company/name
-      if (cleanEntry.startsWith('@')) {
-        let secondAtIndex = cleanEntry.indexOf('@', 1)
-        if (secondAtIndex !== -1 && secondAtIndex < lastAtIndex) {
-          name = cleanEntry.substring(0, lastAtIndex)
-        } else {
-          name = cleanEntry.substring(0, lastAtIndex)
-        }
-      } else {
-        name = cleanEntry.substring(0, lastAtIndex)
-      }
-    } else {
-      name = cleanEntry
-    }
-
+    // Yarn 1 format: @scope/package@^1.0.0 or package@^1.0.0
+    let { name } = splitPackage(entry)
     if (!name) continue
 
     dependencies.push({
@@ -108,21 +84,7 @@ function parseYarnBerryLock(content: string): ParsedDependency[] {
       typeof value.version === 'string'
     ) {
       // Yarn Berry format: "package@npm:1.0.0" or "@scope/package@npm:1.0.0"
-      let name: string
-      let cleanEntry = key
-      if (cleanEntry.startsWith('"')) {
-        cleanEntry = cleanEntry.slice(1)
-      }
-      if (cleanEntry.endsWith('"')) {
-        cleanEntry = cleanEntry.slice(0, -1)
-      }
-
-      if (cleanEntry.includes('@npm:')) {
-        name = cleanEntry.split('@npm:')[0]!
-      } else {
-        name = cleanEntry
-      }
-
+      let name = splitPackage(key).name
       if (!name) continue
 
       dependencies.push({

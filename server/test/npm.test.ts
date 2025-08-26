@@ -188,6 +188,65 @@ test('supports separated major updates', async () => {
   ])
 })
 
+test('shows scoped dependency changes with pnpm', async () => {
+  await run('pnpm add @types/node@20.0.0')
+  await run('git add .')
+  await run('git commit -m "Add types node"')
+  await run('pnpm add @types/node@20.1.0')
+  await cliJsonMatch([
+    {
+      after: '20.1.0',
+      before: '20.0.0',
+      name: '@types/node'
+    }
+  ])
+})
+
+test('shows scoped dependency changes with npm', async () => {
+  await run('npm install @types/node@20.0.0')
+  await run('git add .')
+  await run('git commit -m "Add types node"')
+  await run('npm install @types/node@20.1.0')
+  await cliJsonMatch([
+    {
+      after: '20.1.0',
+      before: '20.0.0',
+      name: '@types/node'
+    }
+  ])
+})
+
+test('shows scoped dependency changes with yarn 1', async () => {
+  await run('npm install yarn')
+  await run('npx yarn add @types/node@20.0.0')
+  await run('git add .')
+  await run('git commit -m "Add types node"')
+  await run('npx yarn add @types/node@20.1.0')
+  await cliJsonMatch([
+    {
+      after: '20.1.0',
+      before: '20.0.0',
+      name: '@types/node'
+    }
+  ])
+})
+
+test('shows scoped dependency changes with yarn berry', async () => {
+  await run('npm install yarn')
+  await run('npx yarn init -2')
+  await run('npx yarn add @types/node@20.0.0')
+  await run('git add .')
+  await run('git commit -m "Add types node"')
+  await run('npx yarn add @types/node@20.1.0')
+  await cliJsonMatch([
+    {
+      after: '20.1.0',
+      before: '20.0.0',
+      name: '@types/node'
+    }
+  ])
+})
+
 test('shows git dependency changes with pnpm', async () => {
   let beforeCommit = 'c0b7b0c33797d4397310bafe517d7e8b65bbf3cc'
   let afterCommit = '27ee2c4b80dc6ddf7916b6ec933f462945ddf3bc'
