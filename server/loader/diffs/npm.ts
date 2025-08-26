@@ -1,3 +1,4 @@
+import Arborist from '@npmcli/arborist'
 import libnpmdiff from 'libnpmdiff'
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
@@ -16,6 +17,7 @@ export const npm = (async change => {
       await writeFile(emptyPackagePath, '{}')
       return diff(
         await libnpmdiff([tempDir, `${change.name}@${change.after}`], {
+          Arborist,
           diffDstPrefix,
           diffSrcPrefix
         })
@@ -28,6 +30,7 @@ export const npm = (async change => {
       await libnpmdiff(
         [`${change.name}@${change.before}`, `${change.name}@${change.after}`],
         {
+          Arborist,
           diffDstPrefix,
           diffSrcPrefix
         }

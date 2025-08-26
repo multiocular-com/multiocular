@@ -5,7 +5,7 @@ import type { VersionsLoader } from './common.ts'
 
 interface NpmLock3 {
   lockfileVersion: number
-  packages: Record<string, { version?: string }>
+  packages: Record<string, { resolved?: string; version?: string }>
 }
 
 function isLockFile3(obj: unknown): obj is NpmLock3 {
@@ -38,14 +38,16 @@ export const npm = {
             continue
           }
 
+          let version = packageInfo.version
+          if (packageInfo.resolved?.includes('git+')) {
+            version = packageInfo.resolved
+          }
+
           let pathParts = packagePath.split('/')
+          let name = pathParts.at(-1)!
+
           dependencies.push(
-            dependency({
-              name: pathParts.at(-1)!,
-              source: file.path,
-              type: 'npm',
-              version: packageInfo.version
-            })
+            dependency({ name, source: file.path, type: 'npm', version })
           )
         }
       } else {

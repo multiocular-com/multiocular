@@ -46,17 +46,6 @@ test('shows dependency changes with pnpm', async () => {
   ])
 })
 
-test('shows new dependency', async () => {
-  await run('pnpm add nanoid@5.1.5')
-  await cliJsonMatch([
-    {
-      before: false,
-      diff: /"name": "nanoid"/,
-      name: 'nanoid'
-    }
-  ])
-})
-
 test('shows dependency changes with npm', async () => {
   await run('npm install postcss@8.4.31 nanoid@5.1.4')
   await run('git add .')
@@ -82,6 +71,17 @@ test('shows dependency changes with npm', async () => {
         '     "uuid",',
       name: 'nanoid',
       type: 'npm'
+    }
+  ])
+})
+
+test('shows new dependency', async () => {
+  await run('pnpm add nanoid@5.1.5')
+  await cliJsonMatch([
+    {
+      before: false,
+      diff: /"name": "nanoid"/,
+      name: 'nanoid'
     }
   ])
 })
@@ -127,7 +127,7 @@ test('supports separated major updates', async () => {
   ])
 })
 
-test('shows dependency changes with git commits', async () => {
+test('shows git dependency changes with pnpm', async () => {
   let beforeCommit = 'c0b7b0c33797d4397310bafe517d7e8b65bbf3cc'
   let afterCommit = '27ee2c4b80dc6ddf7916b6ec933f462945ddf3bc'
 
@@ -138,8 +138,27 @@ test('shows dependency changes with git commits', async () => {
 
   await cliJsonMatch([
     {
-      after: `https://codeload.github.com/ai/nanoid/tar.gz/${afterCommit}`,
-      before: `https://codeload.github.com/ai/nanoid/tar.gz/${beforeCommit}`,
+      after: new RegExp(afterCommit),
+      before: new RegExp(beforeCommit),
+      name: 'nanoid',
+      type: 'npm'
+    }
+  ])
+})
+
+test('shows git dependency changes with npm', async () => {
+  let beforeCommit = 'c0b7b0c33797d4397310bafe517d7e8b65bbf3cc'
+  let afterCommit = '27ee2c4b80dc6ddf7916b6ec933f462945ddf3bc'
+
+  await run(`npm install nanoid@ai/nanoid#${beforeCommit}`)
+  await run('git add .')
+  await run('git commit -m "Add nanoid from git"')
+  await run(`npm install nanoid@ai/nanoid#${afterCommit}`)
+
+  await cliJsonMatch([
+    {
+      after: new RegExp(afterCommit),
+      before: new RegExp(beforeCommit),
       name: 'nanoid',
       type: 'npm'
     }

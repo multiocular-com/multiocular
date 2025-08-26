@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@npmcli/arborist':
+        specifier: ^9.1.3
+        version: 9.1.3
       libnpmdiff:
         specifier: ^8.0.6
         version: 8.0.6
@@ -30,6 +33,9 @@ importers:
       '@types/ws':
         specifier: 8.18.1
         version: 8.18.1
+      arborist:
+        specifier: link:@types/npmcli/arborist
+        version: link:@types/npmcli/arborist
       better-node-test:
         specifier: 0.7.2
         version: 0.7.2
