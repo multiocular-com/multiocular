@@ -15,7 +15,7 @@ import tsBlankSpace from 'ts-blank-space'
 
 const ROOT = join(import.meta.dirname, '..')
 const DIST = join(ROOT, 'dist')
-const IGNORE = new Set(['dist', 'docs', 'node_modules', 'scripts'])
+const IGNORE = new Set(['dist', 'docs', 'node_modules', 'scripts', 'test'])
 
 async function compileTypeScript(dir: string, to: string): Promise<void> {
   let entries = await readdir(dir)
