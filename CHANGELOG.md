@@ -2,6 +2,11 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.1.3
+
+- Fixed case with 2 different major versions in one projects.
+- Fixed falling when lock file was removed.
+
 ## 0.1.2
 
 - Fixed running TS from `node_modules` by adding compilation step.
