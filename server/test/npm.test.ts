@@ -145,3 +145,47 @@ test('shows dependency changes with git commits', async () => {
     }
   ])
 })
+
+test('shows nested dependency updates in pnpm', async () => {
+  // Force nested nanoid version
+  await run('pnpm add nanoid@3.3.4')
+  await run('pnpm add postcss@8.4.20')
+  await run('pnpm dedupe')
+  await run('pnpm remove nanoid')
+
+  await run('git add .')
+  await run('git commit -m "Install PostCSS with Nano ID"')
+
+  await run('pnpm add nanoid@3.3.5')
+  await run('pnpm remove nanoid')
+
+  await cliJsonMatch([
+    {
+      after: '3.3.5',
+      before: '3.3.4',
+      name: 'nanoid'
+    }
+  ])
+})
+
+test('shows nested dependency updates in npm', async () => {
+  // Force nested nanoid version
+  await run('npm install nanoid@3.3.4')
+  await run('npm install postcss@8.4.20')
+  await run('npm dedupe')
+  await run('npm uninstall nanoid')
+
+  await run('git add .')
+  await run('git commit -m "Install PostCSS with Nano ID"')
+
+  await run('npm install nanoid@3.3.5')
+  await run('npm uninstall nanoid')
+
+  await cliJsonMatch([
+    {
+      after: '3.3.5',
+      before: '3.3.4',
+      name: 'nanoid'
+    }
+  ])
+})
