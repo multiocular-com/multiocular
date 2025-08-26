@@ -15,6 +15,12 @@ const TEST_ENV = {
   FORCE_COLOR: undefined,
   GIT_TERMINAL_PROMPT: '0',
   NO_COLOR: '1',
+  npm_config_cache_min: '86400',
+  npm_config_fetch_retries: '5',
+  npm_config_fetch_retry_factor: '10',
+  npm_config_fetch_retry_maxtimeout: '60000',
+  npm_config_fetch_retry_mintimeout: '10000',
+  npm_config_prefer_offline: 'true',
   SSH_AUTH_SOCK: ''
 }
 
