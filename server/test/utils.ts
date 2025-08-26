@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import { exec, spawn } from 'node:child_process'
-import { mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
 
 import type { MultiocularJSON } from '../cli/output.ts'
 import type { CliArg } from '../index.ts'
@@ -22,11 +22,23 @@ const BIN_PATH = process.env.TEST_BIN
   ? join(process.cwd(), process.env.TEST_BIN)
   : join(import.meta.dirname, '../bin.ts')
 
-function getProject(): string {
+export function getProject(): string {
   if (!currentProject) {
     throw new Error('No current project. Call startProject() first.')
   }
   return currentProject
+}
+
+export async function writeProjectFile(
+  file: string,
+  content: object | string
+): Promise<void> {
+  let path = join(getProject(), file)
+  await mkdir(dirname(path), { recursive: true })
+  return writeFile(
+    path,
+    typeof content === 'string' ? content : JSON.stringify(content, null, 2)
+  )
 }
 
 export function run(command: string): Promise<string> {
