@@ -2,6 +2,11 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.2.0
+
+- Add Yarn 1 and Yarn Berry support.
+- Fixed scoped packages support.
+
 ## 0.1.4
 
 - Fixed git dependencies support in npm.
