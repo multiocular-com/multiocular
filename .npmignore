@@ -11,6 +11,7 @@ test/
 .prettierrc.json
 .eslintcache
 eslint.config.ts
+.stylelintrc.json
 nano-staged.json
 tsconfig.*
 AGENTS.md

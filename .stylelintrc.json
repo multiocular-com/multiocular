@@ -1,0 +1,31 @@
+{
+  "extends": ["@logux/stylelint-config"],
+  "ignoreFiles": ["dist/**/*"],
+  "rules": {
+    "function-disallowed-list": ["rgb", "rgba", "hsl", "hsla"],
+    "unit-disallowed-list": [
+      ["px", "em"],
+      {
+        "ignoreProperties": {
+          "px": [
+            "font-size",
+            "/-shadow$/",
+            "/border/",
+            "/-radius$/",
+            "/outline/",
+            "translate"
+          ]
+        }
+      }
+    ],
+    "no-descending-specificity": null,
+    "color-named": "never",
+    "alpha-value-notation": "percentage"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.svelte"],
+      "customSyntax": "postcss-html"
+    }
+  ]
+}

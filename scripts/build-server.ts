@@ -15,15 +15,20 @@ import tsBlankSpace from 'ts-blank-space'
 
 const ROOT = join(import.meta.dirname, '..')
 const DIST = join(ROOT, 'dist')
-const IGNORE = new Set(['dist', 'docs', 'node_modules', 'scripts', 'test'])
+const IGNORE = new Set([
+  'dist',
+  'docs',
+  'node_modules',
+  'scripts',
+  'test',
+  'web'
+])
 
 async function compileTypeScript(dir: string, to: string): Promise<void> {
   let entries = await readdir(dir)
   for (let entry of entries) {
-    if (IGNORE.has(entry)) {
-      continue
-    }
     let path = join(dir, entry)
+    if (IGNORE.has(path)) continue
     let stats = await stat(path)
     if (stats.isDirectory()) {
       await compileTypeScript(path, to)
@@ -53,10 +58,8 @@ async function copyNonTsFiles(
 ): Promise<void> {
   let entries = await readdir(dir)
   for (let entry of entries) {
-    if (IGNORE.has(entry)) {
-      continue
-    }
     let path = join(dir, entry)
+    if (IGNORE.has(path)) continue
     let stats = await stat(path)
     if (entry.startsWith('.') && stats.isDirectory()) continue
     if (stats.isDirectory()) {
@@ -88,7 +91,7 @@ async function preparePackageJson(): Promise<void> {
 }
 
 await rm(DIST, { force: true, recursive: true })
-await compileTypeScript('.', DIST)
+await compileTypeScript('server', DIST)
 await chmod(join(DIST, 'server', 'bin.js'), 0o755)
 await copyNonTsFiles('.', ROOT, DIST)
 await preparePackageJson()
