@@ -16,6 +16,7 @@ import tsBlankSpace from 'ts-blank-space'
 const ROOT = join(import.meta.dirname, '..')
 const DIST = join(ROOT, 'dist')
 const IGNORE = new Set([
+  'CHANGELOG.md',
   'dist',
   'docs',
   'node_modules',
