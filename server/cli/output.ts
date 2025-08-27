@@ -34,6 +34,7 @@ export function outputProcess(config: Config): void {
           after: diff.after,
           before: diff.before,
           diff: diff.diff,
+          from: diff.from,
           name: diff.name,
           type: diff.type
         })) satisfies MultiocularJSON

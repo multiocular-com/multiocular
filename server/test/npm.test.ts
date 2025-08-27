@@ -40,6 +40,7 @@ test('shows dependency changes with pnpm', async () => {
         '   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n' +
         '   "keywords": [\n' +
         '     "uuid",',
+      from: 'pnpm',
       name: 'nanoid',
       type: 'npm'
     }
@@ -69,6 +70,7 @@ test('shows dependency changes with npm', async () => {
         '   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n' +
         '   "keywords": [\n' +
         '     "uuid",',
+      from: 'npm',
       name: 'nanoid',
       type: 'npm'
     }
@@ -99,6 +101,7 @@ test('shows dependency changes with yarn 1', async () => {
         '   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n' +
         '   "keywords": [\n' +
         '     "uuid",',
+      from: 'yarn',
       name: 'nanoid',
       type: 'npm'
     }
@@ -130,6 +133,7 @@ test('shows dependency changes with yarn berry', async () => {
         '   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n' +
         '   "keywords": [\n' +
         '     "uuid",',
+      from: 'yarn',
       name: 'nanoid',
       type: 'npm'
     }

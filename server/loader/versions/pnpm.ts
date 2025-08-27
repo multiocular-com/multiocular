@@ -33,6 +33,7 @@ export const pnpm = {
           dependencies.push(
             dependency({
               ...splitPackage(pkg),
+              from: 'pnpm',
               source: file.path,
               type: 'npm'
             })

@@ -17,6 +17,7 @@ export function isLoaded(file: File): file is LoadedFile {
 }
 
 export interface Dependency {
+  from: 'npm' | 'pnpm' | 'yarn'
   name: DependencyName
   source: FilePath
   type: 'npm'
@@ -26,6 +27,7 @@ export interface Dependency {
 export interface Change {
   after: DependencyVersion
   before: DependencyVersion | false
+  from: Dependency['from']
   id: ChangeId
   name: DependencyName
   type: Dependency['type']

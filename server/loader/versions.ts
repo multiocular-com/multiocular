@@ -1,13 +1,24 @@
 import type { Change, ChangeId, Dependency } from '../types.ts'
 
-function createChangeId(
-  after: Dependency,
-  before: Dependency | undefined
-): ChangeId {
+function createChange(
+  before: Dependency | undefined,
+  after: Dependency
+): Change {
+  let id: ChangeId
   if (before) {
-    return `${after.type}:${after.name}@${before.version}>${after.version}` as ChangeId
+    id =
+      `${after.type}:${after.name}@${before.version}>${after.version}` as ChangeId
+  } else {
+    id = `${after.type}:${after.name}@${after.version}` as ChangeId
   }
-  return `${after.type}:${after.name}@${after.version}` as ChangeId
+  return {
+    after: after.version,
+    before: before ? before.version : false,
+    from: after.from,
+    id,
+    name: after.name,
+    type: after.type
+  }
 }
 
 function compareVersions(a: string, b: string): number {
@@ -48,13 +59,7 @@ export function calculateVersionDiff(
       })
 
       if (candidates.length === 0) {
-        changes.push({
-          after: after.version,
-          before: false,
-          id: createChangeId(after, undefined),
-          name: after.name,
-          type: after.type
-        })
+        changes.push(createChange(undefined, after))
         continue
       }
 
@@ -67,13 +72,7 @@ export function calculateVersionDiff(
       let afterIndex = allVersions.findIndex(v => v === after)
       let previous = afterIndex > 0 ? allVersions[afterIndex - 1] : undefined
 
-      changes.push({
-        after: after.version,
-        before: previous ? previous.version : false,
-        id: createChangeId(after, previous),
-        name: after.name,
-        type: after.type
-      })
+      changes.push(createChange(previous, after))
     }
   }
 

@@ -125,6 +125,7 @@ export const yarn = {
 
         dependencies.push(
           dependency({
+            from: 'yarn',
             name: dep.name,
             source: file.path,
             type: 'npm',

@@ -57,7 +57,13 @@ export const npm = {
           }
 
           dependencies.push(
-            dependency({ name, source: file.path, type: 'npm', version })
+            dependency({
+              from: 'npm',
+              name,
+              source: file.path,
+              type: 'npm',
+              version
+            })
           )
         }
       } else {
