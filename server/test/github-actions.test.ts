@@ -28,7 +28,6 @@ test('shows GitHub Actions changes in workflows', async () => {
         ]
       }
     },
-    name: 'Test',
     on: ['push']
   })
 
@@ -45,7 +44,6 @@ test('shows GitHub Actions changes in workflows', async () => {
         ]
       }
     },
-    name: 'Test',
     on: ['push']
   })
 
@@ -96,7 +94,6 @@ test('handles multiple actions in single workflow', async () => {
         ]
       }
     },
-    name: 'CI',
     on: ['push']
   })
 
@@ -114,7 +111,6 @@ test('handles multiple actions in single workflow', async () => {
         ]
       }
     },
-    name: 'CI',
     on: ['push']
   })
 
@@ -142,7 +138,6 @@ test('supports actions with commit hash', async () => {
         ]
       }
     },
-    name: 'Secure',
     on: ['push']
   })
 
@@ -158,7 +153,6 @@ test('supports actions with commit hash', async () => {
         ]
       }
     },
-    name: 'Secure',
     on: ['push']
   })
 
@@ -188,7 +182,6 @@ test('supports actions in any .github file', async () => {
         'steps': [{ uses: './.github/actions/init' }]
       }
     },
-    name: 'Test',
     on: ['push']
   })
 
@@ -196,8 +189,6 @@ test('supports actions in any .github file', async () => {
   await run('git commit -m "Add custom action"')
 
   await writeProjectFile('.github/actions/init/action.yml', {
-    description: 'Initialize project',
-    name: 'Initialize',
     runs: {
       steps: [{ uses: 'actions/checkout@v4.2.1' }],
       using: 'composite'
@@ -225,7 +216,6 @@ test('ignores local and docker actions', async () => {
         ]
       }
     },
-    name: 'Test',
     on: ['push']
   })
 
@@ -243,7 +233,6 @@ test('ignores local and docker actions', async () => {
         ]
       }
     },
-    name: 'Test',
     on: ['push']
   })
 
@@ -264,7 +253,6 @@ test('handles deleted workflow files', async () => {
         'steps': [{ uses: 'actions/checkout@v4.2.0' }]
       }
     },
-    name: 'Test',
     on: ['push']
   })
 
@@ -293,13 +281,10 @@ test('deduplicates same actions with same version', async () => {
         ]
       }
     },
-    name: 'CI',
     on: ['push']
   })
 
   await writeProjectFile('.github/actions/test/action.yml', {
-    description: 'Test composite action',
-    name: 'Test Action',
     runs: {
       steps: [{ uses: 'actions/checkout@v4.2.0' }],
       using: 'composite'
@@ -326,20 +311,16 @@ test('deduplicates same actions with same version', async () => {
         ]
       }
     },
-    name: 'CI',
     on: ['push']
   })
 
   await writeProjectFile('.github/actions/test/action.yml', {
-    description: 'Test composite action',
-    name: 'Test Action',
     runs: {
       steps: [{ uses: 'actions/checkout@v4.2.1' }],
       using: 'composite'
     }
   })
 
-  // Should only show one change for actions/checkout despite appearing in multiple files
   await cliJsonMatch([
     {
       after: 'v4.2.1',
