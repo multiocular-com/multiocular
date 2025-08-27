@@ -17,10 +17,10 @@ export function isLoaded(file: File): file is LoadedFile {
 }
 
 export interface Dependency {
-  from: 'npm' | 'pnpm' | 'yarn'
+  from: 'github-actions' | 'npm' | 'pnpm' | 'yarn'
   name: DependencyName
   source: FilePath
-  type: 'npm'
+  type: 'github-actions' | 'npm'
   version: DependencyVersion
 }
 

@@ -36,7 +36,11 @@ function compareVersions(a: string, b: string): number {
 
 function findMatching(dependencies: Dependency[], target: Dependency): boolean {
   return dependencies.some(i => {
-    return i.name === target.name && i.version === target.version
+    return (
+      i.name === target.name &&
+      i.version === target.version &&
+      i.type === target.type
+    )
   })
 }
 
@@ -51,8 +55,6 @@ export function calculateVersionDiff(
       let candidates = beforeVersions.filter(i => {
         return (
           i.name === after.name &&
-          // Until we have more types
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           i.type === after.type &&
           i.version !== after.version // Because later we will add after anyway
         )

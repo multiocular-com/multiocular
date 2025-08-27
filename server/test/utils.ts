@@ -3,6 +3,7 @@ import { exec, spawn } from 'node:child_process'
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
+import { stringify } from 'yaml'
 
 import type { MultiocularJSON } from '../cli/output.ts'
 import type { CliArg } from '../index.ts'
@@ -41,10 +42,17 @@ export async function writeProjectFile(
 ): Promise<void> {
   let path = join(getProject(), file)
   await mkdir(dirname(path), { recursive: true })
-  return writeFile(
-    path,
-    typeof content === 'string' ? content : JSON.stringify(content, null, 2)
-  )
+
+  let fileContent: string
+  if (typeof content === 'string') {
+    fileContent = content
+  } else if (file.endsWith('.yml') || file.endsWith('.yaml')) {
+    fileContent = stringify(content)
+  } else {
+    fileContent = JSON.stringify(content, null, 2)
+  }
+
+  return writeFile(path, fileContent)
 }
 
 export function run(command: string): Promise<string> {
