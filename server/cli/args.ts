@@ -52,7 +52,7 @@ async function detectModeFromGit(): Promise<'changed' | 'last-commit'> {
 
 export async function parseArgs(args: string[]): Promise<Config> {
   let debug = false
-  let output: Config['output'] = 'text'
+  let output: Config['output'] | undefined
   let source:
     | { commit: string; source: 'commit' }
     | { source: 'changed' | 'last-commit' }
@@ -64,6 +64,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
       source = { source: 'changed' }
     } else if (arg === '--debug') {
       debug = true
+      if (!output) output = 'text'
     } else if (arg === '--last-commit') {
       source = { source: 'last-commit' }
     } else if (arg === '--commit') {
@@ -92,6 +93,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
   }
 
   if (!source) source = { source: await detectModeFromGit() }
+  if (output === undefined) output = 'web'
 
   return { debug, output, ...source }
 }
