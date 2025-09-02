@@ -1,0 +1,9 @@
+:root {
+  --text-color: oklch(0.15 0 0);
+  --background-color: oklch(0.97 0 0);
+
+  @media (prefers-color-scheme: dark) {
+    --text-color: oklch(0.9 0 0);
+    --background-color: oklch(0.25 0 0);
+  }
+}

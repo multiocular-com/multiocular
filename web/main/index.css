@@ -1,8 +1,10 @@
 @import url('./reset.css');
+@import url('./colors.css');
 @import url('@fontsource-variable/martian-mono');
 
 :root {
   color-scheme: light dark;
+  background: var(--background-color);
 
   &.is-light-theme {
     color-scheme: light;
@@ -22,6 +24,7 @@ input {
   font:
     400 80%/1.6 'Martian Mono Variable',
     monospace;
+  color: var(--text-color);
 }
 
 :focus-visible {
