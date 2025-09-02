@@ -1,6 +1,6 @@
 import { styleText } from 'node:util'
 
-import type { FilePath } from '../../common/types.ts'
+import type { FilePath, ServerURL } from '../../common/types.ts'
 import type { Config } from './args.ts'
 
 export function print(message: string): void {
@@ -38,11 +38,8 @@ export function printDebugInfo(
   debug('Config:' + JSON.stringify(config, null, 2) + '\n')
 }
 
-export function printUrl(port: number): void {
+export function printUrl(url: ServerURL): void {
   print('')
-  print(
-    `  Multiocular UI: ` +
-      styleText(['green', 'bold'], `http://localhost:${port}/`)
-  )
+  print(`  Multiocular UI: ` + styleText(['green', 'bold'], url))
   print('')
 }

@@ -13,6 +13,7 @@ export type CliArg =
   | '--help'
   | '--json'
   | '--last-commit'
+  | '--no-open'
   | '--text'
   | '--version'
   | '--web'
@@ -23,6 +24,7 @@ export type CliArg =
 
 export type Config = {
   debug: boolean
+  noOpen: boolean
   output: 'json' | 'text' | 'web'
   port: number
 } & (
@@ -54,6 +56,7 @@ async function detectModeFromGit(): Promise<'changed' | 'last-commit'> {
 
 export async function parseArgs(args: string[]): Promise<Config> {
   let debug = false
+  let noOpen = false
   let output: Config['output'] | undefined
   let port = 31337
   let source:
@@ -80,6 +83,8 @@ export async function parseArgs(args: string[]): Promise<Config> {
     } else if (arg === '--help' || arg === '-h') {
       await printHelp()
       process.exit(0)
+    } else if (arg === '--no-open') {
+      noOpen = true
     } else if (arg === '--port') {
       let portArg = args[++i]
       port = parseInt(portArg ?? '', 10)
@@ -111,5 +116,5 @@ export async function parseArgs(args: string[]): Promise<Config> {
   if (!source) source = { source: await detectModeFromGit() }
   if (output === undefined) output = 'web'
 
-  return { debug, output, port, ...source }
+  return { debug, noOpen, output, port, ...source }
 }

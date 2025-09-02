@@ -5,6 +5,7 @@ import {
   findProjectRoot,
   getVersion,
   loadDiffs,
+  openBrowser,
   outputProcess,
   parseArgs,
   printDebugInfo,
@@ -17,4 +18,5 @@ if (config.debug) printDebugInfo(await getVersion(), config, root)
 
 loadDiffs(root, config)
 outputProcess(config)
-startWebServerIfNecessary(config)
+let url = await startWebServerIfNecessary(config)
+if (url && !config.noOpen) openBrowser(url)
