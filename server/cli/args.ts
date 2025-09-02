@@ -19,10 +19,12 @@ export type CliArg =
   | '-h'
   | '-v'
   | `--commit ${string}`
+  | `--port ${number}`
 
 export type Config = {
   debug: boolean
   output: 'json' | 'text' | 'web'
+  port: number
 } & (
   | { commit: string; source: 'commit' }
   | { source: 'changed' | 'last-commit' }
@@ -53,6 +55,7 @@ async function detectModeFromGit(): Promise<'changed' | 'last-commit'> {
 export async function parseArgs(args: string[]): Promise<Config> {
   let debug = false
   let output: Config['output'] | undefined
+  let port = 31337
   let source:
     | { commit: string; source: 'commit' }
     | { source: 'changed' | 'last-commit' }
@@ -77,6 +80,19 @@ export async function parseArgs(args: string[]): Promise<Config> {
     } else if (arg === '--help' || arg === '-h') {
       await printHelp()
       process.exit(0)
+    } else if (arg === '--port') {
+      let portArg = args[++i]
+      port = parseInt(portArg ?? '', 10)
+      if (
+        !portArg ||
+        portArg.startsWith('-') ||
+        isNaN(port) ||
+        port < 1 ||
+        port > 65535
+      ) {
+        printError(format('--port requires a port number'))
+        process.exit(1)
+      }
     } else if (arg === '--json') {
       output = 'json'
     } else if (arg === '--web') {
@@ -95,5 +111,5 @@ export async function parseArgs(args: string[]): Promise<Config> {
   if (!source) source = { source: await detectModeFromGit() }
   if (output === undefined) output = 'web'
 
-  return { debug, output, ...source }
+  return { debug, output, port, ...source }
 }

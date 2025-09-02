@@ -107,22 +107,26 @@ export function cd(directory: string): void {
   currentDirectory = join(getProject(), directory)
 }
 
+function processArgs(args: CliArg[]): string[] {
+  let processed: string[] = []
+  for (let arg of args) {
+    if (arg.startsWith('--commit ')) {
+      processed.push('--commit', arg.slice('--commit '.length))
+    } else if (arg.startsWith('--port ')) {
+      processed.push('--port', arg.slice('--port '.length))
+    } else {
+      processed.push(arg)
+    }
+  }
+  return processed
+}
+
 export function runCli(
   ...args: CliArg[]
 ): Promise<{ code: null | number; stderr: string; stdout: string }> {
   let cwd = currentDirectory || process.cwd()
-  let processedArgs: string[] = []
-
-  for (let arg of args) {
-    if (arg.startsWith('--commit ')) {
-      processedArgs.push('--commit', arg.slice('--commit '.length))
-    } else {
-      processedArgs.push(arg)
-    }
-  }
-
   return new Promise(resolve => {
-    let child = spawn(BIN_PATH, processedArgs, {
+    let child = spawn(BIN_PATH, processArgs(args), {
       cwd,
       env: TEST_ENV,
       stdio: ['pipe', 'pipe', 'pipe']
@@ -217,18 +221,15 @@ export async function cliJsonMatch(
 
 let backgroundProcess: ReturnType<typeof spawn> | undefined
 
-export function startInBackground(
-  args: CliArg[]
-): Promise<ReturnType<typeof spawn>> {
+export function startInBackground(args: CliArg[]): Promise<string> {
   return new Promise((resolve, reject) => {
-    let serverProcess = spawn(BIN_PATH, args, {
+    let serverProcess = spawn(BIN_PATH, processArgs(args), {
       cwd: currentDirectory || process.cwd(),
       env: TEST_ENV,
       stdio: 'pipe'
     })
 
     backgroundProcess = serverProcess
-
     let started = false
     let output = ''
 
@@ -239,28 +240,22 @@ export function startInBackground(
       }
     }, 10000)
 
-    serverProcess.stderr.on('data', data => {
+    function onOutput(data: { toString: () => string }): void {
       output += data.toString()
-      if (output.includes('Web server listening on port 31337') && !started) {
+      if (output.includes('http://') && !started) {
         started = true
         clearTimeout(timeout)
-        resolve(serverProcess)
+        resolve(output)
       }
-    })
+    }
+    serverProcess.stderr.on('data', onOutput)
+    serverProcess.stdout.on('data', onOutput)
 
-    serverProcess.on('error', err => {
+    serverProcess.on('exit', code => {
       if (!started) {
         started = true
         clearTimeout(timeout)
-        reject(err)
-      }
-    })
-
-    serverProcess.on('exit', (code, signal) => {
-      if (!started) {
-        started = true
-        clearTimeout(timeout)
-        reject(new Error(`Process exited with code ${code}, signal ${signal}`))
+        reject(new Error(`Process exited with code ${code}\n${output}`))
       }
     })
   })

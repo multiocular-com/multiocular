@@ -2,6 +2,7 @@ import { Server } from '@logux/server'
 
 import { subprotocol } from '../../common/api.ts'
 import type { Config } from '../cli/args.ts'
+import { printUrl } from '../cli/print.ts'
 import { LOCAL } from '../env.ts'
 import { serveAssets } from './assets.ts'
 import { syncStores } from './sync.ts'
@@ -11,6 +12,7 @@ export function startWebServerIfNecessary(config: Config): void {
     let server = new Server({
       host: '0.0.0.0',
       minSubprotocol: subprotocol,
+      port: config.port,
       subprotocol
     })
     if (!config.debug) {
@@ -21,8 +23,9 @@ export function startWebServerIfNecessary(config: Config): void {
     server.auth(() => LOCAL)
     serveAssets(server)
     syncStores(server)
+
     server.listen().then(() => {
-      process.stderr.write('Web server listening on port 31337\n')
+      printUrl(server.options.port as number)
     })
   }
 }

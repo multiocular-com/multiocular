@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert'
-import { afterEach, test } from 'node:test'
+import { afterEach, beforeEach, test } from 'node:test'
 
 import { IS_DEV } from '../env.ts'
 import {
@@ -10,13 +10,16 @@ import {
   startProject
 } from './utils.ts'
 
+beforeEach(async () => {
+  await startProject()
+})
+
 afterEach(async () => {
   await killBackgroundProcess()
   await removeProject()
 })
 
 test('starts web server with --web and makes HTTP requests', async () => {
-  await startProject()
   if (IS_DEV) await run(`cd ${import.meta.dirname} && node --run build:web`)
   await startInBackground(['--web'])
 
@@ -39,4 +42,9 @@ test('starts web server with --web and makes HTTP requests', async () => {
 
   let notFoundResponse = await fetch('http://localhost:31337/nonexistent.js')
   assert.equal(notFoundResponse.status, 404)
+})
+
+test('shows correct port in output when using --port argument', async () => {
+  let output = await startInBackground(['--web', '--port 8080'])
+  assert.match(output, /8080/)
 })

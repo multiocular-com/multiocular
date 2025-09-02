@@ -18,6 +18,7 @@ Review diffs on dependencies updates to prevent supply chain attacks
 
 *Other options:*
   `--debug`   Print extra information to help diagnose and report issue
+  `--port`    Web server port (default: 31337)
 
 *Examples:*
   `multiocular`

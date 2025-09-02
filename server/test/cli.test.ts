@@ -38,6 +38,13 @@ test('exits with error when --commit has no hash', async () => {
   assert.match(await cliBad('--commit'), /--commit requires a commit hash/)
 })
 
+test('exits with error on missed port', async () => {
+  // @ts-expect-error We are testing invalid argument
+  assert.match(await cliBad('--port'), /requires a port number/)
+  // @ts-expect-error We are testing invalid argument
+  assert.match(await cliBad('--port good'), /requires a port number/)
+})
+
 test('exits with error when no .git folder found', async () => {
   await startProject({ git: false })
   assert.match(await cliBad(), /Could not find project root directory/)

@@ -1,9 +1,9 @@
 import { styleText } from 'node:util'
 
 import { $sortedDiffs, $step } from '../../common/stores.ts'
-import type { ChangeDiff, Debrand, FilePath } from '../../common/types.ts'
-import { type Config, getVersion } from './args.ts'
-import { debug, print } from './print.ts'
+import type { ChangeDiff, Debrand } from '../../common/types.ts'
+import type { Config } from './args.ts'
+import { print } from './print.ts'
 
 export type MultiocularJSON = Debrand<Omit<ChangeDiff, 'id'>[]>
 
@@ -49,15 +49,4 @@ export function outputProcess(config: Config): void {
       }
     }
   })
-}
-
-export async function printDebugInfo(
-  config: Config,
-  root: FilePath
-): Promise<void> {
-  debug(`Multiocular version: v${await getVersion()}`)
-  debug(`Node.js version: ${process.version}`)
-  debug(`OS: ${process.platform}`)
-  debug(`Root: ${root}`)
-  debug('Config:' + JSON.stringify(config, null, 2) + '\n')
 }
