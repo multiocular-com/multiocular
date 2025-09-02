@@ -1,0 +1,72 @@
+name: Visual Test
+on:
+  schedule:
+    - cron: '00 23 * * *' # Runs at midnight UTC every day
+  push:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  chromatic:
+    name: Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            chromatic-builds.s3.us-west-2.amazonaws.com:443
+            github.com:443
+            index.chromatic.com:443
+            nodejs.org:443
+            release-assets.githubusercontent.com:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+            storybook.js.org:443
+      - name: Checkout the repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+      - name: Check if should run
+        id: should_run
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            if git log -1 --pretty=%B | grep -i "Chromatic"; then
+              echo "should_run=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "should_run=false" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            today=$(date -u +"%Y-%m-%d")
+            last_commit_date=$(git log -1 --format=%cd --date=short)
+            if [ "$today" == "$last_commit_date" ]; then
+              echo "should_run=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "should_run=false" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+      - name: Install pnpm
+        if: steps.should_run.outputs.should_run == 'true'
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 10
+      - name: Install Node.js
+        if: steps.should_run.outputs.should_run == 'true'
+        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install dependencies
+        if: steps.should_run.outputs.should_run == 'true'
+        run: pnpm install --ignore-scripts
+      - name: Publish to Chromatic
+        if: steps.should_run.outputs.should_run == 'true'
+        uses: chromaui/action@c93e0bc3a63aa176e14a75b61a31847cbfdd341c # v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-visual
+          exitZeroOnChanges: true
+          exitOnceUploaded: true

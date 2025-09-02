@@ -31,6 +31,7 @@
     "visual": "storybook dev -c web/.storybook -p 6006 --no-open --host 0.0.0.0",
     "format": "pnpm run /^format:/",
     "update-env": "node ./scripts/update-env.ts",
+    "build-visual": "NODE_ENV=test storybook build -c web/.storybook",
     "test:real": "node --run build && TEST_BIN=./dist/server/bin.js pnpm bnt",
     "test:js": "eslint --cache --concurrency auto .",
     "test:css": "stylelint **/*.css **/*.svelte",
