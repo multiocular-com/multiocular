@@ -1,6 +1,8 @@
 import { atom, computed } from 'nanostores'
 
-import type { ChangeDiff, ChangeStatus, StepValue } from './types.ts'
+import type { ChangeDiff, ChangeStatus } from './types.ts'
+
+export type StepValue = 'diffs' | 'done' | 'initialize' | 'versions'
 
 export const $step = atom<StepValue>('initialize')
 

@@ -20,9 +20,6 @@ function isDependency(msg: Message): msg is Dependency {
   )
 }
 
-/**
- * @type {SvelteConfig}
- */
 export default {
   preprocess: {
     async style({ content, filename }) {

@@ -1,6 +1,6 @@
 import { defineAction } from '@logux/actions'
 
-import type { StepValue } from './types.ts'
+import type { StepValue } from './stores.ts'
 
 export const subprotocol = 0
 
