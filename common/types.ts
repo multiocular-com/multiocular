@@ -24,6 +24,7 @@ export type DependencyName = Brand<string, 'DependencyName'>
 export type ChangeId = Brand<string, 'ChangeId'>
 export type Diff = Brand<string, 'Diff'>
 export type DiffSize = Brand<number, 'DiffSize'>
+export type ServerURL = Brand<string, 'ServerURL'>
 
 export type LoadedFile = { content: FileContent; path: FilePath }
 export type MissingFile = { missing: true; path: FilePath }
@@ -78,4 +79,12 @@ export function missingFile(path: string): MissingFile {
 
 export function dependency(object: Debrand<Dependency>): Dependency {
   return object as Dependency
+}
+
+export function serverURL(
+  protocol: string,
+  host: string,
+  port: number
+): ServerURL {
+  return `${protocol}${host}${port}/` as ServerURL
 }
