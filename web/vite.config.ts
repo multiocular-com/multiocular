@@ -4,7 +4,9 @@ import { defineConfig } from 'vite'
 
 export default defineConfig(() => ({
   build: {
+    cssMinify: false,
     emptyOutDir: true,
+    minify: false,
     outDir: join(import.meta.dirname, '..', 'dist', 'web')
   },
   plugins: [svelte()]
