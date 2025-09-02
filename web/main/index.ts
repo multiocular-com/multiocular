@@ -1,3 +1,5 @@
+import './client.ts'
+
 import { mount } from 'svelte'
 
 import Main from './main.svelte'

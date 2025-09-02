@@ -51,6 +51,7 @@
     "yaml": "^2.8.1"
   },
   "devDependencies": {
+    "@logux/client": "^0.22.0",
     "@logux/eslint-config": "56.1.0",
     "@logux/stylelint-config": "^0.21.0",
     "@sveltejs/vite-plugin-svelte": "^6.1.3",

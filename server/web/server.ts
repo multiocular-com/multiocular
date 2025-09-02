@@ -12,6 +12,9 @@ export function startWebServerIfNecessary(config: Config): void {
       minSubprotocol: subprotocol,
       subprotocol
     })
+    server.logger.debug = () => {}
+    server.logger.info = () => {}
+    server.logger.warn = () => {}
     server.auth(() => IS_DEV)
     serveAssets(server)
     server.listen().then(() => {
