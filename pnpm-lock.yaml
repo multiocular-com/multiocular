@@ -24,6 +24,9 @@ importers:
         specifier: ^2.8.1
         version: 2.8.1
     devDependencies:
+      '@logux/actions':
+        specifier: ^0.5.0
+        version: 0.5.0(@logux/core@0.10.0)
       '@logux/client':
         specifier: ^0.22.0
         version: 0.22.0(nanostores@1.0.1)

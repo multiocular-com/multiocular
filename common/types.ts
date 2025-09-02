@@ -54,6 +54,12 @@ export type ChangeDiff = {
   diff: Diff
 } & Change
 
+export type ChangeStatus = {
+  id: ChangeId
+} & ({ size: DiffSize; status: 'loaded' } | { status: 'loading' })
+
+export type StepValue = 'diffs' | 'done' | 'initialize' | 'versions'
+
 export function filePath(value: string): FilePath {
   return value as FilePath
 }

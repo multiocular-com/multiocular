@@ -1,4 +1,4 @@
-import './client.ts'
+import './sync.ts'
 
 import { mount } from 'svelte'
 

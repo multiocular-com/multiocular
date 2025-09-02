@@ -1,10 +1,11 @@
+import { $step } from '../../common/stores.ts'
 import type { FilePath } from '../../common/types.ts'
 import { isLoaded } from '../../common/types.ts'
 import type { Config } from '../cli/args.ts'
 import { debug } from '../cli/print.ts'
 import { diffLoaders } from './diffs/index.ts'
 import { getChangedFiles, loadFile } from './git.ts'
-import { $step, addDiff, declareUnloadedChanges } from './stores.ts'
+import { addDiff, declareUnloadedChanges } from './stores.ts'
 import { calculateVersionDiff } from './versions.ts'
 import { versionsLoaders } from './versions/index.ts'
 

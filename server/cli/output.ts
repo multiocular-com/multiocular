@@ -1,7 +1,7 @@
 import { styleText } from 'node:util'
 
+import { $sortedDiffs, $step } from '../../common/stores.ts'
 import type { ChangeDiff, Debrand, FilePath } from '../../common/types.ts'
-import { $sortedDiffs, $step } from '../loader/stores.ts'
 import { type Config, getVersion } from './args.ts'
 import { debug, print } from './print.ts'
 
