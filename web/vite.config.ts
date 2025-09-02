@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig(({ command }) => ({
   build: {
+    assetsInlineLimit: 0,
     cssMinify: false,
     emptyOutDir: true,
     minify: false,
