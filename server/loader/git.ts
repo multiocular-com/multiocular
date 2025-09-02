@@ -5,6 +5,7 @@ import { promisify } from 'node:util'
 
 import type { File, FilePath } from '../../common/types.ts'
 import { loadedFile, missingFile } from '../../common/types.ts'
+import { debug } from '../cli/print.ts'
 
 const execAsync = promisify(exec)
 
@@ -15,15 +16,28 @@ class GitError extends Error {
   }
 }
 
-async function git(args: string, root: FilePath): Promise<string> {
+async function git(
+  args: string,
+  root: FilePath,
+  debugMode = false
+): Promise<string> {
+  if (debugMode) {
+    debug(`> git ${args}`)
+  }
   try {
     let result = await execAsync(`git ${args}`, {
       cwd: root,
       encoding: 'utf8'
     })
+    if (!args.startsWith('show ') && debugMode) {
+      debug(result.stdout)
+    }
     return result.stdout
   } catch (error) {
     if (error instanceof Error && 'stderr' in error) {
+      if (debugMode) {
+        debug(error.stderr as string)
+      }
       throw new GitError(error.stderr as string)
     }
     throw error
@@ -40,14 +54,18 @@ function toFiles(stdout: string): FilePath[] {
 export async function loadFile(
   root: FilePath,
   commit: false | string,
-  file: FilePath
+  file: FilePath,
+  debugMode = false
 ): Promise<File> {
   let path = join(root, file)
   if (!commit) {
     return loadedFile(path, await readFile(path))
   } else {
     try {
-      return loadedFile(path, await git(`show ${commit}:${file}`, root))
+      return loadedFile(
+        path,
+        await git(`show ${commit}:${file}`, root, debugMode)
+      )
     } catch (error) {
       if (error instanceof GitError) {
         if (
@@ -64,13 +82,18 @@ export async function loadFile(
 
 export async function getChangedFiles(
   root: FilePath,
-  between: string
+  between: string,
+  debugMode = false
 ): Promise<FilePath[]> {
   let files = toFiles(
-    await git(`diff --name-only --diff-filter=AM ${between}`, root)
+    await git(`diff --name-only --diff-filter=AM ${between}`, root, debugMode)
   )
   if (between === 'HEAD') {
-    let untracked = await git('ls-files --others --exclude-standard', root)
+    let untracked = await git(
+      'ls-files --others --exclude-standard',
+      root,
+      debugMode
+    )
     files.push(...toFiles(untracked))
   }
   return files

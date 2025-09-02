@@ -10,6 +10,10 @@ export function format(text: string): string {
     .replace(/\*([^*]*)\*/g, (_, content: string) => styleText('bold', content))
 }
 
+export function debug(message: string): void {
+  process.stderr.write(styleText('gray', message) + '\n')
+}
+
 export function printError(message: string): void {
   process.stderr.write(
     styleText(['bgRed', 'bold'], ' ERROR ') +

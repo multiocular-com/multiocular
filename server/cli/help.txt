@@ -16,6 +16,9 @@ Review diffs on dependencies updates to prevent supply chain attacks
 
   On missing options it use `--changed` on uncommitted changes
 
+*Other options:*
+  `--debug`   Print extra information to help diagnose and report issue
+
 *Examples:*
   `multiocular`
     Run web server to manually review dependencies

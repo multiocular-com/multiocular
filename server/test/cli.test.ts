@@ -10,6 +10,7 @@ import {
   cliJsonMatch,
   removeProject,
   run,
+  runCli,
   startProject
 } from './utils.ts'
 
@@ -96,4 +97,11 @@ test('is ready for no changes', async () => {
 
   assert.equal(await cliGood('--text', '--changed'), 'No changes found\n')
   await cliJsonMatch([], '--json')
+})
+
+test('shows debug information with --debug', async () => {
+  await startProject()
+  let { code, stderr } = await runCli('--debug', '--text')
+  assert.equal(code, 0)
+  assert.match(stderr, /Multiocular version: v\d+\.\d+\.\d+/)
 })

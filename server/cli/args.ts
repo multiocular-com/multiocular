@@ -9,6 +9,7 @@ const execAsync = promisify(exec)
 
 export type CliArg =
   | '--changed'
+  | '--debug'
   | '--help'
   | '--json'
   | '--last-commit'
@@ -20,18 +21,19 @@ export type CliArg =
   | `--commit ${string}`
 
 export type Config = {
+  debug: boolean
   output: 'json' | 'text' | 'web'
 } & (
   | { commit: string; source: 'commit' }
   | { source: 'changed' | 'last-commit' }
 )
 
-async function printVersion(): Promise<void> {
+export async function getVersion(): Promise<string> {
   let packagePath = join(import.meta.dirname, '../../package.json')
   let packageData = JSON.parse(await readFile(packagePath, 'utf-8')) as {
     version: string
   }
-  print('v' + packageData.version)
+  return packageData.version
 }
 
 async function printHelp(): Promise<void> {
@@ -49,6 +51,7 @@ async function detectModeFromGit(): Promise<'changed' | 'last-commit'> {
 }
 
 export async function parseArgs(args: string[]): Promise<Config> {
+  let debug = false
   let output: Config['output'] = 'text'
   let source:
     | { commit: string; source: 'commit' }
@@ -59,6 +62,8 @@ export async function parseArgs(args: string[]): Promise<Config> {
     let arg = args[i]!
     if (arg === '--changed') {
       source = { source: 'changed' }
+    } else if (arg === '--debug') {
+      debug = true
     } else if (arg === '--last-commit') {
       source = { source: 'last-commit' }
     } else if (arg === '--commit') {
@@ -78,7 +83,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
     } else if (arg === '--text') {
       output = 'text'
     } else if (arg === '--version' || arg === '-v') {
-      await printVersion()
+      print('v' + (await getVersion()))
       process.exit(0)
     } else {
       printError(format('Unknown argument `' + arg + '`'))
@@ -88,5 +93,5 @@ export async function parseArgs(args: string[]): Promise<Config> {
 
   if (!source) source = { source: await detectModeFromGit() }
 
-  return { output, ...source }
+  return { debug, output, ...source }
 }

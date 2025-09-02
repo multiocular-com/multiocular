@@ -1,6 +1,7 @@
 import type { FilePath } from '../../common/types.ts'
 import { isLoaded } from '../../common/types.ts'
 import type { Config } from '../cli/args.ts'
+import { debug } from '../cli/print.ts'
 import { diffLoaders } from './diffs/index.ts'
 import { getChangedFiles, loadFile } from './git.ts'
 import { $step, addDiff, declareUnloadedChanges } from './stores.ts'
@@ -24,14 +25,19 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
   }
 
   let changedRange = afterCommit ? `${beforeCommit} ${afterCommit}` : 'HEAD'
-  let changed = await getChangedFiles(root, changedRange)
+  let changed = await getChangedFiles(root, changedRange, config.debug)
+
   let changes = (
     await Promise.all(
       Object.values(versionsLoaders).map(async loader => {
         let selected = loader.findFiles(changed)
         let [beforeContent, afterContent] = await Promise.all([
-          Promise.all(selected.map(file => loadFile(root, beforeCommit, file))),
-          Promise.all(selected.map(file => loadFile(root, afterCommit, file)))
+          Promise.all(
+            selected.map(f => loadFile(root, beforeCommit, f, config.debug))
+          ),
+          Promise.all(
+            selected.map(f => loadFile(root, afterCommit, f, config.debug))
+          )
         ])
         return calculateVersionDiff(
           loader.load(beforeContent.filter(isLoaded)),
@@ -40,6 +46,13 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
       })
     )
   ).flat()
+
+  if (config.debug) {
+    debug('')
+    debug('Found changes:')
+    debug(JSON.stringify(changes, null, 2))
+    debug('')
+  }
 
   declareUnloadedChanges(changes.map(i => i.id))
   $step.set('diffs')
