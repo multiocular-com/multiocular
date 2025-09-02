@@ -1,4 +1,4 @@
-import { diff } from '../../types.ts'
+import { diff } from '../../../common/types.ts'
 import { type DiffLoader, getDiffPrefixes } from './common.ts'
 
 interface GitHubContent {

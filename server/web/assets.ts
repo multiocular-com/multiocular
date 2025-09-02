@@ -13,8 +13,8 @@ interface Asset {
 }
 
 const ASSETS_DIR = IS_DEV
-  ? join(import.meta.dirname, '..', 'dist', 'web')
-  : join(import.meta.dirname, '..', 'web')
+  ? join(import.meta.dirname, '..', '..', 'dist', 'web')
+  : join(import.meta.dirname, '..', '..', 'web')
 
 const MIME_TYPES: Record<string, string> = {
   '.avif': 'image/avif',
@@ -53,6 +53,26 @@ const CONTENT_SECURITY_POLICIES = {
 export function serveAssets(server: BaseServer): void {
   let CACHE: Record<string, Asset> = {}
 
+  server.http('GET', '/', async (req, res) => {
+    let cacheKey = '/'
+    if (!CACHE[cacheKey]) {
+      let html = await readFile(join(ASSETS_DIR, 'index.html'))
+      CACHE[cacheKey] = {
+        contentType: 'text/html',
+        data: html,
+        headers: {
+          'Content-Security-Policy': Object.entries(CONTENT_SECURITY_POLICIES)
+            .map(([k, v]) => `${k} ${v}`)
+            .join('; '),
+          'Strict-Transport-Security':
+            'max-age=31536000; includeSubDomains; preload',
+          'X-Content-Type-Options': 'nosniff'
+        }
+      }
+    }
+    send(res, CACHE[cacheKey])
+  })
+
   server.http(async (req, res) => {
     if (req.method !== 'GET') return false
 
@@ -63,31 +83,14 @@ export function serveAssets(server: BaseServer): void {
     let path = join(ASSETS_DIR, safe)
 
     if (!CACHE[cacheKey]) {
-      if (path === '/') {
-        let html = await readFile(join(ASSETS_DIR, 'index.html'))
-        CACHE[cacheKey] = {
-          contentType: 'text/html',
-          data: html,
-          headers: {
-            'Content-Security-Policy': Object.entries(CONTENT_SECURITY_POLICIES)
-              .map(([k, v]) => `${k} ${v}`)
-              .join('; '),
-            'Strict-Transport-Security':
-              'max-age=31536000; includeSubDomains; preload',
-            'X-Content-Type-Options': 'nosniff'
-          }
-        }
-      } else {
-        if (!existsSync(path)) return false
-        let contentType =
-          MIME_TYPES[extname(path)] || 'application/octet-stream'
-        let data = await readFile(path)
-        let headers: Asset['headers'] = {}
-        if (pathname.includes('/assets/') && HASHED.test(path)) {
-          headers['Cache-Control'] = 'public, max-age=31536000, immutable'
-        }
-        CACHE[cacheKey] = { contentType, data, headers }
+      if (!existsSync(path)) return false
+      let contentType = MIME_TYPES[extname(path)] || 'application/octet-stream'
+      let data = await readFile(path)
+      let headers: Asset['headers'] = {}
+      if (pathname.includes('/assets/') && HASHED.test(path)) {
+        headers['Cache-Control'] = 'public, max-age=31536000, immutable'
       }
+      CACHE[cacheKey] = { contentType, data, headers }
     }
 
     send(res, CACHE[cacheKey])

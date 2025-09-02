@@ -214,3 +214,78 @@ export async function cliJsonMatch(
     }
   }
 }
+
+let backgroundProcess: ReturnType<typeof spawn> | undefined
+
+export function startInBackground(
+  args: CliArg[]
+): Promise<ReturnType<typeof spawn>> {
+  return new Promise((resolve, reject) => {
+    let serverProcess = spawn(BIN_PATH, args, {
+      cwd: currentDirectory || process.cwd(),
+      env: TEST_ENV,
+      stdio: 'pipe'
+    })
+
+    backgroundProcess = serverProcess
+
+    let started = false
+    let output = ''
+
+    let timeout = setTimeout(() => {
+      if (!started) {
+        serverProcess.kill('SIGTERM')
+        reject(new Error('Process startup timeout'))
+      }
+    }, 10000)
+
+    serverProcess.stderr.on('data', data => {
+      output += data.toString()
+      if (output.includes('Web server listening on port 31337') && !started) {
+        started = true
+        clearTimeout(timeout)
+        resolve(serverProcess)
+      }
+    })
+
+    serverProcess.on('error', err => {
+      if (!started) {
+        started = true
+        clearTimeout(timeout)
+        reject(err)
+      }
+    })
+
+    serverProcess.on('exit', (code, signal) => {
+      if (!started) {
+        started = true
+        clearTimeout(timeout)
+        reject(new Error(`Process exited with code ${code}, signal ${signal}`))
+      }
+    })
+  })
+}
+
+export function killBackgroundProcess(): Promise<void> {
+  return new Promise(resolve => {
+    if (!backgroundProcess) {
+      resolve()
+      return
+    }
+
+    backgroundProcess.kill('SIGTERM')
+    let timeout = setTimeout(() => {
+      if (backgroundProcess && !backgroundProcess.killed) {
+        backgroundProcess.kill('SIGKILL')
+      }
+      backgroundProcess = undefined
+      resolve()
+    }, 2000)
+
+    backgroundProcess.once('exit', () => {
+      clearTimeout(timeout)
+      backgroundProcess = undefined
+      resolve()
+    })
+  })
+}

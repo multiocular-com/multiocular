@@ -1,6 +1,11 @@
 import { atom, computed } from 'nanostores'
 
-import type { ChangeDiff, ChangeId, Diff, DiffSize } from '../types.ts'
+import type {
+  ChangeDiff,
+  ChangeId,
+  Diff,
+  DiffSize
+} from '../../common/types.ts'
 
 export type ChangeStatus = {
   id: ChangeId

@@ -1,8 +1,8 @@
 import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 
+import { filePath, type FilePath } from '../../common/types.ts'
 import { format, printError } from '../cli/print.ts'
-import { filePath, type FilePath } from '../types.ts'
 
 export function findProjectRoot(start: FilePath): FilePath {
   let current = start

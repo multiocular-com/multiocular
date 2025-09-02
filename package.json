@@ -30,7 +30,7 @@
     "build": "rm -Rf dist && pnpm run /^build:/",
     "format": "pnpm run /^format:/",
     "update-env": "node ./scripts/update-env.ts",
-    "test:real": "node --run build:server && TEST_BIN=./dist/server/bin.js pnpm bnt",
+    "test:real": "node --run build && TEST_BIN=./dist/server/bin.js pnpm bnt",
     "test:js": "eslint --cache --concurrency auto .",
     "test:css": "stylelint **/*.css **/*.svelte",
     "test:types": "svelte-check",
@@ -44,7 +44,7 @@
     "format:prettier": "prettier --experimental-cli --write ."
   },
   "dependencies": {
-    "@logux/server": "^0.13.1",
+    "@logux/server": "^0.14.0",
     "@npmcli/arborist": "^9.1.3",
     "libnpmdiff": "^8.0.6",
     "nanostores": "^1.0.1",

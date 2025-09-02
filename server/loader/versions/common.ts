@@ -4,7 +4,7 @@ import type {
   DependencyVersion,
   FilePath,
   LoadedFile
-} from '../../types.ts'
+} from '../../../common/types.ts'
 
 /**
  * Load versions list from changed files.

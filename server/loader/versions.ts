@@ -1,4 +1,4 @@
-import type { Change, ChangeId, Dependency } from '../types.ts'
+import type { Change, ChangeId, Dependency } from '../../common/types.ts'
 
 function createChange(
   before: Dependency | undefined,

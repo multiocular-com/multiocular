@@ -1,6 +1,6 @@
 import { basename } from 'node:path'
 
-import { dependency, type Dependency } from '../../types.ts'
+import { dependency, type Dependency } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
 
 interface NpmLock3 {

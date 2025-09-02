@@ -21,7 +21,7 @@ const IGNORE = new Set([
   'docs',
   'node_modules',
   'scripts',
-  'test',
+  'server/test',
   'web'
 ])
 
@@ -93,6 +93,7 @@ async function preparePackageJson(): Promise<void> {
 
 await rm(DIST, { force: true, recursive: true })
 await compileTypeScript('server', DIST)
+await compileTypeScript('common', DIST)
 await chmod(join(DIST, 'server', 'bin.js'), 0o755)
 await copyNonTsFiles('.', ROOT, DIST)
 await preparePackageJson()

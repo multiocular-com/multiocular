@@ -1,4 +1,4 @@
-import type { Change, Diff } from '../../types.ts'
+import type { Change, Diff } from '../../../common/types.ts'
 
 /**
  * Load dependency diff from version changes.

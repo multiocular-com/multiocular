@@ -4,7 +4,7 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { diff } from '../../types.ts'
+import { diff } from '../../../common/types.ts'
 import { type DiffLoader, getDiffPrefixes } from './common.ts'
 
 export const npm = (async change => {

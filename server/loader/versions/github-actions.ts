@@ -6,7 +6,7 @@ import {
   type Dependency,
   type DependencyName,
   type DependencyVersion
-} from '../../types.ts'
+} from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
 
 interface GitHubActionReference {

@@ -1,7 +1,7 @@
 import { basename } from 'node:path'
 import { parse } from 'yaml'
 
-import { dependency, type Dependency } from '../../types.ts'
+import { dependency, type Dependency } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
 import { splitPackage } from './common.ts'
 

@@ -3,8 +3,8 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { promisify } from 'node:util'
 
-import type { File, FilePath } from '../types.ts'
-import { loadedFile, missingFile } from '../types.ts'
+import type { File, FilePath } from '../../common/types.ts'
+import { loadedFile, missingFile } from '../../common/types.ts'
 
 const execAsync = promisify(exec)
 

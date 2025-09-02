@@ -1,6 +1,6 @@
+import type { FilePath } from '../../common/types.ts'
+import { isLoaded } from '../../common/types.ts'
 import type { Config } from '../cli/args.ts'
-import type { FilePath } from '../types.ts'
-import { isLoaded } from '../types.ts'
 import { diffLoaders } from './diffs/index.ts'
 import { getChangedFiles, loadFile } from './git.ts'
 import { $step, addDiff, declareUnloadedChanges } from './stores.ts'
