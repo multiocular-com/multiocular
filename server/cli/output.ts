@@ -1,11 +1,13 @@
 import { styleText } from 'node:util'
 
-import { $sortedDiffs, $step, type ChangeDiff } from '../../common/stores.ts'
+import { $sortedChanges, $step, type Change } from '../../common/stores.ts'
 import type { Debrand } from '../../common/types.ts'
 import type { Config } from './args.ts'
 import { print } from './print.ts'
 
-export type MultiocularJSON = Debrand<Omit<ChangeDiff, 'id'>[]>
+export type MultiocularJSON = Debrand<
+  Omit<Extract<Change, { status: 'loaded' }>, 'id' | 'size' | 'status'>[]
+>
 
 function colorizedDiff(diffText: string): string {
   return diffText
@@ -27,23 +29,25 @@ export function outputProcess(config: Config): void {
   let unbindStep = $step.listen(step => {
     if (step === 'done') {
       unbindStep()
-      let diffs = $sortedDiffs.get()
+      let changes = $sortedChanges
+        .get()
+        .filter(change => change.status === 'loaded')
       if (config.output === 'json') {
-        let json = diffs.map(diff => ({
-          after: diff.after,
-          before: diff.before,
-          diff: diff.diff,
-          from: diff.from,
-          name: diff.name,
-          type: diff.type
+        let json = changes.map(change => ({
+          after: change.after,
+          before: change.before,
+          diff: change.diff,
+          from: change.from,
+          name: change.name,
+          type: change.type
         })) satisfies MultiocularJSON
         print(JSON.stringify(json, null, 2))
       } else if (config.output === 'text') {
-        if (diffs.length === 0) {
+        if (changes.length === 0) {
           print('No changes found')
         } else {
-          for (let diff of diffs) {
-            print(colorizedDiff(diff.diff))
+          for (let change of changes) {
+            print(colorizedDiff(change.diff))
           }
         }
       }

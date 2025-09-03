@@ -4,7 +4,7 @@ import type { Config } from '../cli/args.ts'
 import { debug } from '../cli/print.ts'
 import { diffLoaders } from './diffs/index.ts'
 import { getChangedFiles, loadFile } from './git.ts'
-import { addDiff, declareUnloadedChanges } from './stores.ts'
+import { addDiff, initChanges } from './stores.ts'
 import { calculateVersionDiff } from './versions.ts'
 import { versionsLoaders } from './versions/index.ts'
 
@@ -54,12 +54,12 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
     debug('')
   }
 
-  declareUnloadedChanges(changes.map(i => i.id))
+  initChanges(changes)
   $step.set('diffs')
   await Promise.all(
     changes.map(async change => {
       let diff = await diffLoaders[change.type](change)
-      addDiff({ ...change, diff })
+      addDiff(change.id, diff)
     })
   )
 

@@ -1,18 +1,13 @@
-import {
-  $diffs,
-  $loading,
-  type ChangeDiff,
-  type ChangeStatus
-} from '../../common/stores.ts'
+import { $changes, type Change } from '../../common/stores.ts'
 import type { ChangeId, Diff, DiffSize } from '../../common/types.ts'
 
-function changeStatus(changed: ChangeStatus): void {
-  $loading.set(
-    $loading.get().map(i => {
-      if (i.id === changed.id) {
-        return changed
+function changeStatus(changeId: ChangeId, update: Partial<Change>): void {
+  $changes.set(
+    $changes.get().map(change => {
+      if (change.id === changeId) {
+        return { ...change, ...update } as Change
       } else {
-        return i
+        return change
       }
     })
   )
@@ -26,11 +21,14 @@ export function calcSize(diff: Diff): DiffSize {
   return realLines(diff) as DiffSize
 }
 
-export function addDiff(diff: ChangeDiff): void {
-  changeStatus({ id: diff.id, size: calcSize(diff.diff), status: 'loaded' })
-  $diffs.set([...$diffs.get(), diff])
+export function addDiff(changeId: ChangeId, diff: Diff): void {
+  changeStatus(changeId, {
+    diff,
+    size: calcSize(diff),
+    status: 'loaded'
+  })
 }
 
-export function declareUnloadedChanges(ids: ChangeId[]): void {
-  $loading.set(ids.map(id => ({ id, status: 'loading' })))
+export function initChanges(changes: Change[]): void {
+  $changes.set(changes)
 }

@@ -18,6 +18,7 @@ function createChange(
     from: after.from,
     id,
     name: after.name,
+    status: 'loading',
     type: after.type
   }
 }
