@@ -1,9 +1,9 @@
 import { atom, computed, type ReadableAtom } from 'nanostores'
 
 import {
-  $sortedDiffs,
+  $sortedChanges,
   $step,
-  type ChangeDiff,
+  type Change,
   type StepValue
 } from '../../common/stores.ts'
 import type { ChangeId } from '../../common/types.ts'
@@ -45,17 +45,17 @@ export type Page =
   | { page: 'settings' }
   | { page: 'waiting' }
 
-function redirect(route: Route, step: StepValue, diffs: ChangeDiff[]): Page {
+function redirect(route: Route, step: StepValue, changes: Change[]): Page {
   if (route.route === 'home') {
     if (step === 'initialize' || step === 'versions') {
       return { page: 'waiting' }
-    } else if (diffs[0]) {
-      return { id: diffs[0].id, page: 'change' }
+    } else if (changes[0]) {
+      return { id: changes[0].id, page: 'change' }
     } else {
       return { page: 'empty' }
     }
   } else if (route.route === 'change') {
-    if (diffs.some(diff => diff.id === route.id)) {
+    if (changes.some(change => change.id === route.id)) {
       return { page: 'notFound' }
     } else {
       return { id: route.id, page: 'change' }
@@ -65,6 +65,6 @@ function redirect(route: Route, step: StepValue, diffs: ChangeDiff[]): Page {
   }
 }
 export const $page: ReadableAtom<Page> = computed(
-  [$router, $step, $sortedDiffs],
+  [$router, $step, $sortedChanges],
   redirect
 )

@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@fontsource-variable/martian-mono": "^5.2.6",
+    "@fontsource/jacquard-12": "^5.2.6",
     "@logux/actions": "^0.5.0",
     "@logux/client": "^0.22.0",
     "@logux/eslint-config": "56.1.0",

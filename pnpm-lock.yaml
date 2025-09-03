@@ -27,6 +27,9 @@ importers:
       '@fontsource-variable/martian-mono':
         specifier: ^5.2.6
         version: 5.2.6
+      '@fontsource/jacquard-12':
+        specifier: ^5.2.6
+        version: 5.2.6
       '@logux/actions':
         specifier: ^0.5.0
         version: 0.5.0(@logux/core@0.10.0)
@@ -387,6 +390,9 @@ packages:
 
   '@fontsource-variable/martian-mono@5.2.6':
     resolution: {integrity: sha512-CmjMLTVJVivuZSNhKJf3nLe67eC9W2x0IkIhrkT0h/AKUP8NETCUnbdhkZN/NYUZryDLiLr8FaYf4dALdPDRMA==}
+
+  '@fontsource/jacquard-12@5.2.6':
+    resolution: {integrity: sha512-xlMBX1Wze6KW0vSzpvuZkDh7rYoaXaMtBQZ2DITaXq0TFqh4K4fbTFeDE+jrLgdPGAqceWlHTVGmM6JcdfG8AQ==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3031,6 +3037,8 @@ snapshots:
       levn: 0.4.1
 
   '@fontsource-variable/martian-mono@5.2.6': {}
+
+  '@fontsource/jacquard-12@5.2.6': {}
 
   '@humanfs/core@0.19.1': {}
 

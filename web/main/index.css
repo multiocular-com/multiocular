@@ -1,6 +1,6 @@
 @import url('./reset.css');
 @import url('./colors.css');
-@import url('@fontsource-variable/martian-mono');
+@import url('./fonts.css');
 
 html {
   color: var(--text-color);
@@ -22,9 +22,7 @@ html {
 
 body,
 input {
-  font:
-    400 80%/1.6 'Martian Mono Variable',
-    monospace;
+  font: 400 80%/1.6 var(--monospace-font);
 }
 
 :focus-visible {

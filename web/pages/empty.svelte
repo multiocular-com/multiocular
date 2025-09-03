@@ -5,9 +5,9 @@
   import Placeholder from '../ui/placeholder.svelte'
 </script>
 
-<Page title="404">
+<Page title="Empty">
   <Header>
     <Logo />
   </Header>
-  <Placeholder text="Not Found" />
+  <Placeholder text="No Changes" />
 </Page>

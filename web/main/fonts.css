@@ -1,0 +1,7 @@
+@import url('@fontsource-variable/martian-mono');
+@import url('@fontsource/jacquard-12');
+
+html {
+  --decorative-font: 'Jacquard 12', system-ui;
+  --monospace-font: 'Martian Mono Variable', monospace;
+}

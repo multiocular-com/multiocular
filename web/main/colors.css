@@ -1,5 +1,6 @@
 html {
   --text-color: oklch(0.15 0 0);
+  --secondary-text-color: oklch(0.75 0 0);
   --background-color: oklch(0.97 0 0);
 }
 
