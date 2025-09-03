@@ -1,12 +1,19 @@
 import { styleText } from 'node:util'
 
-import { $sortedChanges, $step, type Change } from '../../common/stores.ts'
+import {
+  $diffs,
+  $sortedChanges,
+  $step,
+  type Change
+} from '../../common/stores.ts'
 import type { Debrand } from '../../common/types.ts'
 import type { Config } from './args.ts'
 import { print } from './print.ts'
 
 export type MultiocularJSON = Debrand<
-  Omit<Extract<Change, { status: 'loaded' }>, 'id' | 'size' | 'status'>[]
+  ({
+    diff: string
+  } & Omit<Extract<Change, { status: 'loaded' }>, 'id' | 'size' | 'status'>)[]
 >
 
 function colorizedDiff(diffText: string): string {
@@ -33,10 +40,11 @@ export function outputProcess(config: Config): void {
         .get()
         .filter(change => change.status === 'loaded')
       if (config.output === 'json') {
+        let diffs = $diffs.get()
         let json = changes.map(change => ({
           after: change.after,
           before: change.before,
-          diff: change.diff,
+          diff: diffs[change.id]!,
           from: change.from,
           name: change.name,
           type: change.type
@@ -46,8 +54,9 @@ export function outputProcess(config: Config): void {
         if (changes.length === 0) {
           print('No changes found')
         } else {
+          let diffs = $diffs.get()
           for (let change of changes) {
-            print(colorizedDiff(change.diff))
+            print(colorizedDiff(diffs[change.id]!))
           }
         }
       }

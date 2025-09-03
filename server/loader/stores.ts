@@ -1,16 +1,18 @@
-import { $changes, type Change } from '../../common/stores.ts'
+import {
+  $changes,
+  $diffs,
+  type Change,
+  updateChangeById
+} from '../../common/stores.ts'
 import type { ChangeId, Diff, DiffSize } from '../../common/types.ts'
+import { sendReplaceChanges, sendUpdateChange } from '../web/sync.ts'
 
-function changeStatus(changeId: ChangeId, update: Partial<Change>): void {
-  $changes.set(
-    $changes.get().map(change => {
-      if (change.id === changeId) {
-        return { ...change, ...update } as Change
-      } else {
-        return change
-      }
-    })
-  )
+export function updateChangeAndSend(
+  id: ChangeId,
+  update: Partial<Change>
+): void {
+  updateChangeById(id, update)
+  sendUpdateChange(id, update)
 }
 
 function realLines(str: string): number {
@@ -22,8 +24,8 @@ export function calcSize(diff: Diff): DiffSize {
 }
 
 export function addDiff(changeId: ChangeId, diff: Diff): void {
-  changeStatus(changeId, {
-    diff,
+  $diffs.set({ ...$diffs.get(), [changeId]: diff })
+  updateChangeAndSend(changeId, {
     size: calcSize(diff),
     status: 'loaded'
   })
@@ -31,4 +33,5 @@ export function addDiff(changeId: ChangeId, diff: Diff): void {
 
 export function initChanges(changes: Change[]): void {
   $changes.set(changes)
+  sendReplaceChanges(changes)
 }

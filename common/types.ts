@@ -1,3 +1,5 @@
+import type { Change } from './stores.ts'
+
 declare const __brand: unique symbol
 
 // Avoid using string for everything. With this fake __brand key we are adding
@@ -60,6 +62,14 @@ export function missingFile(path: string): MissingFile {
 
 export function dependency(object: Debrand<Dependency>): Dependency {
   return object as Dependency
+}
+
+export function change(object: Debrand<Change>): Change
+export function change(object: Partial<Debrand<Change>>): Partial<Change>
+export function change(
+  object: Partial<Debrand<Change>>
+): Change | Partial<Change> {
+  return object as any
 }
 
 export function serverURL(

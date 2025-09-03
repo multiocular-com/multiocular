@@ -6,7 +6,7 @@
 - Don’t use `export default`.
 - Always use `.ts` in TS files imports.
 - Use discriminant union in types: `{ missing: true } | { missing: false, content: string }` instead of `{ missing: boolean, content?: string }`.
-- Do not create variable for single use.
+- Do not create variable which you will use in single place.
 
 ## Architecture
 

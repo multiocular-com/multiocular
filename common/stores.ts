@@ -22,7 +22,6 @@ export type Change = {
   type: Dependency['type']
 } & (
   | {
-      diff: Diff
       size: DiffSize
       status: 'loaded'
     }
@@ -31,8 +30,24 @@ export type Change = {
     }
 )
 
+export type ChangeDiffs = Record<ChangeId, Diff>
+
 export const $changes = atom<Change[]>([])
+
+export const $diffs = atom<ChangeDiffs>({})
 
 export const $sortedChanges = computed($changes, changes =>
   [...changes].sort((a, b) => a.id.localeCompare(b.id))
 )
+
+export function updateChangeById(id: ChangeId, update: Partial<Change>): void {
+  $changes.set(
+    $changes.get().map(change => {
+      if (change.id === id) {
+        return { ...change, ...update } as Change
+      } else {
+        return change
+      }
+    })
+  )
+}
