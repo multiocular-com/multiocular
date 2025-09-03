@@ -1,4 +1,4 @@
-import type { Change } from '../../../common/types.ts'
+import type { Change } from '../../../common/stores.ts'
 import type { DiffLoader } from './common.ts'
 import { githubActions } from './github-actions.ts'
 import { npm } from './npm.ts'

@@ -30,10 +30,6 @@ export type LoadedFile = { content: FileContent; path: FilePath }
 export type MissingFile = { missing: true; path: FilePath }
 export type File = LoadedFile | MissingFile
 
-export function isLoaded(file: File): file is LoadedFile {
-  return !('missing' in file)
-}
-
 export interface Dependency {
   from: 'github-actions' | 'npm' | 'pnpm' | 'yarn'
   name: DependencyName
@@ -42,22 +38,9 @@ export interface Dependency {
   version: DependencyVersion
 }
 
-export interface Change {
-  after: DependencyVersion
-  before: DependencyVersion | false
-  from: Dependency['from']
-  id: ChangeId
-  name: DependencyName
-  type: Dependency['type']
+export function isLoaded(file: File): file is LoadedFile {
+  return !('missing' in file)
 }
-
-export type ChangeDiff = {
-  diff: Diff
-} & Change
-
-export type ChangeStatus = {
-  id: ChangeId
-} & ({ size: DiffSize; status: 'loaded' } | { status: 'loading' })
 
 export function filePath(value: string): FilePath {
   return value as FilePath

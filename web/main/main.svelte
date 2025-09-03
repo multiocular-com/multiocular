@@ -1,10 +1,10 @@
 <script lang="ts">
   import NotFound from '../pages/not-found.svelte'
-  import { router } from '../stores/router.ts'
+  import { $page as pageStore } from '../stores/router.ts'
 </script>
 
-{#if $router.route === 'notFound'}
+{#if $pageStore.page === 'notFound'}
   <NotFound />
 {:else}
-  {$router.route}
+  {$pageStore.page}
 {/if}

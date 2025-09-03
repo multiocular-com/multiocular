@@ -1,6 +1,5 @@
 import { $step } from '../../common/stores.ts'
-import type { FilePath } from '../../common/types.ts'
-import { isLoaded } from '../../common/types.ts'
+import { type FilePath, isLoaded } from '../../common/types.ts'
 import type { Config } from '../cli/args.ts'
 import { debug } from '../cli/print.ts'
 import { diffLoaders } from './diffs/index.ts'

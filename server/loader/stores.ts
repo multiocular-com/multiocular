@@ -1,11 +1,10 @@
-import { $diffs, $loading } from '../../common/stores.ts'
-import type {
-  ChangeDiff,
-  ChangeId,
-  ChangeStatus,
-  Diff,
-  DiffSize
-} from '../../common/types.ts'
+import {
+  $diffs,
+  $loading,
+  type ChangeDiff,
+  type ChangeStatus
+} from '../../common/stores.ts'
+import type { ChangeId, Diff, DiffSize } from '../../common/types.ts'
 
 function changeStatus(changed: ChangeStatus): void {
   $loading.set(
