@@ -2,7 +2,7 @@
   import iconSvg from '../public/icon.svg?raw'
   import Icon from './icon.svelte'
 
-  let pathMatch = iconSvg.match(/<path d="([^"]+)"/)
+  let pathMatch = iconSvg.match(/ d="([^"]+)"/)
   let iconPath = pathMatch?.[1] ?? ''
 </script>
 

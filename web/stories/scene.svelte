@@ -12,7 +12,7 @@
 
   $effect.pre(() => {
     hashStore.set(hash ?? '')
-    if (step) stepStore.set(step)
+    stepStore.set(step ?? 'initialize')
   })
 </script>
 
