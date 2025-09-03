@@ -3,6 +3,6 @@
   import Logo from './logo.svelte'
 </script>
 
-<Button href="#" variant="ghost">
+<Button aria-label="Home" href="#" variant="ghost">
   <Logo />
 </Button>
