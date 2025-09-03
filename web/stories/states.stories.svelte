@@ -25,3 +25,9 @@
     <Main />
   </Scene>
 </Story>
+
+<Story name="Not Found" asChild parameters={{ layout: 'fullscreen' }}>
+  <Scene hash="404">
+    <Main />
+  </Scene>
+</Story>
