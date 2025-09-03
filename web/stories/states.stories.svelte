@@ -31,3 +31,9 @@
     <Main />
   </Scene>
 </Story>
+
+<Story name="Empty" asChild parameters={{ layout: 'fullscreen' }}>
+  <Scene changes={[]} step="done">
+    <Main />
+  </Scene>
+</Story>
