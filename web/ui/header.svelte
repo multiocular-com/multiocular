@@ -18,6 +18,7 @@
     align-items: center;
     justify-content: center;
     height: 2.2rem;
+    padding: 0 0.2rem;
     box-shadow: var(--panel-shadow);
   }
 </style>
