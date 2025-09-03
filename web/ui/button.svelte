@@ -10,12 +10,14 @@
     children,
     disabled,
     onclick,
+    state,
     variant,
     ...props
   }: {
     children: Snippet
     disabled?: boolean
     onclick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
+    state?: 'hover' | 'pressed'
     variant?: 'ghost'
   } & (
     | ({ href: string } & HTMLAnchorAttributes)
@@ -28,6 +30,8 @@
     {...props}
     class="button"
     class:is-ghost={variant === 'ghost'}
+    class:is-hover={state === 'hover'}
+    class:is-pressed={state === 'pressed'}
     aria-disabled={disabled}
     href={props.href}
     onclick={onclick
@@ -45,6 +49,8 @@
     {...props}
     class="button"
     class:is-ghost={variant === 'ghost'}
+    class:is-hover={state === 'hover'}
+    class:is-pressed={state === 'pressed'}
     aria-disabled={disabled}
     onclick={onclick
       ? e => {
@@ -72,6 +78,7 @@
 
       &:hover,
       &:active,
+      &.is-hover,
       &.is-pressed {
         background: var(--ghost-hover-color);
       }
