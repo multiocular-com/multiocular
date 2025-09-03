@@ -46,5 +46,5 @@ test('starts web server with --web and makes HTTP requests', async () => {
 
 test('shows correct port in output when using --port argument', async () => {
   let output = await startInBackground(['--web', '--port 8080'])
-  assert.match(output, /8080/)
+  assert.match(output, /:8080/)
 })

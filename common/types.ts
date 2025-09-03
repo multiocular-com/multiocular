@@ -67,5 +67,5 @@ export function serverURL(
   host: string,
   port: number
 ): ServerURL {
-  return `${protocol}${host}${port}/` as ServerURL
+  return `${protocol}${host}:${port}/` as ServerURL
 }
