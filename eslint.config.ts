@@ -3,7 +3,7 @@ import type { Linter } from 'eslint'
 
 export default [
   {
-    ignores: ['dist/', 'client/storybook-static/', 'client/vite.config.ts.*']
+    ignores: ['dist/', 'storybook-static/', 'client/vite.config.ts.*']
   },
   ...loguxSvelteConfig,
   {
