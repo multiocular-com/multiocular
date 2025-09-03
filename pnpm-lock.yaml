@@ -90,6 +90,9 @@ importers:
       jiti:
         specifier: 2.5.1
         version: 2.5.1
+      keyux:
+        specifier: ^0.11.3
+        version: 0.11.3
       nano-staged:
         specifier: 0.8.0
         version: 0.8.0
@@ -1895,6 +1898,10 @@ packages:
 
   just-diff@6.0.2:
     resolution: {integrity: sha512-S59eriX5u3/QhMNq3v/gm8Kd0w8OS6Tz2FS1NG4blv+z0MuQcBRJyFWjdovM0Rad4/P4aUPFtnkNjMjyMlMSYA==}
+
+  keyux@0.11.3:
+    resolution: {integrity: sha512-IzS9emdl1gazLhGvCcwy066WYeOJtoxuncDVIsKvvyZZXRmPwUusHuvvOd4bjT9qiN+kBc9ntP6CaKYM16qzPA==}
+    engines: {node: ^18.0.0 || >=20.0.0}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -4617,6 +4624,8 @@ snapshots:
   just-diff-apply@5.5.0: {}
 
   just-diff@6.0.2: {}
+
+  keyux@0.11.3: {}
 
   keyv@4.5.4:
     dependencies:

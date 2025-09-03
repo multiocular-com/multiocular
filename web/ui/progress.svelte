@@ -1,8 +1,8 @@
 <script lang="ts">
   import Header from '../ui/header.svelte'
-  import Logo from '../ui/logo.svelte'
+  import Home from '../ui/home.svelte'
 </script>
 
 <Header>
-  <Logo />
+  <Home />
 </Header>

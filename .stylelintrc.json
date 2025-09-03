@@ -2,6 +2,14 @@
   "extends": ["@logux/stylelint-config"],
   "ignoreFiles": ["dist/**/*"],
   "rules": {
+    "declaration-property-value-no-unknown": [
+      true,
+      {
+        "propertiesSyntax": {
+          "corner-shape": "round | scoop | bevel | notch | square | squircle"
+        }
+      }
+    ],
     "function-disallowed-list": ["rgb", "rgba", "hsl", "hsla"],
     "unit-disallowed-list": [
       ["px", "em"],
@@ -16,6 +24,12 @@
             "translate"
           ]
         }
+      }
+    ],
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": ["corner-shape"]
       }
     ],
     "no-descending-specificity": null,

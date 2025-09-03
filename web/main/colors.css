@@ -2,11 +2,26 @@ html {
   --text-color: oklch(0.15 0 0);
   --secondary-text-color: oklch(0.75 0 0);
   --background-color: oklch(0.97 0 0);
+  --focus-color: oklch(0.83 0.165 84);
+  --panel-shadow:
+    0 0 6px oklch(0 0 0 / 10%), 0 0 3px oklch(0 0 0 / 10%),
+    0 0 1px oklch(0 0 0 / 20%);
+  --pressed-shadow:
+    inset 0 0 0 0.5px oklch(0 0 0 / 5%), inset 0 1px 2px oklch(0 0 0 / 20%),
+    inset 0 1px 4px oklch(0 0 0 / 20%);
+  --ghost-hover-color: oklch(0 0 0 / 5%);
 }
 
 @media (prefers-color-scheme: dark) {
   html {
     --text-color: oklch(0.9 0 0);
     --background-color: oklch(0.25 0 0);
+    --panel-shadow:
+      0 0 6px oklch(0 0 0 / 20%), 0 0 3px oklch(0 0 0 / 20%),
+      0 0 1px oklch(0 0 0);
+    --pressed-shadow:
+      inset 0 -0.5px 0 oklch(1 0 0 / 20%), inset 0 1px 2px oklch(0 0 0 / 80%),
+      inset 0 1px 4px oklch(0 0 0 / 80%);
+    --ghost-hover-color: oklch(1 0 0 / 4%);
   }
 }

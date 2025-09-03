@@ -17,6 +17,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2rem;
+    height: 2.2rem;
+    box-shadow: var(--panel-shadow);
   }
 </style>
