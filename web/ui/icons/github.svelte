@@ -1,5 +1,7 @@
 <script lang="ts">
   import Icon from '../icon.svelte'
+
+  // From https://github.com/tabler/tabler-icons
 </script>
 
 <Icon
