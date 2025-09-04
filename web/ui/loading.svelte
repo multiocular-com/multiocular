@@ -7,8 +7,8 @@
 <style>
   /* From https://css-tricks.com/how-to-create-wavy-shapes-patterns-in-css/ */
   .loading {
-    --loading-size: 0.5rem;
-    --loading-stroke: 0.25rem;
+    --loading-size: 0.375rem;
+    --loading-stroke: 0.1875rem;
 
     display: grid;
     flex-grow: 1;
