@@ -28,9 +28,9 @@ function parseHash(hash: string): Route {
   } else if (hash === 'settings') {
     return { route: 'settings' }
   } else {
-    let match = hash.match(/change\/([^/]+)/)
+    let match = hash.match(/change\/(.+)/)
     if (match) {
-      return { id: match[1]! as ChangeId, route: 'change' }
+      return { id: decodeURIComponent(match[1]!) as ChangeId, route: 'change' }
     } else {
       return { route: 'notFound' }
     }
@@ -49,16 +49,17 @@ function redirect(route: Route, step: StepValue, changes: Change[]): Page {
   if (route.route === 'home') {
     if (step === 'initialize' || step === 'versions') {
       return { page: 'waiting' }
-    } else if (changes[0]) {
-      return { id: changes[0].id, page: 'change' }
     } else {
+      if (changes[0]) {
+        location.hash = `#change/${changes[0].id}`
+      }
       return { page: 'empty' }
     }
   } else if (route.route === 'change') {
     if (changes.some(change => change.id === route.id)) {
-      return { page: 'notFound' }
-    } else {
       return { id: route.id, page: 'change' }
+    } else {
+      return { page: 'notFound' }
     }
   } else {
     return { page: route.route }

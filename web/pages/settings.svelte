@@ -2,11 +2,9 @@
   import Footer from '../ui/footer.svelte'
   import NameHeader from '../ui/name-header.svelte'
   import Page from '../ui/page.svelte'
-  import Placeholder from '../ui/placeholder.svelte'
 </script>
 
-<Page title="404">
+<Page title="Settings">
   <NameHeader />
-  <Placeholder text="Not Found" />
   <Footer />
 </Page>

@@ -35,8 +35,10 @@
 
 <style>
   .page {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding: calc(var(--panel-height) + 0.5rem) 0.5rem;
   }
 </style>

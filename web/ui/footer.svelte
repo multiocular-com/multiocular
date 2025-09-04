@@ -3,20 +3,22 @@
 
   import Panel from './panel.svelte'
 
-  let { children }: { children: Snippet } = $props()
+  let { children }: { children?: Snippet } = $props()
 </script>
 
-<header>
+<footer>
   <Panel>
-    {@render children()}
+    {#if children}
+      {@render children()}
+    {/if}
   </Panel>
-</header>
+</footer>
 
 <style>
-  header {
+  footer {
     position: fixed;
-    top: 0;
     right: 0;
+    bottom: 0;
     left: 0;
   }
 </style>

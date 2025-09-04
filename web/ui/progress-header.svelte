@@ -5,6 +5,6 @@
 </script>
 
 <Header>
-  <Home />
+  <Home href="#settings" />
   <Loading animated />
 </Header>
