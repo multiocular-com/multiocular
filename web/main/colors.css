@@ -9,7 +9,7 @@ html {
   --pressed-shadow:
     inset 0 0 0 0.5px oklch(0 0 0 / 5%), inset 0 1px 2px oklch(0 0 0 / 20%),
     inset 0 1px 4px oklch(0 0 0 / 20%);
-  --button-hover-color: oklch(0 0 0 / 3%);
+  --button-hover-color: oklch(1 0 0);
   --button-border:
     inset 0 0 0 0.5px oklch(0 0 0 / 15%), 0 0.5px 0 oklch(1 0 0),
     inset 0 1px 0 oklch(1 0 0);
