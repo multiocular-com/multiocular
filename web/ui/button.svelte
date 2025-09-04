@@ -98,7 +98,7 @@
       &:active,
       &.is-hover,
       &.is-pressed {
-        background: var(--button-hover-color);
+        background: var(--hover-color);
       }
     }
 
@@ -107,7 +107,7 @@
       &:active,
       &.is-hover,
       &.is-pressed {
-        background: var(--button-hover-color);
+        background: var(--hover-color);
       }
 
       &:hover,

@@ -53,7 +53,7 @@
     height: 100%;
 
     &:hover {
-      background: var(--button-hover-color);
+      background: var(--hover-color);
     }
   }
 
