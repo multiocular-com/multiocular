@@ -55,7 +55,7 @@ jobs:
           version: 10
       - name: Install Node.js
         if: steps.should_run.outputs.should_run == 'true'
-        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version: 24
           cache: pnpm
@@ -64,7 +64,7 @@ jobs:
         run: pnpm install --ignore-scripts
       - name: Publish to Chromatic
         if: steps.should_run.outputs.should_run == 'true'
-        uses: chromaui/action@c93e0bc3a63aa176e14a75b61a31847cbfdd341c # v1
+        uses: chromaui/action@d0795df816d05c4a89c80295303970fddd247cce # v13.1.4
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: build-visual
