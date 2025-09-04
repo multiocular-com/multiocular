@@ -10,15 +10,17 @@
     children,
     disabled,
     onclick,
+    padding = 'm',
     state,
-    variant,
+    variant = 'simple',
     ...props
   }: {
     children: Snippet
     disabled?: boolean
     onclick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
+    padding?: 'm' | 's' | false
     state?: 'hover' | 'pressed'
-    variant?: 'ghost'
+    variant?: 'ghost' | 'simple'
   } & (
     | ({ href: string } & HTMLAnchorAttributes)
     | ({ href?: undefined } & HTMLButtonAttributes)
@@ -31,7 +33,10 @@
     class="button"
     class:is-ghost={variant === 'ghost'}
     class:is-hover={state === 'hover'}
+    class:is-padding-m={padding === 'm'}
+    class:is-padding-s={padding === 's'}
     class:is-pressed={state === 'pressed'}
+    class:is-simple={variant === 'simple'}
     aria-disabled={disabled}
     href={props.href}
     onclick={onclick
@@ -50,7 +55,10 @@
     class="button"
     class:is-ghost={variant === 'ghost'}
     class:is-hover={state === 'hover'}
+    class:is-padding-m={padding === 'm'}
+    class:is-padding-s={padding === 's'}
     class:is-pressed={state === 'pressed'}
+    class:is-simple={variant === 'simple'}
     aria-disabled={disabled}
     onclick={onclick
       ? e => {
@@ -67,25 +75,49 @@
 
 <style>
   .button {
-    padding: 0.2rem;
+    display: inline-flex;
     color: currentcolor;
+    text-decoration: none;
+    background: transparent;
     border: none;
     border-radius: 0.25rem;
     corner-shape: squircle;
 
-    &.is-ghost {
-      background: transparent;
+    &.is-padding-m {
+      padding-inline: 0.5rem;
+    }
+
+    &.is-padding-s {
+      padding-inline: 0.2rem;
+    }
+
+    &.is-simple {
+      box-shadow: var(--button-border);
 
       &:hover,
       &:active,
       &.is-hover,
       &.is-pressed {
-        background: var(--ghost-hover-color);
+        background: var(--button-hover-color);
       }
     }
 
-    &:active,
-    &.is-pressed {
+    &.is-ghost {
+      &:hover,
+      &:active,
+      &.is-hover,
+      &.is-pressed {
+        background: var(--button-hover-color);
+      }
+
+      &:hover,
+      &.is-hover {
+        box-shadow: var(--button-border);
+      }
+    }
+
+    &&:active,
+    &&.is-pressed {
       box-shadow: var(--pressed-shadow);
     }
 
@@ -95,6 +127,12 @@
   }
 
   .button_cap {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    min-height: 1.75rem;
+    line-height: 1;
+
     .button:active &,
     .button.is-pressed & {
       translate: 0 1px;

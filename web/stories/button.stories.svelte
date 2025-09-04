@@ -10,13 +10,36 @@
 </script>
 
 <Story name="Initialize" asChild>
-  <Button variant="ghost">Ghost</Button>
-  <Button state="hover" variant="ghost">Ghost</Button>
-  <Button state="pressed" variant="ghost">Ghost</Button>
+  <section>
+    <Button variant="simple">Simple</Button>
+    <Button state="hover" variant="simple">Hover</Button>
+    <Button state="pressed" variant="simple">Pressed</Button>
+  </section>
+  <section>
+    <Button variant="ghost">Ghost</Button>
+    <Button state="hover" variant="ghost">Hover</Button>
+    <Button state="pressed" variant="ghost">Pressed</Button>
+  </section>
+  <section>
+    <Button href="#">Link</Button>
+  </section>
 </Story>
 
 <Story name="Dark" asChild parameters={{ themes: { themeOverride: 'dark' } }}>
-  <Button variant="ghost">Ghost</Button>
-  <Button state="hover" variant="ghost">Ghost</Button>
-  <Button state="pressed" variant="ghost">Ghost</Button>
+  <section>
+    <Button variant="simple">Simple</Button>
+    <Button state="hover" variant="simple">Hover</Button>
+    <Button state="pressed" variant="simple">Pressed</Button>
+  </section>
+  <section>
+    <Button variant="ghost">Ghost</Button>
+    <Button state="hover" variant="ghost">Hover</Button>
+    <Button state="pressed" variant="ghost">Pressed</Button>
+  </section>
 </Story>
+
+<style>
+  section + section {
+    margin-top: 1rem;
+  }
+</style>
