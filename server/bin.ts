@@ -14,7 +14,7 @@ import {
 
 let config = await parseArgs(process.argv.slice(2))
 let root = findProjectRoot(filePath(process.cwd()))
-if (config.debug) printDebugInfo(await getVersion(), config, root)
+if (config.debug) printDebugInfo(getVersion(), config, root)
 
 loadDiffs(root, config)
 outputProcess(config)

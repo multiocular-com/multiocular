@@ -1,6 +1,7 @@
 @import url('./reset.css');
 @import url('./colors.css');
 @import url('./fonts.css');
+@import url('./sizes.css');
 
 html {
   color: var(--text-color);
@@ -22,7 +23,7 @@ html {
 
 body,
 input {
-  font: 400 80%/1.6 var(--monospace-font);
+  font: 400 78.125%/1.12 var(--monospace-font);
 }
 
 :focus-visible {

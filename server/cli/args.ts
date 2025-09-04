@@ -4,6 +4,7 @@ import { join } from 'node:path'
 import { promisify } from 'node:util'
 
 import { format, print, printError } from './print.ts'
+import { getVersion } from './version.ts'
 
 const execAsync = promisify(exec)
 
@@ -31,14 +32,6 @@ export type Config = {
   | { commit: string; source: 'commit' }
   | { source: 'changed' | 'last-commit' }
 )
-
-export async function getVersion(): Promise<string> {
-  let packagePath = join(import.meta.dirname, '../../package.json')
-  let packageData = JSON.parse(await readFile(packagePath, 'utf-8')) as {
-    version: string
-  }
-  return packageData.version
-}
 
 async function printHelp(): Promise<void> {
   let helpPath = join(import.meta.dirname, 'help.txt')
@@ -105,7 +98,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
     } else if (arg === '--text') {
       output = 'text'
     } else if (arg === '--version' || arg === '-v') {
-      print('v' + (await getVersion()))
+      print('v' + getVersion())
       process.exit(0)
     } else {
       printError(format('Unknown argument `' + arg + '`'))

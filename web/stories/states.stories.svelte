@@ -37,3 +37,13 @@
     <Main />
   </Scene>
 </Story>
+
+<Story
+  name="Empty Dark"
+  asChild
+  parameters={{ layout: 'fullscreen', themes: { themeOverride: 'dark' } }}
+>
+  <Scene changes={[]} step="done">
+    <Main />
+  </Scene>
+</Story>
