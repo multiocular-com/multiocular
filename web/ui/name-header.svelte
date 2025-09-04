@@ -2,6 +2,7 @@
   import Button from './button.svelte'
   import Header from './header.svelte'
   import Home from './home.svelte'
+  import GithubIcon from './icons/github.svelte'
 </script>
 
 <Header>
@@ -20,6 +21,7 @@
         href="https://github.com/multiocular-com/multiocular"
         target="_blank"
       >
+        <GithubIcon />
         GitHub
       </Button>
     </div>
