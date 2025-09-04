@@ -22,7 +22,7 @@
           {:else}
             <!-- element is hidden for a11y tree, since we have another menu -->
             <!-- svelte-ignore a11y_consider_explicit_label -->
-            <a href={getChangeUrl(change.id)} title={change.id}>
+            <a href={getChangeUrl(change.id)} tabindex="-1" title={change.id}>
               <div class="line"></div>
             </a>
           {/if}
