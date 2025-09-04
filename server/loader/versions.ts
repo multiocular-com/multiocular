@@ -1,22 +1,15 @@
-import type { Change } from '../../common/stores.ts'
-import type { ChangeId, Dependency } from '../../common/types.ts'
+import { type Change, getChangeId } from '../../common/stores.ts'
+import type { Dependency } from '../../common/types.ts'
 
 function createChange(
   before: Dependency | undefined,
   after: Dependency
 ): Change {
-  let id: ChangeId
-  if (before) {
-    id =
-      `${after.type}:${after.name}@${before.version}>${after.version}` as ChangeId
-  } else {
-    id = `${after.type}:${after.name}@${after.version}` as ChangeId
-  }
   return {
     after: after.version,
     before: before ? before.version : false,
     from: after.from,
-    id,
+    id: getChangeId(after.type, after.name, before?.version, after.version),
     name: after.name,
     status: 'loading',
     type: after.type

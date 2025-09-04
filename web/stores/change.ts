@@ -20,3 +20,10 @@ export function getChange(id: ChangeId): ReadableAtom<ChangeValue> {
     }
   })
 }
+
+export function getChangeIndex(
+  changes: readonly Change[],
+  id: ChangeId
+): string {
+  return `${changes.findIndex(i => i.id === id) + 1}` + `/${changes.length}`
+}

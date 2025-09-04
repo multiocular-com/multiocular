@@ -37,8 +37,55 @@ export const $changes = atom<Change[]>([])
 export const $diffs = atom<ChangeDiffs>({})
 
 export const $sortedChanges = computed($changes, changes =>
-  [...changes].sort((a, b) => a.id.localeCompare(b.id))
+  [...changes].sort((a, b) => {
+    if (a.status === 'loading' && b.status !== 'loading') return 1
+    if (a.status !== 'loading' && b.status === 'loading') return -1
+    return a.id.localeCompare(b.id)
+  })
 )
+
+export interface ProgressItem {
+  id: 'loading' | ChangeId
+  part: number
+  status: Change['status']
+}
+
+export const $progress = computed($sortedChanges, changes => {
+  if (changes.length === 0) return []
+
+  let loadingChanges = changes.filter(change => change.status === 'loading')
+  let loadedChanges = changes.filter(change => change.status !== 'loading')
+
+  let totalSize = loadedChanges.reduce((sum, change) => sum + change.size, 0)
+
+  let loadingPart = (loadingChanges.length / changes.length) * 100
+  let loadedPart = 100 - loadingPart
+
+  let result: ProgressItem[] = []
+
+  for (let change of changes) {
+    if (change.status !== 'loading') {
+      let part =
+        totalSize > 0
+          ? (change.size / totalSize) * loadedPart
+          : loadedPart / loadedChanges.length
+      result.push({
+        id: change.id,
+        part,
+        status: change.status
+      })
+    }
+  }
+  if (loadingPart > 0) {
+    result.push({
+      id: 'loading',
+      part: loadingPart,
+      status: 'loading'
+    })
+  }
+
+  return result
+})
 
 export function updateChangeById(id: ChangeId, update: Partial<Change>): void {
   $changes.set(
@@ -50,4 +97,17 @@ export function updateChangeById(id: ChangeId, update: Partial<Change>): void {
       }
     })
   )
+}
+
+export function getChangeId(
+  type: Dependency['type'],
+  name: DependencyName,
+  before: DependencyVersion | false | undefined,
+  after: DependencyVersion
+): ChangeId {
+  if (before) {
+    return `${type}:${name}@${before}>${after}` as ChangeId
+  } else {
+    return `${type}:${name}@${after}` as ChangeId
+  }
 }

@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { $changes as changesStore } from '../../common/stores.ts'
   import type { ChangeId } from '../../common/types.ts'
-  import { getChange } from '../stores/change.ts'
+  import { getChange, getChangeIndex } from '../stores/change.ts'
   import Footer from '../ui/footer.svelte'
   import Page from '../ui/page.svelte'
   import ProgressHeader from '../ui/progress-header.svelte'
@@ -11,7 +12,7 @@
 </script>
 
 {#if !$change.notFound}
-  <Page title={$change.isLoading ? 'Wait' : $change.name}>
+  <Page title={$change.isLoading ? 'Wait' : getChangeIndex($changesStore, id)}>
     <ProgressHeader />
     <Footer />
   </Page>

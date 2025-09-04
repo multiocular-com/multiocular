@@ -51,7 +51,7 @@ function redirect(route: Route, step: StepValue, changes: Change[]): Page {
       return { page: 'waiting' }
     } else {
       if (changes[0]) {
-        location.hash = `#change/${changes[0].id}`
+        location.hash = getChangeUrl(changes[0].id)
       }
       return { page: 'empty' }
     }
@@ -69,3 +69,7 @@ export const $page: ReadableAtom<Page> = computed(
   [$router, $step, $sortedChanges],
   redirect
 )
+
+export function getChangeUrl(id: ChangeId): string {
+  return `#change/${encodeURI(id)}`
+}
