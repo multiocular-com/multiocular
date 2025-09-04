@@ -2,4 +2,6 @@ html {
   --page-width: 40rem;
   --panel-height: 2.2rem;
   --progress-stroke: 0.125rem;
+  --button-height: 1.75rem;
+  --radius: 0.25rem;
 }

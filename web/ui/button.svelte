@@ -80,7 +80,7 @@
     text-decoration: none;
     background: transparent;
     border: none;
-    border-radius: 0.25rem;
+    border-radius: var(--radius);
     corner-shape: squircle;
 
     &.is-padding-m {
@@ -130,7 +130,7 @@
     display: flex;
     gap: 0.3rem;
     align-items: center;
-    min-height: 1.75rem;
+    min-height: var(--button-height);
     line-height: 1;
 
     .button:active &,

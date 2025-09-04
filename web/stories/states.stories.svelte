@@ -50,7 +50,45 @@
       },
       { after: '8.0.1', before: '8.0.0', name: 'postcss', size: 50 }
     ]}
-    hash=""
+    hash="#change/npm:@typescript-eslint/project-service@8.40.0%3E8.41.0"
+    step="diffs"
+  >
+    <Main />
+  </Scene>
+</Story>
+
+<Story name="Eyes Moving" asChild parameters={{ layout: 'fullscreen' }}>
+  <Scene
+    changes={[
+      {
+        after: '5.1.5',
+        before: '5.1.4',
+        name: 'nanoid',
+        size: 10,
+        status: 'loaded'
+      },
+      {
+        after: '8.0.0',
+        before: '9.0.0',
+        name: 'nanoevents',
+        size: 10,
+        status: 'loaded'
+      },
+      {
+        after: '8.41.0',
+        before: '8.40.0',
+        name: '@typescript-eslint/project-service',
+        size: 10
+      },
+      {
+        after: '7.1.2',
+        before: '7.1.1',
+        name: 'npm-install-checks',
+        size: 100
+      },
+      { after: '8.0.1', before: '8.0.0', name: 'postcss', size: 50 }
+    ]}
+    hash="#change/npm:postcss@8.0.0%3E8.0.1"
     step="diffs"
   >
     <Main />

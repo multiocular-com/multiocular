@@ -1,18 +1,18 @@
 <script lang="ts">
-  import type { Change } from '../../common/stores.ts'
+  import { $sortedChanges as sortedChangesStore } from '../../common/stores.ts'
   import type { ChangeId } from '../../common/types.ts'
   import { getChangeUrl } from '../stores/router.ts'
 
-  let { changes, current }: { changes: readonly Change[]; current: ChangeId } =
-    $props()
+  let { current }: { current: ChangeId } = $props()
 </script>
 
 <nav>
   <ul>
-    {#each changes as change (change.id)}
-      <li>
+    {#each $sortedChangesStore as change (change.id)}
+      <li class:is-loading={change.status === 'loading'}>
         <a
           aria-current={current === change.id ? 'true' : 'false'}
+          aria-disabled={change.status === 'loading'}
           href={getChangeUrl(change.id)}
         >
           <div class="name">{change.name}</div>
@@ -36,6 +36,10 @@
 
   li {
     list-style: none;
+
+    &.is-loading {
+      cursor: wait;
+    }
   }
 
   a {
@@ -43,10 +47,12 @@
     padding: 0.5rem;
     color: var(--text-color);
     text-decoration: none;
+    border-radius: var(--radius);
 
     &:hover,
     &:active {
       background: var(--hover-color);
+      box-shadow: var(--button-border);
     }
 
     &:active {
@@ -55,6 +61,10 @@
 
     &:focus-visible {
       outline-offset: -2px;
+    }
+
+    li.is-loading & {
+      pointer-events: none;
     }
   }
 
