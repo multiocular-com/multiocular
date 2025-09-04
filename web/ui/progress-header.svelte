@@ -22,7 +22,9 @@
           {:else}
             <!-- element is hidden for a11y tree, since we have another menu -->
             <!-- svelte-ignore a11y_consider_explicit_label -->
-            <a href={getChangeUrl(change.id)} title={change.id}></a>
+            <a href={getChangeUrl(change.id)} title={change.id}>
+              <div class="line"></div>
+            </a>
           {/if}
         </li>
       {/each}
@@ -55,9 +57,13 @@
     &:hover {
       background: var(--hover-color);
     }
+
+    &:active {
+      box-shadow: var(--pressed-shadow);
+    }
   }
 
-  a::before {
+  .line {
     position: absolute;
     top: calc(50% - var(--progress-stroke) / 2);
     right: 0;
@@ -66,5 +72,9 @@
     height: var(--progress-stroke);
     content: '';
     background: var(--text-color);
+
+    a:active & {
+      translate: 0 1px;
+    }
   }
 </style>
