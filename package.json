@@ -43,7 +43,8 @@
     "build:web": "vite build web/",
     "build:server": "node ./scripts/build-server.ts",
     "format:js": "eslint --fix --cache --concurrency auto .",
-    "format:prettier": "prettier --experimental-cli --write ."
+    "format:prettier": "prettier --experimental-cli --write .",
+    "format:css": "stylelint --fix **/*.css **/*.svelte"
   },
   "dependencies": {
     "@logux/server": "^0.14.0",
