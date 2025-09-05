@@ -18,7 +18,7 @@
 
     &.is-loading {
       color: var(--secondary-text-color);
-      background: var(--panel-color);
+      background: var(--panel-background);
     }
   }
 

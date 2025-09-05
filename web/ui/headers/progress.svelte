@@ -86,7 +86,7 @@
 
     &:hover,
     &:active {
-      background: var(--panel-hover-color);
+      background: var(--panel-hover-background);
     }
 
     &:active {

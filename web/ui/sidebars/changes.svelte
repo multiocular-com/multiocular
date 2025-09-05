@@ -48,7 +48,7 @@
 
     &:hover,
     &:active {
-      background: var(--main-hover-color);
+      background: var(--main-hover-background);
     }
 
     &:active {

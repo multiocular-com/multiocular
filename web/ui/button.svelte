@@ -101,14 +101,14 @@
     }
 
     &.is-simple {
-      background: var(--panel-color);
+      background: var(--panel-background);
       box-shadow: var(--button-border);
 
       &:hover,
       &:active,
       &.is-hover,
       &.is-pressed {
-        background: var(--panel-hover-color);
+        background: var(--panel-hover-background);
       }
     }
 
@@ -117,7 +117,7 @@
       &:active,
       &.is-hover,
       &.is-pressed {
-        background: var(--panel-hover-color);
+        background: var(--panel-hover-background);
       }
     }
 

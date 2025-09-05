@@ -6,7 +6,7 @@
 html {
   color: var(--text-color);
   color-scheme: light dark;
-  background: var(--background-color);
+  background: var(--page-background);
 
   &.is-light-theme {
     color-scheme: light;

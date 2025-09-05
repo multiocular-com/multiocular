@@ -1,8 +1,8 @@
 html {
   --text-color: oklch(0.25 0.01 254);
   --secondary-text-color: oklch(0.5 0.02 248);
-  --background-color: oklch(1 0 0);
-  --panel-color: oklch(0.98 0.004 248);
+  --page-background: oklch(1 0 0);
+  --panel-background: oklch(0.98 0.004 248);
   --focus-color: oklch(0.66 0.17 256);
   --panel-shadow:
     0 1px 0 oklch(0.88 0.013 254), 0 -1px 0 oklch(0.88 0.013 254),
@@ -11,17 +11,19 @@ html {
     inset 0 0 0 0.5px oklch(0 0 0 / 5%), inset 0 1px 2px oklch(0 0 0 / 20%),
     inset 0 1px 4px oklch(0 0 0 / 20%);
   --line-pressed-shadow: none;
-  --main-hover-color: oklch(0.96 0.005 248);
-  --panel-hover-color: oklch(0.94 0.005 248);
+  --main-hover-background: oklch(0.96 0.005 248);
+  --panel-hover-background: oklch(0.94 0.005 248);
   --button-border: inset 0 0 0 1px oklch(0.88 0.013 248);
+  --add-text-background: oklch(0.25 0.032 163);
+  --remove-text-background: oklch(0.25 0.032 359);
 }
 
 @media (prefers-color-scheme: dark) {
   html {
     --text-color: oklch(0.97 0.01 248);
     --secondary-text-color: oklch(0.68 0.015 254);
-    --background-color: oklch(0.18 0.015 254);
-    --panel-color: oklch(0.11 0.019 248);
+    --page-background: oklch(0.18 0.015 254);
+    --panel-background: oklch(0.11 0.019 248);
     --panel-shadow:
       0 1px 0 oklch(0.38 0.02 254), 0 -1px 0 oklch(0.38 0.02 254),
       1px 0 0 oklch(0.38 0.02 254), -1px 0 0 oklch(0.38 0.02 254);
@@ -33,8 +35,10 @@ html {
       inset 4px 1px 4px -4px oklch(0 0 0 / 80%),
       inset -2px 1px 2px -2px oklch(0 0 0 / 80%),
       inset -4px 1px 4px -4px oklch(0 0 0 / 80%);
-    --main-hover-color: oklch(0.25 0.015 254);
-    --panel-hover-color: oklch(0.29 0.02 254);
+    --main-hover-background: oklch(0.25 0.015 254);
+    --panel-hover-background: oklch(0.29 0.02 254);
     --button-border: inset 0 0 0 1px oklch(0.38 0.018 254);
+    --add-text-background: oklch(0.25 0.032 163);
+    --remove-text-background: oklch(0.25 0.032 359);
   }
 }

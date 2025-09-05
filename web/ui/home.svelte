@@ -22,10 +22,10 @@
 
 <style>
   .logo {
-    background: var(--panel-color);
+    background: var(--panel-background);
 
     :global(a:hover) & {
-      background: var(--panel-hover-color);
+      background: var(--panel-hover-background);
     }
   }
 

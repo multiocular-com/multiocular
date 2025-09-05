@@ -36,7 +36,7 @@
     box-sizing: border-box;
     width: var(--sidebar-width);
     overflow: auto;
-    background: var(--background-color);
+    background: var(--page-background);
     box-shadow: var(--panel-shadow);
 
     &.is-right {

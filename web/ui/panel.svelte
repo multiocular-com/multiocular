@@ -30,7 +30,7 @@
     justify-content: center;
     height: var(--panel-height);
     padding: 0 0.2rem;
-    background: var(--panel-color);
+    background: var(--panel-background);
     box-shadow: var(--panel-shadow);
   }
 
