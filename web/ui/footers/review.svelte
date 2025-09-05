@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { mdiCheckCircle } from '@mdi/js'
+  import { mdiArrowRightThick, mdiCheckCircle, mdiUndo } from '@mdi/js'
 
+  import type { Change } from '../../../common/stores.ts'
   import type { ChangeId } from '../../../common/types.ts'
   import { reviewChange } from '../../stores/change.ts'
   import Button from '../button.svelte'
@@ -10,27 +11,59 @@
   let {
     current,
     disabled,
-    next
+    next,
+    status
   }:
-    | { current: ChangeId; disabled?: false; next?: string }
-    | { current?: undefined; disabled: true; next?: undefined } = $props()
+    | {
+        current: ChangeId
+        disabled?: false
+        next?: string
+        status: Change['status']
+      }
+    | {
+        current?: undefined
+        disabled: true
+        next?: undefined
+        status?: undefined
+      } = $props()
 </script>
 
 <Panel position="bottom">
   <div class="center">
-    <Button
-      {disabled}
-      onclick={() => {
-        if (current) {
-          reviewChange(current, 'reviewed')
-          location.hash = next ?? '#finish'
-        }
-      }}
-      variant="approve"
-    >
-      <Icon path={mdiCheckCircle} />
-      Review
-    </Button>
+    {#if status === 'loaded'}
+      <Button
+        {disabled}
+        onclick={() => {
+          if (current) {
+            location.hash = next ?? '#finish'
+            let reviewing = current
+            setTimeout(() => {
+              reviewChange(reviewing, 'reviewed')
+            }, 100)
+          }
+        }}
+        variant="approve"
+      >
+        <Icon path={mdiCheckCircle} />
+        Review
+      </Button>
+    {:else}
+      <Button
+        {disabled}
+        onclick={() => {
+          if (current) {
+            reviewChange(current, 'loaded')
+          }
+        }}
+      >
+        <Icon path={mdiUndo} />
+        Unreview
+      </Button>
+      <Button {disabled} href={next ?? '#finish'} variant="approve">
+        <Icon path={mdiArrowRightThick} />
+        Next change
+      </Button>
+    {/if}
   </div>
 </Panel>
 
@@ -38,6 +71,7 @@
   .center {
     display: flex;
     flex-grow: 1;
+    gap: 0.5rem;
     justify-content: flex-end;
     margin-inline: var(--sidebar-width);
   }

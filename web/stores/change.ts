@@ -45,7 +45,7 @@ export function getNextUrl(changes: readonly Change[], id: ChangeId): string {
 
 export function reviewChange(
   id: ChangeId,
-  value: Exclude<Change['status'], 'loaded' | 'loading'>
+  value: Exclude<Change['status'], 'loading'>
 ): void {
   client.log.add(reviewChangeAction({ id, value }), { sync: true })
 }

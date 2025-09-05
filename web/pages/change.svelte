@@ -27,5 +27,5 @@
   {:else}
     <Diff content={$diff.value} />
   {/if}
-  <ReviewFooter current={id} {next} />
+  <ReviewFooter current={id} {next} status={$change.status} />
 </Page>
