@@ -65,10 +65,17 @@
         <Icon path={mdiUndo} />
         Unreview
       </Button>
-      <Button {disabled} href={next ?? '#finish'} variant="approve">
-        <Icon path={mdiArrowRightThick} />
-        Next change
-      </Button>
+      {#if !next || next === '#finish'}
+        <Button {disabled} href="#finish" variant="approve">
+          <Icon path={mdiArrowRightThick} />
+          Finish
+        </Button>
+      {:else}
+        <Button {disabled} href={next} variant="approve">
+          <Icon path={mdiArrowRightThick} />
+          Next change
+        </Button>
+      {/if}
     {/if}
   </div>
 </Panel>
