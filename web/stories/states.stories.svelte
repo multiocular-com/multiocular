@@ -40,13 +40,13 @@
         after: '8.41.0',
         before: '8.40.0',
         name: '@typescript-eslint/project-service',
-        size: 10
+        size: 100
       },
       {
-        after: '7.1.2',
-        before: '7.1.1',
-        name: 'npm-install-checks',
-        size: 100
+        after: '8.41.0',
+        before: '8.40.0',
+        name: 'typescript-eslint',
+        size: 10
       },
       { after: '8.0.1', before: '8.0.0', name: 'postcss', size: 50 }
     ]}
@@ -57,38 +57,45 @@
   </Scene>
 </Story>
 
-<Story name="Eyes Moving" asChild parameters={{ layout: 'fullscreen' }}>
+<Story name="Diff" asChild parameters={{ layout: 'fullscreen' }}>
   <Scene
     changes={[
-      {
-        after: '5.1.5',
-        before: '5.1.4',
-        name: 'nanoid',
-        size: 10,
-        status: 'loaded'
-      },
+      { after: '5.1.5', before: '5.1.4', name: 'nanoid', status: 'loading' },
       {
         after: '8.0.0',
         before: '9.0.0',
         name: 'nanoevents',
-        size: 10,
-        status: 'loaded'
+        size: 10
       },
       {
         after: '8.41.0',
         before: '8.40.0',
         name: '@typescript-eslint/project-service',
-        size: 10
+        size: 100
       },
       {
-        after: '7.1.2',
-        before: '7.1.1',
-        name: 'npm-install-checks',
-        size: 100
+        after: '8.41.0',
+        before: '8.40.0',
+        name: 'typescript-eslint',
+        size: 10
       },
       { after: '8.0.1', before: '8.0.0', name: 'postcss', size: 50 }
     ]}
-    hash="#change/npm:postcss@8.0.0%3E8.0.1"
+    diffs={{
+      'npm:typescript-eslint@8.40.0>8.41.0': `diff --git npm:typescript-eslint@8.40.0/package.json npm:typescript-eslint@8.41.0/package.json
+index v8.40.0..v8.41.0 100644
+--- npm:typescript-eslint@8.40.0/package.json
++++ npm:typescript-eslint@8.41.0/package.json
+@@ -1,6 +1,6 @@
+  {
+    "name": "typescript-eslint",
+-  "version": "8.40.0",
++  "version": "8.41.0",
+    "description": "Tooling which enables you to use TypeScript with ESLint",
+    "files": [
+      "dist",`
+    }}
+    hash="#change/npm:typescript-eslint@8.40.0%3E8.41.0"
     step="diffs"
   >
     <Main />

@@ -3,7 +3,9 @@
 
   import {
     type Change,
+    type ChangeDiffs,
     $changes as changesStore,
+    $diffs as diffsStore,
     getChangeId,
     $step as stepStore,
     type StepValue
@@ -35,11 +37,13 @@
   let {
     changes = [],
     children,
+    diffs = {},
     hash = '',
     step = 'done'
   }: {
     changes?: Partial<Debrand<Change>>[]
     children: Snippet
+    diffs?: Record<string, string>
     hash?: string
     step?: StepValue
   } = $props()
@@ -48,6 +52,13 @@
     stepStore.set(step)
     changesStore.set(changes.map(i => mockChange(i)))
     hashStore.set(hash)
+    diffsStore.set(diffs as ChangeDiffs)
+    return () => {
+      hashStore.set('settings')
+      stepStore.set('done')
+      changesStore.set([])
+      diffsStore.set({})
+    }
   })
 </script>
 
