@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { mdiTagMultipleOutline } from '@mdi/js'
+
   import Button from '../button.svelte'
   import Home from '../home.svelte'
-  import GithubIcon from '../icons/github.svelte'
+  import Icon from '../icon.svelte'
+  import { github } from '../icons/github.ts'
   import Panel from '../panel.svelte'
 </script>
 
@@ -14,6 +17,7 @@
         target="_blank"
         title="Change log"
       >
+        <Icon path={mdiTagMultipleOutline} />
         {__MULTIOCULAR_VERSION__}
       </Button>
     </div>
@@ -22,7 +26,7 @@
         href="https://github.com/multiocular-com/multiocular"
         target="_blank"
       >
-        <GithubIcon />
+        <Icon path={github} />
         GitHub
       </Button>
     </div>

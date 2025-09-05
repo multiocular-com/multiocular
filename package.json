@@ -59,6 +59,7 @@
     "@logux/client": "^0.22.0",
     "@logux/eslint-config": "56.1.0",
     "@logux/stylelint-config": "^0.21.0",
+    "@mdi/js": "^7.4.47",
     "@storybook/addon-svelte-csf": "^5.0.8",
     "@storybook/addon-themes": "^9.1.4",
     "@storybook/svelte": "^9.1.4",

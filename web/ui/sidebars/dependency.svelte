@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { mdiOpenInNew } from '@mdi/js'
+
   import type { Change } from '../../../common/stores.ts'
   import Button from '../button.svelte'
-  import GithubIcon from '../icons/github.svelte'
+  import Icon from '../icon.svelte'
+  import { github } from '../icons/github.ts'
   import Sidebar from '../sidebar.svelte'
 
   let { change }: { change: Change } = $props()
@@ -11,15 +14,18 @@
   <h1>{change.name}</h1>
   <Button href={change.repository} size="big" target="_blank">
     {#if change.repository.startsWith('https://github.com/')}
-      <GithubIcon />
+      <Icon path={github} />
+      Repository
+    {:else}
+      <Icon path={mdiOpenInNew} />
+      Project link
     {/if}
-    Repository
   </Button>
 </Sidebar>
 
 <style>
   h1 {
-    margin-bottom: 1rem;
+    margin: 0.2rem 0 0.7rem;
     font: var(--title-font);
     overflow-wrap: break-word;
   }

@@ -63,8 +63,8 @@ interface PackageJson {
   repository?: { type?: string; url: string } | string
 }
 
-function extractRepositoryUrl(packageJsonContent: string): null | string {
-  let pkg = JSON.parse(packageJsonContent) as PackageJson
+function extractRepositoryUrl(packageJson: string): null | string {
+  let pkg = JSON.parse(packageJson) as PackageJson
   if (pkg.private) return null
   if (pkg.repository) {
     if (typeof pkg.repository === 'string') {
@@ -125,9 +125,9 @@ export function findRepositorySource(
   } else {
     try {
       let require = createRequire(import.meta.url)
-      let packageJsonPath = require.resolve(`${name}/package.json`)
-      let packageJsonContent = readFileSync(packageJsonPath, 'utf8')
-      let repoUrl = extractRepositoryUrl(packageJsonContent)
+      let repoUrl = extractRepositoryUrl(
+        readFileSync(require.resolve(`${name}/package.json`), 'utf8')
+      )
       if (repoUrl) return repoUrl as Repository
     } catch {
       // Package not found in node_modules
