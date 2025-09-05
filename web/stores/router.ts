@@ -18,6 +18,7 @@ window.addEventListener('hashchange', updateHash)
 
 export type Route =
   | { id: ChangeId; route: 'change' }
+  | { route: 'finish' }
   | { route: 'home' }
   | { route: 'notFound' }
   | { route: 'settings' }
@@ -27,6 +28,8 @@ function parseHash(hash: string): Route {
     return { route: 'home' }
   } else if (hash === 'settings') {
     return { route: 'settings' }
+  } else if (hash === 'finish') {
+    return { route: 'finish' }
   } else {
     let match = hash.match(/change\/(.+)/)
     if (match) {
@@ -41,6 +44,7 @@ export const $router: ReadableAtom<Route> = computed($hash, parseHash)
 export type Page =
   | { id: ChangeId; page: 'change' }
   | { page: 'empty' }
+  | { page: 'finish' }
   | { page: 'notFound' }
   | { page: 'settings' }
   | { page: 'waiting' }
@@ -61,6 +65,12 @@ function redirect(route: Route, step: StepValue, changes: Change[]): Page {
     } else {
       return { page: 'notFound' }
     }
+  } else if (route.route === 'finish') {
+    let unreviewed = changes.find(change => change.status === 'loaded')
+    if (unreviewed) {
+      location.hash = getChangeUrl(unreviewed.id)
+    }
+    return { page: route.route }
   } else {
     return { page: route.route }
   }

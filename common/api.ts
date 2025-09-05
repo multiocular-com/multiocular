@@ -15,6 +15,12 @@ export const replaceChangesAction = defineAction<{
   type: 'changes/replace'
 }>('changes/replace')
 
+export const reviewChangeAction = defineAction<{
+  id: ChangeId
+  type: 'changes/review'
+  value: Exclude<Change['status'], 'loaded' | 'loading'>
+}>('changes/review')
+
 export const updateChangeAction = defineAction<{
   id: ChangeId
   type: 'changes/update'

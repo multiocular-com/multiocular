@@ -13,6 +13,7 @@
       {#each $sortedChangesStore as change (change.id)}
         <li class:is-loading={change.status === 'loading'}>
           <a
+            class:is-reviewed={change.status === 'reviewed'}
             aria-current={current === change.id ? 'true' : 'false'}
             aria-disabled={change.status === 'loading'}
             href={getChangeUrl(change.id)}
@@ -59,13 +60,20 @@
       outline-offset: -2px;
     }
 
-    li.is-loading & {
+    &.is-reviewed {
+      padding-left: var(--safe-padding);
+      border-left: 0.25rem solid var(--approve-background);
+      opacity: 70%;
+    }
+
+    &[aria-disabled='true'] {
       pointer-events: none;
     }
 
     &[aria-current='true'] {
       padding-left: var(--safe-padding);
       border-left: 0.25rem solid var(--focus-color);
+      opacity: 100%;
     }
   }
 

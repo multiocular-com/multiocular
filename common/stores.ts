@@ -25,7 +25,7 @@ export type Change = {
 } & (
   | {
       size: DiffSize
-      status: 'loaded'
+      status: 'loaded' | 'reviewed'
     }
   | {
       status: 'loading'

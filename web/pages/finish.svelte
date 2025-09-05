@@ -6,7 +6,7 @@
 </script>
 
 <Page title="Wait">
-  <ProgressHeader />
-  <Placeholder loading text="Extracting Diffs…" />
+  <ProgressHeader finish />
+  <Placeholder text="All changes reviewed" />
   <ReviewFooter disabled />
 </Page>

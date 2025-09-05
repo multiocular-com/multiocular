@@ -1,9 +1,8 @@
 <script lang="ts">
   import { $changes as changesStore } from '../../common/stores.ts'
   import type { ChangeId } from '../../common/types.ts'
-  import { getChange, getChangeIndex, getNextChange } from '../stores/change.ts'
+  import { getChange, getChangeIndex, getNextUrl } from '../stores/change.ts'
   import { getDiff } from '../stores/diff.ts'
-  import { getChangeUrl } from '../stores/router.ts'
   import Diff from '../ui/diff.svelte'
   import ReviewFooter from '../ui/footers/review.svelte'
   import ProgressHeader from '../ui/headers/progress.svelte'
@@ -16,8 +15,7 @@
 
   let change = $derived(getChange(id))
   let diff = $derived(getDiff(id))
-  let nextChange = $derived(getNextChange($changesStore, id))
-  let next = $derived(nextChange ? getChangeUrl(nextChange.id) : undefined)
+  let next = $derived(getNextUrl($changesStore, id))
 </script>
 
 <Page title={getChangeIndex($changesStore, id)}>
@@ -29,5 +27,5 @@
   {:else}
     <Diff content={$diff.value} />
   {/if}
-  <ReviewFooter {next} />
+  <ReviewFooter current={id} {next} />
 </Page>

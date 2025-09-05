@@ -5,6 +5,7 @@ import {
   addDiffAction,
   changeStepAction,
   replaceChangesAction,
+  reviewChangeAction,
   subprotocol,
   updateChangeAction
 } from '../../common/api.ts'
@@ -25,6 +26,8 @@ client.log.on('add', action => {
     $changes.set(action.changes)
   } else if (updateChangeAction.match(action)) {
     updateChange(action.id, action.update)
+  } else if (reviewChangeAction.match(action)) {
+    updateChange(action.id, { status: action.value })
   } else if (addDiffAction.match(action)) {
     addDiff(action.id, action.diff)
   }

@@ -1,18 +1,35 @@
 <script lang="ts">
-  import { mdiArrowRightThick } from '@mdi/js'
+  import { mdiCheckCircle } from '@mdi/js'
 
+  import type { ChangeId } from '../../../common/types.ts'
+  import { reviewChange } from '../../stores/change.ts'
   import Button from '../button.svelte'
   import Icon from '../icon.svelte'
   import Panel from '../panel.svelte'
 
-  let { next }: { next?: string } = $props()
+  let {
+    current,
+    disabled,
+    next
+  }:
+    | { current: ChangeId; disabled?: false; next?: string }
+    | { current?: undefined; disabled: true; next?: undefined } = $props()
 </script>
 
 <Panel position="bottom">
   <div class="center">
-    <Button disabled={!next} href={next ?? '#'} variant="approve">
-      <Icon path={mdiArrowRightThick} />
-      Next change
+    <Button
+      {disabled}
+      onclick={() => {
+        if (current) {
+          reviewChange(current, 'reviewed')
+          location.hash = next ?? '#finish'
+        }
+      }}
+      variant="approve"
+    >
+      <Icon path={mdiCheckCircle} />
+      Review
     </Button>
   </div>
 </Panel>

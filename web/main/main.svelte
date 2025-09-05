@@ -1,6 +1,7 @@
 <script lang="ts">
   import ChangePage from '../pages/change.svelte'
   import EmptyPage from '../pages/empty.svelte'
+  import FinishPage from '../pages/finish.svelte'
   import NotFoundPage from '../pages/not-found.svelte'
   import SettingsPage from '../pages/settings.svelte'
   import WaitingPage from '../pages/waiting.svelte'
@@ -17,4 +18,6 @@
   <ChangePage id={$pageStore.id} />
 {:else if $pageStore.page === 'settings'}
   <SettingsPage />
+{:else if $pageStore.page === 'finish'}
+  <FinishPage />
 {/if}

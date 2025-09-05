@@ -1,7 +1,10 @@
 import { computed, type ReadableAtom } from 'nanostores'
 
+import { reviewChangeAction } from '../../common/api.ts'
 import { $changes, type Change } from '../../common/stores.ts'
 import type { ChangeId } from '../../common/types.ts'
+import { client } from '../main/sync.ts'
+import { getChangeUrl } from './router.ts'
 
 export function getChange(id: ChangeId): ReadableAtom<Change> {
   let prevValue: Change | undefined
@@ -26,9 +29,23 @@ export function getChangeIndex(
   return `${changes.findIndex(i => i.id === id) + 1}` + `/${changes.length}`
 }
 
-export function getNextChange(
-  changes: readonly Change[],
-  id: ChangeId
-): Change | undefined {
-  return changes[changes.findIndex(i => i.id === id) + 1]
+export function getNextUrl(changes: readonly Change[], id: ChangeId): string {
+  let nextChange = changes[changes.findIndex(i => i.id === id) + 1]
+  if (nextChange && nextChange.status === 'loaded') {
+    return getChangeUrl(nextChange.id)
+  } else {
+    let unreviewed = changes.find(i => i.status === 'loaded')
+    if (unreviewed) {
+      return getChangeUrl(unreviewed.id)
+    } else {
+      return '#finish'
+    }
+  }
+}
+
+export function reviewChange(
+  id: ChangeId,
+  value: Exclude<Change['status'], 'loaded' | 'loading'>
+): void {
+  client.log.add(reviewChangeAction({ id, value }), { sync: true })
 }

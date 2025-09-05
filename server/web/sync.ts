@@ -4,9 +4,10 @@ import {
   addDiffAction,
   changeStepAction,
   replaceChangesAction,
+  reviewChangeAction,
   updateChangeAction
 } from '../../common/api.ts'
-import { $changes, $diffs, $step } from '../../common/stores.ts'
+import { $changes, $diffs, $step, updateChange } from '../../common/stores.ts'
 import type { ChangeId } from '../../common/types.ts'
 import { LOCAL } from '../env.ts'
 
@@ -58,6 +59,18 @@ export function syncStores(server: BaseServer): void {
     access() {
       // Only server can send this action
       return false
+    },
+    resend() {
+      return 'projects/main'
+    }
+  })
+
+  server.type(reviewChangeAction, {
+    access() {
+      return LOCAL
+    },
+    process(ctx, action) {
+      updateChange(action.id, { status: action.value })
     },
     resend() {
       return 'projects/main'

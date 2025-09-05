@@ -9,11 +9,20 @@
   import Loading from '../../ui/loading.svelte'
   import Panel from '../panel.svelte'
 
-  let { current }: { current?: ChangeId } = $props()
+  let {
+    current,
+    finish
+  }:
+    | { current?: ChangeId; finish?: false }
+    | { current?: undefined; finish: true } = $props()
 
   let currentIndex = $derived($progressStore.findIndex(i => i.id === current))
   let moveEyes = $derived(
-    $progressStore.slice(0, currentIndex).reduce((sum, i) => sum + i.part, 0)
+    finish
+      ? 100
+      : $progressStore
+          .slice(0, currentIndex)
+          .reduce((sum, i) => sum + i.part, 0)
   )
 </script>
 
@@ -33,7 +42,8 @@
             <!-- element is hidden for a11y tree, since we have another menu -->
             <!-- svelte-ignore a11y_consider_explicit_label -->
             <a
-              class:is-before={index < currentIndex}
+              class:is-before={finish || index < currentIndex}
+              class:is-reviewed={change.status === 'reviewed'}
               href={getChangeUrl(change.id)}
               tabindex="-1"
               title={change.id}
@@ -107,10 +117,15 @@
     height: var(--progress-stroke);
     content: '';
     background: var(--text-color);
+    transition: background 150ms;
 
     a:active & {
       box-shadow: var(--line-pressed-shadow);
       translate: 0 1px;
+    }
+
+    a.is-reviewed & {
+      background: var(--approve-background);
     }
   }
 </style>

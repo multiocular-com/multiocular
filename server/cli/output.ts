@@ -13,7 +13,7 @@ import { print } from './print.ts'
 export type MultiocularJSON = Debrand<
   ({
     diff: string
-  } & Omit<Extract<Change, { status: 'loaded' }>, 'id' | 'size' | 'status'>)[]
+  } & Omit<Extract<Change, { status: string }>, 'id' | 'size' | 'status'>)[]
 >
 
 function colorizedDiff(diffText: string): string {
