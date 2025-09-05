@@ -5,7 +5,13 @@
   let { href = '#', name = false }: { href?: string; name?: boolean } = $props()
 </script>
 
-<Button aria-label="Home" {href} padding={name ? 'm' : 's'} variant="ghost">
+<Button
+  aria-label="Home"
+  {href}
+  padding={name ? 'm' : 's'}
+  tabindex={name ? 0 : -1}
+  variant="ghost"
+>
   <div class="logo">
     <Logo />
   </div>

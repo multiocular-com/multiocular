@@ -3,7 +3,7 @@ html {
   --secondary-text-color: oklch(0.5 0.02 248);
   --background-color: oklch(1 0 0);
   --panel-color: oklch(0.98 0.004 248);
-  --focus-color: oklch(0.83 0.165 84);
+  --focus-color: oklch(0.66 0.17 256);
   --panel-shadow:
     0 1px 0 oklch(0.88 0.013 254), 0 -1px 0 oklch(0.88 0.013 254),
     1px 0 0 oklch(0.88 0.013 254), -1px 0 0 oklch(0.88 0.013 254);

@@ -16,15 +16,21 @@
   })
 </script>
 
-<aside class:is-padding={padding} class:is-right={position === 'right'}>
+<aside
+  class:is-padding={padding}
+  class:is-right={position === 'right'}
+  tabindex="-1"
+>
   {@render children()}
 </aside>
 
 <style>
   aside {
     position: fixed;
-    top: var(--panel-height);
-    bottom: var(--panel-height);
+    /* stylelint-disable unit-disallowed-list */
+    top: calc(var(--panel-height) + 1px);
+    bottom: calc(var(--panel-height) + 1px);
+    /* stylelint-enable unit-disallowed-list */
     left: 0;
     z-index: 1;
     box-sizing: border-box;
