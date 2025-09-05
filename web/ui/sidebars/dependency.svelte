@@ -21,5 +21,6 @@
   h1 {
     margin-bottom: 1rem;
     font: var(--title-font);
+    overflow-wrap: break-word;
   }
 </style>
