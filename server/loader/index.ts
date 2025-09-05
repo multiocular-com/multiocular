@@ -1,12 +1,26 @@
-import { $step } from '../../common/stores.ts'
-import { type FilePath, isLoaded } from '../../common/types.ts'
+import {
+  addDiffAction,
+  replaceChangesAction,
+  updateChangeAction
+} from '../../common/api.ts'
+import { $changes, $step, addDiff, updateChange } from '../../common/stores.ts'
+import {
+  change,
+  type DiffSize,
+  type FilePath,
+  isLoaded
+} from '../../common/types.ts'
 import type { Config } from '../cli/args.ts'
 import { debug } from '../cli/print.ts'
+import { send } from '../web/sync.ts'
 import { diffLoaders } from './diffs/index.ts'
 import { getChangedFiles, loadFile } from './git.ts'
-import { addDiff, initChanges } from './stores.ts'
 import { calculateVersionDiff } from './versions.ts'
 import { versionsLoaders } from './versions/index.ts'
+
+function calcSize(str: string): DiffSize {
+  return str.split('\n').filter(i => i.trim().length > 0).length as DiffSize
+}
 
 export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
   $step.set('versions')
@@ -54,12 +68,22 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
     debug('')
   }
 
-  initChanges(changes)
+  $changes.set(changes)
+  send(replaceChangesAction({ changes }))
+
   $step.set('diffs')
   await Promise.all(
-    changes.map(async change => {
-      let diff = await diffLoaders[change.type](change)
-      addDiff(change.id, diff)
+    changes.map(async i => {
+      let id = i.id
+      let diff = await diffLoaders[i.type](i)
+      addDiff(id, diff)
+      send(addDiffAction({ diff, id }))
+      let update = change({
+        size: calcSize(diff),
+        status: 'loaded'
+      })
+      updateChange(id, update)
+      send(updateChangeAction({ id, update }))
     })
   )
 

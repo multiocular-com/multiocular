@@ -1,22 +1,19 @@
-import type { BaseServer } from '@logux/server'
+import type { Action, BaseServer } from '@logux/server'
 
-import { changeStep, replaceChanges, updateChange } from '../../common/api.ts'
-import { $changes, $step, type Change } from '../../common/stores.ts'
+import {
+  addDiffAction,
+  changeStepAction,
+  replaceChangesAction,
+  updateChangeAction
+} from '../../common/api.ts'
+import { $changes, $diffs, $step } from '../../common/stores.ts'
 import type { ChangeId } from '../../common/types.ts'
 import { LOCAL } from '../env.ts'
 
 let syncServer: BaseServer | null = null
 
-export function sendUpdateChange(id: ChangeId, update: Partial<Change>): void {
-  if (syncServer) {
-    syncServer.process(updateChange({ id, update }))
-  }
-}
-
-export function sendReplaceChanges(changes: Change[]): void {
-  if (syncServer) {
-    syncServer.process(replaceChanges({ changes }))
-  }
+export function send(action: Action): void {
+  syncServer?.process(action)
 }
 
 export function syncStores(server: BaseServer): void {
@@ -28,13 +25,16 @@ export function syncStores(server: BaseServer): void {
     },
     load() {
       return [
-        changeStep({ value: $step.get() }),
-        replaceChanges({ changes: $changes.get() })
+        changeStepAction({ value: $step.get() }),
+        replaceChangesAction({ changes: $changes.get() }),
+        ...Object.entries($diffs.get()).map(([id, diff]) => {
+          return addDiffAction({ diff, id: id as ChangeId })
+        })
       ]
     }
   })
 
-  server.type(changeStep, {
+  server.type(changeStepAction, {
     access() {
       // Only server can send this action
       return false
@@ -44,7 +44,7 @@ export function syncStores(server: BaseServer): void {
     }
   })
 
-  server.type(replaceChanges, {
+  server.type(replaceChangesAction, {
     access() {
       // Only server can send this action
       return false
@@ -54,7 +54,17 @@ export function syncStores(server: BaseServer): void {
     }
   })
 
-  server.type(updateChange, {
+  server.type(updateChangeAction, {
+    access() {
+      // Only server can send this action
+      return false
+    },
+    resend() {
+      return 'projects/main'
+    }
+  })
+
+  server.type(addDiffAction, {
     access() {
       // Only server can send this action
       return false
@@ -65,6 +75,6 @@ export function syncStores(server: BaseServer): void {
   })
 
   $step.listen(value => {
-    server.process(changeStep({ value }))
+    server.process(changeStepAction({ value }))
   })
 }

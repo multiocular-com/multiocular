@@ -89,7 +89,7 @@ export const $progress = computed($sortedChanges, changes => {
   return result
 })
 
-export function updateChangeById(id: ChangeId, update: Partial<Change>): void {
+export function updateChange(id: ChangeId, update: Partial<Change>): void {
   $changes.set(
     $changes.get().map(change => {
       if (change.id === id) {
@@ -99,6 +99,13 @@ export function updateChangeById(id: ChangeId, update: Partial<Change>): void {
       }
     })
   )
+}
+
+export function addDiff(id: ChangeId, diff: Diff): void {
+  $diffs.set({
+    ...$diffs.get(),
+    [id]: diff
+  })
 }
 
 export function getChangeId(
