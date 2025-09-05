@@ -4,10 +4,15 @@ import { $changes, type Change } from '../../common/stores.ts'
 import type { ChangeId } from '../../common/types.ts'
 
 export function getChange(id: ChangeId): ReadableAtom<Change> {
+  let prevValue: Change | undefined
   return computed([$changes], changes => {
     let value = changes.find(i => i.id === id)
     if (value) {
-      return { ...value, isLoading: false, notFound: false } as const
+      prevValue = value
+      return value
+    } else if (prevValue) {
+      // Hack to fix Storybook <Scene> hack
+      return prevValue
     } else {
       throw new Error('No change with this ID')
     }
