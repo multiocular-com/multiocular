@@ -1,7 +1,7 @@
 name: Visual Test
 on:
   schedule:
-    - cron: '00 03 * * *' # Runs at midnight UTC every day
+    - cron: '00 04 * * *' # Runs at midnight UTC every day
   push:
     branches:
       - main
