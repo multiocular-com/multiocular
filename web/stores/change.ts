@@ -35,7 +35,7 @@ export function getNextUrl(changes: readonly Change[], id: ChangeId): string {
     return getChangeUrl(nextChange.id)
   } else {
     let unreviewed = changes.find(i => i.status === 'loaded')
-    if (unreviewed) {
+    if (unreviewed && unreviewed.id !== id) {
       return getChangeUrl(unreviewed.id)
     } else {
       return '#finish'

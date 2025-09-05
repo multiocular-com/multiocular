@@ -35,11 +35,17 @@
         {disabled}
         onclick={() => {
           if (current) {
-            location.hash = next ?? '#finish'
-            let reviewing = current
-            setTimeout(() => {
-              reviewChange(reviewing, 'reviewed')
-            }, 100)
+            if (!next || next === '#finish') {
+              reviewChange(current, 'reviewed')
+              location.hash = '#finish'
+            } else {
+              location.hash = next
+              let reviewing = current
+              // To prevent footer flash changes
+              setTimeout(() => {
+                reviewChange(reviewing, 'reviewed')
+              }, 100)
+            }
           }
         }}
         variant="approve"
