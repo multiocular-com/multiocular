@@ -16,4 +16,9 @@ nano-staged.json
 tsconfig.*
 AGENTS.md
 
+web/assets/*.woff
+web/assets/*-math-*.woff2
+web/assets/*-symbols-*.woff2
+web/assets/*-latin-ext-*.woff2
+
 *.d.ts.map
