@@ -39,7 +39,8 @@
 
   a {
     display: block;
-    padding: 0.5rem;
+    padding: var(--safe-padding);
+    padding-left: calc(var(--safe-padding) + 0.25rem);
     font: var(--control-font);
     color: var(--text-color);
     overflow-wrap: break-word;
@@ -60,6 +61,11 @@
 
     li.is-loading & {
       pointer-events: none;
+    }
+
+    &[aria-current='true'] {
+      padding-left: var(--safe-padding);
+      border-left: 0.25rem solid var(--focus-color);
     }
   }
 
