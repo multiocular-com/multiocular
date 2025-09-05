@@ -80,7 +80,7 @@
     left: 0;
     display: block;
     width: 100%;
-    height: var(--button-height);
+    height: var(--control-height);
     border-radius: var(--radius);
     transition: left 150ms cubic-bezier(0.5, 0, 0.75, 0);
 

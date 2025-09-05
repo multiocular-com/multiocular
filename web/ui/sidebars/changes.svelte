@@ -40,6 +40,7 @@
   a {
     display: block;
     padding: 0.5rem;
+    font: var(--control-font);
     color: var(--text-color);
     overflow-wrap: break-word;
     text-decoration: none;

@@ -9,6 +9,7 @@ html {
     liberation mono, monospace;
   --decorative-family: 'Jacquard 12', system-ui;
   --base-font: 400 0.9375rem/1.4 var(--regular-family);
+  --title-font: 600 1rem/1.2 var(--regular-family);
   --secondary-font: 400 0.875rem/1.4 var(--regular-family);
   --control-font: 500 0.9375rem/1.4 var(--regular-family);
   --code-font: 400 0.875rem/2 var(--monospace-family);

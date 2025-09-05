@@ -20,7 +20,7 @@
     disabled?: boolean
     onclick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
     padding?: 'm' | 's' | false
-    size?: 'inline' | 'wide'
+    size?: 'big' | 'inline'
     state?: 'hover' | 'pressed'
     variant?: 'ghost' | 'simple'
   } & (
@@ -33,13 +33,13 @@
   <a
     {...props}
     class="button"
+    class:is-big={size === 'big'}
     class:is-ghost={variant === 'ghost'}
     class:is-hover={state === 'hover'}
     class:is-padding-m={padding === 'm'}
     class:is-padding-s={padding === 's'}
     class:is-pressed={state === 'pressed'}
     class:is-simple={variant === 'simple'}
-    class:is-wide={size === 'wide'}
     aria-disabled={disabled}
     href={props.href}
     onclick={onclick
@@ -56,13 +56,13 @@
   <button
     {...props}
     class="button"
+    class:is-big={size === 'big'}
     class:is-ghost={variant === 'ghost'}
     class:is-hover={state === 'hover'}
     class:is-padding-m={padding === 'm'}
     class:is-padding-s={padding === 's'}
     class:is-pressed={state === 'pressed'}
     class:is-simple={variant === 'simple'}
-    class:is-wide={size === 'wide'}
     aria-disabled={disabled}
     onclick={onclick
       ? e => {
@@ -96,7 +96,7 @@
       padding-inline: 0.2rem;
     }
 
-    &.is-wide {
+    &.is-big {
       width: stretch;
     }
 
@@ -135,12 +135,16 @@
     display: flex;
     gap: 0.3rem;
     align-items: center;
-    min-height: var(--button-height);
+    min-height: var(--control-height);
     line-height: 1;
 
     .button:active &,
     .button.is-pressed & {
       translate: 0 1px;
+    }
+
+    .button.is-big & {
+      min-height: var(--big-control-height);
     }
   }
 </style>

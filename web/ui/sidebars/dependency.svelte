@@ -8,10 +8,18 @@
 </script>
 
 <Sidebar padding position="right">
-  <Button href={change.repository} size="wide">
+  <h1>{change.name}</h1>
+  <Button href={change.repository} size="big" target="_blank">
     {#if change.repository.startsWith('https://github.com/')}
       <GithubIcon />
     {/if}
     Repository
   </Button>
 </Sidebar>
+
+<style>
+  h1 {
+    margin-bottom: 1rem;
+    font: var(--title-font);
+  }
+</style>
