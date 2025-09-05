@@ -20,3 +20,10 @@ export function getChangeIndex(
 ): string {
   return `${changes.findIndex(i => i.id === id) + 1}` + `/${changes.length}`
 }
+
+export function getNextChange(
+  changes: readonly Change[],
+  id: ChangeId
+): Change | undefined {
+  return changes[changes.findIndex(i => i.id === id) + 1]
+}

@@ -4,16 +4,25 @@
   let {
     children,
     position
-  }: { children: Snippet; position: 'bottom' | 'top' } = $props()
+  }: { children?: Snippet; position: 'bottom' | 'top' } = $props()
+
+  $effect(() => {
+    if (position === 'bottom') {
+      document.body.classList.add(`is-footer`)
+      return () => {
+        document.body.classList.remove(`is-footer`)
+      }
+    }
+  })
 </script>
 
 {#if position === 'top'}
   <header>
-    {@render children()}
+    {@render children?.()}
   </header>
 {:else}
   <footer>
-    {@render children()}
+    {@render children?.()}
   </footer>
 {/if}
 

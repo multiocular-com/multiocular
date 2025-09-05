@@ -1,6 +1,7 @@
 html {
   --text-color: oklch(0.25 0.01 254);
   --secondary-text-color: oklch(0.5 0.02 248);
+  --light-text-color: oklch(1 0 0);
   --page-background: oklch(1 0 0);
   --panel-background: oklch(0.98 0.004 248);
   --focus-color: oklch(0.66 0.17 256);
@@ -13,9 +14,14 @@ html {
   --line-pressed-shadow: none;
   --main-hover-background: oklch(0.96 0.005 248);
   --panel-hover-background: oklch(0.94 0.005 248);
+  --approve-background: oklch(0.54 0.16 146);
+  --approve-hover-background: oklch(0.57 0.16 146);
   --button-border: inset 0 0 0 1px oklch(0.88 0.013 248);
-  --add-text-background: oklch(0.25 0.032 163);
-  --remove-text-background: oklch(0.25 0.032 359);
+  --button-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 30%), inset 0 -1px 0 oklch(0 0 0 / 10%),
+    0 1px 3px oklch(0 0 0 / 30%);
+  --add-text-background: oklch(0.95 0.05 152);
+  --remove-text-background: oklch(0.95 0.022 24);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -38,6 +44,9 @@ html {
     --main-hover-background: oklch(0.25 0.015 254);
     --panel-hover-background: oklch(0.29 0.02 254);
     --button-border: inset 0 0 0 1px oklch(0.38 0.018 254);
+    --button-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 30%), inset 0 -1px 0 oklch(0 0 0 / 30%),
+      0 1px 2px oklch(0 0 0);
     --add-text-background: oklch(0.25 0.032 163);
     --remove-text-background: oklch(0.25 0.032 359);
   }

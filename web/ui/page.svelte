@@ -39,7 +39,11 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-block: var(--panel-height);
+    padding-top: var(--panel-height);
+
+    :global(body.is-footer) & {
+      padding-bottom: var(--panel-height);
+    }
 
     :global(body.is-left-sidebar) & {
       padding-left: var(--sidebar-width);

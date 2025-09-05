@@ -22,7 +22,7 @@
     padding?: 'm' | 's' | false
     size?: 'big' | 'inline'
     state?: 'hover' | 'pressed'
-    variant?: 'ghost' | 'simple'
+    variant?: 'approve' | 'ghost' | 'simple'
   } & (
     | ({ href: string } & HTMLAnchorAttributes)
     | ({ href?: undefined } & HTMLButtonAttributes)
@@ -33,6 +33,7 @@
   <a
     {...props}
     class="button"
+    class:is-approve={variant === 'approve'}
     class:is-big={size === 'big'}
     class:is-ghost={variant === 'ghost'}
     class:is-hover={state === 'hover'}
@@ -56,6 +57,7 @@
   <button
     {...props}
     class="button"
+    class:is-approve={variant === 'approve'}
     class:is-big={size === 'big'}
     class:is-ghost={variant === 'ghost'}
     class:is-hover={state === 'hover'}
@@ -121,6 +123,19 @@
       }
     }
 
+    &.is-approve {
+      color: var(--light-text-color);
+      background: var(--approve-background);
+      box-shadow: var(--button-shadow);
+
+      &:hover,
+      &:active,
+      &.is-hover,
+      &.is-pressed {
+        background: var(--approve-hover-background);
+      }
+    }
+
     &&:active,
     &&.is-pressed {
       box-shadow: var(--pressed-shadow);
@@ -128,6 +143,12 @@
 
     &:focus-visible {
       outline-offset: 0;
+    }
+
+    &[aria-disabled='true'] {
+      pointer-events: none;
+      box-shadow: none;
+      opacity: 70%;
     }
   }
 
