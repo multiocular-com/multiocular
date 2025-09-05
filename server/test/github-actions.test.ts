@@ -77,6 +77,7 @@ test('shows new GitHub Actions', async () => {
       before: false,
       diff: /action\.yml.*name.*description.*runs/s,
       name: 'actions/checkout',
+      repository: 'https://github.com/actions/checkout',
       type: 'github-actions'
     }
   ])

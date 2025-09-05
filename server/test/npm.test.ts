@@ -41,6 +41,7 @@ test('shows dependency changes with npm', async () => {
         '     "uuid",',
       from: 'npm',
       name: 'nanoid',
+      repository: 'https://github.com/ai/nanoid',
       type: 'npm'
     }
   ])
@@ -74,6 +75,7 @@ test('shows git dependency changes with npm', async () => {
       after: new RegExp(afterCommit),
       before: new RegExp(beforeCommit),
       name: 'nanoid',
+      repository: 'https://github.com/ai/nanoid',
       type: 'npm'
     }
   ])

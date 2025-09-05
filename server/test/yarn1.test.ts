@@ -42,6 +42,7 @@ test('shows dependency changes with yarn 1', async () => {
         '     "uuid",',
       from: 'yarn',
       name: 'nanoid',
+      repository: 'https://github.com/ai/nanoid',
       type: 'npm'
     }
   ])
@@ -77,6 +78,7 @@ test('shows git dependency changes with yarn 1', async () => {
       after: new RegExp(afterCommit),
       before: new RegExp(beforeCommit),
       name: 'nanoid',
+      repository: 'https://github.com/ai/nanoid',
       type: 'npm'
     }
   ])

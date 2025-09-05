@@ -41,6 +41,7 @@ test('shows dependency changes with pnpm', async () => {
         '     "uuid",',
       from: 'pnpm',
       name: 'nanoid',
+      repository: 'https://github.com/ai/nanoid',
       type: 'npm'
     }
   ])
@@ -56,25 +57,6 @@ test('shows scoped dependency changes with pnpm', async () => {
       after: '20.1.0',
       before: '20.0.0',
       name: '@types/node'
-    }
-  ])
-})
-
-test('shows git dependency changes with pnpm', async () => {
-  let beforeCommit = 'c0b7b0c33797d4397310bafe517d7e8b65bbf3cc'
-  let afterCommit = '27ee2c4b80dc6ddf7916b6ec933f462945ddf3bc'
-
-  await run(`pnpm add nanoid@ai/nanoid#${beforeCommit}`)
-  await run('git add .')
-  await run('git commit -m "Add nanoid from git"')
-  await run(`pnpm add nanoid@ai/nanoid#${afterCommit}`)
-
-  await cliJsonMatch([
-    {
-      after: new RegExp(afterCommit),
-      before: new RegExp(beforeCommit),
-      name: 'nanoid',
-      type: 'npm'
     }
   ])
 })

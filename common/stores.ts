@@ -6,7 +6,8 @@ import type {
   DependencyName,
   DependencyVersion,
   Diff,
-  DiffSize
+  DiffSize,
+  Repository
 } from './types.ts'
 
 export type StepValue = 'diffs' | 'done' | 'initialize' | 'versions'
@@ -19,6 +20,7 @@ export type Change = {
   from: Dependency['from']
   id: ChangeId
   name: DependencyName
+  repository: Repository
   type: Dependency['type']
 } & (
   | {

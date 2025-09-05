@@ -47,6 +47,7 @@ export function outputProcess(config: Config): void {
           diff: diffs[change.id]!,
           from: change.from,
           name: change.name,
+          repository: change.repository,
           type: change.type
         })) satisfies MultiocularJSON
         print(JSON.stringify(json, null, 2))

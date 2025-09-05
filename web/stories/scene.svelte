@@ -18,6 +18,7 @@
       from: 'npm',
       id: '',
       name: 'mock-package',
+      repository: 'https://www.npmjs.com/package/mock-package',
       size: 100,
       status: 'loaded',
       type: 'npm',

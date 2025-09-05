@@ -92,6 +92,7 @@ export const githubActions = {
             dependency({
               from: 'github-actions',
               name: action.name,
+              repository: `https://github.com/${action.name}`,
               source: file.path,
               type: 'github-actions',
               version: action.version

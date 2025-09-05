@@ -43,6 +43,7 @@ test('shows dependency changes with yarn berry', async () => {
         '     "uuid",',
       from: 'yarn',
       name: 'nanoid',
+      repository: 'https://github.com/ai/nanoid',
       type: 'npm'
     }
   ])

@@ -73,6 +73,7 @@ test('syncs subscription and change update', async () => {
       from: 'npm',
       id: 'test-change',
       name: 'test-package',
+      repository: 'https://www.npmjs.com/package/test-package',
       status: 'loading',
       type: 'npm'
     })

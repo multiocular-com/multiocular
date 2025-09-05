@@ -153,7 +153,8 @@ export async function cliGood(...args: CliArg[]): Promise<string> {
   let result = await runCli(...args)
   if (result.code !== 0) {
     throw new Error(
-      `Expected exit code 0, got ${result.code}\n${result.stderr}`
+      `Expected exit code 0, got ${result.code}` +
+        `\n${result.stdout}\n${result.stderr}`
     )
   }
   if (result.stderr !== '') {

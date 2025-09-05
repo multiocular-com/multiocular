@@ -3,10 +3,10 @@ import { parse } from 'yaml'
 
 import { dependency, type Dependency } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
-import { splitPackage } from './common.ts'
+import { findRepositorySource, splitPackage } from './common.ts'
 
 interface PnpmLock9 {
-  packages: Record<string, object>
+  packages: Record<string, { resolution?: { integrity: string } | string }>
 }
 
 function isLockFile9(obj: unknown): obj is PnpmLock9 {
@@ -30,12 +30,18 @@ export const pnpm = {
       let lock = parse(file.content)
       if (isLockFile9(lock)) {
         for (let pkg in lock.packages) {
+          let { name, version } = splitPackage(pkg)
           dependencies.push(
             dependency({
-              ...splitPackage(pkg),
               from: 'pnpm',
+              name,
+              repository: findRepositorySource(
+                lock.packages[pkg]?.resolution,
+                name
+              ),
               source: file.path,
-              type: 'npm'
+              type: 'npm',
+              version
             })
           )
         }
