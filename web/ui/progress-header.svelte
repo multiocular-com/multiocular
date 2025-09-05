@@ -109,6 +109,7 @@
     background: var(--text-color);
 
     a:active & {
+      box-shadow: var(--line-pressed-shadow);
       translate: 0 1px;
     }
   }

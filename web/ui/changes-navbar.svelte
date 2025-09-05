@@ -51,7 +51,6 @@
     color: var(--text-color);
     overflow-wrap: break-word;
     text-decoration: none;
-    border-radius: 1px;
 
     &:hover,
     &:active {
