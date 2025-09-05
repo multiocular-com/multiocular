@@ -57,7 +57,7 @@
     left: calc(var(--move, 0) * (100% - var(--eyes-width)));
     z-index: 2;
     width: var(--eyes-width);
-    transition: left 200ms cubic-bezier(0.5, 0, 0.75, 0);
+    transition: left 300ms cubic-bezier(0.5, 0, 0.75, 0);
   }
 
   ul {
@@ -77,15 +77,16 @@
 
   a {
     position: relative;
+    left: 0;
     display: block;
     width: 100%;
     height: var(--button-height);
     border-radius: var(--radius);
+    transition: left 150ms cubic-bezier(0.5, 0, 0.75, 0);
 
     &:hover,
     &:active {
-      background: var(--hover-color);
-      box-shadow: var(--button-border);
+      background: var(--panel-hover-color);
     }
 
     &:active {

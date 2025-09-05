@@ -17,7 +17,7 @@
         >
           <div class="name">{change.name}</div>
           <div class="versions">
-            {change.before} > {change.after}
+            {change.before} → {change.after}
           </div>
         </a>
       </li>
@@ -31,7 +31,10 @@
     top: var(--panel-height);
     bottom: var(--panel-height);
     left: 0;
+    z-index: 1;
+    width: 20rem;
     overflow: auto;
+    box-shadow: var(--panel-shadow);
   }
 
   li {
@@ -46,13 +49,13 @@
     display: block;
     padding: 0.5rem;
     color: var(--text-color);
+    overflow-wrap: break-word;
     text-decoration: none;
-    border-radius: var(--radius);
+    border-radius: 1px;
 
     &:hover,
     &:active {
-      background: var(--hover-color);
-      box-shadow: var(--button-border);
+      background: var(--main-hover-color);
     }
 
     &:active {
@@ -69,16 +72,13 @@
   }
 
   .name {
-    text-decoration: underline;
-
     a:active & {
       translate: 0 1px;
     }
   }
 
   .versions {
-    margin-top: 0.4rem;
-    font-size: 80%;
+    font: var(--secondary-font);
     color: var(--secondary-text-color);
     text-decoration: none;
 

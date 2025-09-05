@@ -1,7 +1,16 @@
-@import url('@fontsource-variable/martian-mono');
 @import url('@fontsource/jacquard-12');
 
 html {
-  --decorative-font: 'Jacquard 12', system-ui;
-  --monospace-font: 'Martian Mono Variable', monospace;
+  --regular-family:
+    -apple-system, blinkmacsystemfont, 'Segoe UI', 'Noto Sans', helvetica,
+    arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --monospace-family:
+    'Monaspace Neon', ui-monospace, sfmono-regular, sf mono, menlo, consolas,
+    liberation mono, monospace;
+  --decorative-family: 'Jacquard 12', system-ui;
+  --base-font: 400 0.9375rem/1.4 var(--regular-family);
+  --secondary-font: 400 0.875rem/1.4 var(--regular-family);
+  --control-font: 500 0.9375rem/1.4 var(--regular-family);
+  --code-font: 400 0.875rem/2 var(--monospace-family);
+  --cool-font: 400 1.5625rem/1 var(--decorative-family);
 }

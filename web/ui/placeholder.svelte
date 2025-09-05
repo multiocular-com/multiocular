@@ -16,9 +16,6 @@
   }
 
   h1 {
-    font-family: var(--decorative-font);
-    font-size: 2rem;
-    font-weight: 400;
-    color: var(--secondary-text-color);
+    font: var(--cool-font);
   }
 </style>

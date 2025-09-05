@@ -1,34 +1,34 @@
 html {
-  --text-color: oklch(0.15 0 0);
-  --secondary-text-color: oklch(0.75 0 0);
-  --background-color: oklch(0.97 0 0);
+  --text-color: oklch(0.25 0.01 254);
+  --secondary-text-color: oklch(0.5 0.02 248);
+  --background-color: oklch(1 0 0);
+  --panel-color: oklch(0.98 0.004 248);
   --focus-color: oklch(0.83 0.165 84);
   --panel-shadow:
-    0 0 6px oklch(0 0 0 / 10%), 0 0 3px oklch(0 0 0 / 10%),
-    0 0 1px oklch(0 0 0 / 20%);
+    0 1px 0 oklch(0.88 0.013 254), 0 -1px 0 oklch(0.88 0.013 254),
+    1px 0 0 oklch(0.88 0.013 254), -1px 0 0 oklch(0.88 0.013 254);
   --pressed-shadow:
     inset 0 0 0 0.5px oklch(0 0 0 / 5%), inset 0 1px 2px oklch(0 0 0 / 20%),
     inset 0 1px 4px oklch(0 0 0 / 20%);
-  --hover-color: oklch(1 0 0 / 50%);
-  --button-border:
-    inset 0 0 0 0.5px oklch(0 0 0 / 15%), 0 0.5px 0 oklch(1 0 0),
-    inset 0 1px 0 oklch(1 0 0);
+  --main-hover-color: oklch(0.96 0.005 248);
+  --panel-hover-color: oklch(0.94 0.005 248);
+  --button-border: inset 0 0 0 1px oklch(0.88 0.013 248);
 }
 
 @media (prefers-color-scheme: dark) {
   html {
-    --text-color: oklch(0.9 0 0);
-    --secondary-text-color: oklch(0.5 0 0);
-    --background-color: oklch(0.25 0 0);
+    --text-color: oklch(0.97 0.01 248);
+    --secondary-text-color: oklch(0.68 0.015 254);
+    --background-color: oklch(0.27 0.018 254);
+    --panel-color: oklch(0.22 0.018 254);
     --panel-shadow:
-      0 0 6px oklch(0 0 0 / 20%), 0 0 3px oklch(0 0 0 / 20%),
-      0 0 1px oklch(0 0 0);
+      0 1px 0 oklch(0.38 0.02 254), 0 -1px 0 oklch(0.38 0.02 254),
+      1px 0 0 oklch(0.38 0.02 254), -1px 0 0 oklch(0.38 0.02 254);
     --pressed-shadow:
       inset 0 -0.5px 0 oklch(1 0 0 / 20%), inset 0 1px 2px oklch(0 0 0 / 80%),
       inset 0 1px 4px oklch(0 0 0 / 80%);
-    --hover-color: oklch(1 0 0 / 4%);
-    --button-border:
-      inset 0 0 0 0.5px oklch(0 0 0), 0 0.5px 0 oklch(1 0 0 / 15%),
-      inset 0 1px 0 oklch(1 0 0 / 15%);
+    --main-hover-color: oklch(0.31 0.02 254);
+    --panel-hover-color: oklch(0.29 0.02 254);
+    --button-border: inset 0 0 0 1px oklch(0.38 0.018 254);
   }
 }

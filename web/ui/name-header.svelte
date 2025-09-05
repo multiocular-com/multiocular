@@ -12,6 +12,7 @@
       <Button
         href="https://github.com/multiocular-com/multiocular/releases"
         target="_blank"
+        title="Change log"
       >
         {__MULTIOCULAR_VERSION__}
       </Button>

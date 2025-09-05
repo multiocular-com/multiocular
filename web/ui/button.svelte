@@ -76,6 +76,7 @@
 <style>
   .button {
     display: inline-flex;
+    font: var(--control-font);
     color: currentcolor;
     text-decoration: none;
     background: transparent;
@@ -92,13 +93,14 @@
     }
 
     &.is-simple {
+      background: var(--panel-color);
       box-shadow: var(--button-border);
 
       &:hover,
       &:active,
       &.is-hover,
       &.is-pressed {
-        background: var(--hover-color);
+        background: var(--panel-hover-color);
       }
     }
 
@@ -107,12 +109,7 @@
       &:active,
       &.is-hover,
       &.is-pressed {
-        background: var(--hover-color);
-      }
-
-      &:hover,
-      &.is-hover {
-        box-shadow: var(--button-border);
+        background: var(--panel-hover-color);
       }
     }
 

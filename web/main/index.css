@@ -23,7 +23,12 @@ html {
 
 body,
 input {
-  font: 400 78.125%/1.12 var(--monospace-font);
+  font: var(--base-font);
+}
+
+pre,
+code {
+  font: var(--code-font);
 }
 
 :focus-visible {

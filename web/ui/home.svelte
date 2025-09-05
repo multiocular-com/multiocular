@@ -6,15 +6,24 @@
 </script>
 
 <Button aria-label="Home" {href} padding={name ? 'm' : 's'} variant="ghost">
-  <Logo />
+  <div class="logo">
+    <Logo />
+  </div>
   {#if name}
     <div class="name">Multiocular</div>
   {/if}
 </Button>
 
 <style>
+  .logo {
+    background: var(--panel-color);
+
+    :global(a:hover) & {
+      background: var(--panel-hover-color);
+    }
+  }
+
   .name {
-    font-family: var(--decorative-font);
-    font-size: 200%;
+    font: var(--cool-font);
   }
 </style>

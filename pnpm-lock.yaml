@@ -24,9 +24,6 @@ importers:
         specifier: ^2.8.1
         version: 2.8.1
     devDependencies:
-      '@fontsource-variable/martian-mono':
-        specifier: ^5.2.6
-        version: 5.2.6
       '@fontsource/jacquard-12':
         specifier: ^5.2.6
         version: 5.2.6
@@ -393,9 +390,6 @@ packages:
   '@eslint/plugin-kit@0.3.5':
     resolution: {integrity: sha512-Z5kJ+wU3oA7MMIqVR9tyZRtjYPr4OC004Q4Rw7pgOKUOKkJfZ3O24nz3WYfGRpMDNmcOi3TwQOmgm7B7Tpii0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@fontsource-variable/martian-mono@5.2.6':
-    resolution: {integrity: sha512-CmjMLTVJVivuZSNhKJf3nLe67eC9W2x0IkIhrkT0h/AKUP8NETCUnbdhkZN/NYUZryDLiLr8FaYf4dALdPDRMA==}
 
   '@fontsource/jacquard-12@5.2.6':
     resolution: {integrity: sha512-xlMBX1Wze6KW0vSzpvuZkDh7rYoaXaMtBQZ2DITaXq0TFqh4K4fbTFeDE+jrLgdPGAqceWlHTVGmM6JcdfG8AQ==}
@@ -3065,8 +3059,6 @@ snapshots:
     dependencies:
       '@eslint/core': 0.15.2
       levn: 0.4.1
-
-  '@fontsource-variable/martian-mono@5.2.6': {}
 
   '@fontsource/jacquard-12@5.2.6': {}
 
