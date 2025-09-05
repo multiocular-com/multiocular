@@ -6,6 +6,10 @@
   import SettingsPage from '../pages/settings.svelte'
   import WaitingPage from '../pages/waiting.svelte'
   import { $page as pageStore } from '../stores/router.ts'
+
+  pageStore.listen(() => {
+    document.documentElement.scrollTop = 0
+  })
 </script>
 
 {#if $pageStore.page === 'notFound'}
