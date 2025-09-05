@@ -14,19 +14,10 @@
   let change = $derived(getChange(id))
 </script>
 
-{#if !$change.notFound}
-  <Page
-    sidebars
-    title={$change.isLoading ? 'Wait' : getChangeIndex($changesStore, id)}
-  >
-    <ProgressHeader current={id} />
-    <ChangesSidebar current={id} />
-    {#if $change.isLoading}
-      <Placeholder loading text="Loading diff…" />
-    {:else}
-      <DependencySidebar change={$change} />
-      <Placeholder loading text="Loading diff…" />
-    {/if}
-    <Footer />
-  </Page>
-{/if}
+<Page title={getChangeIndex($changesStore, id)}>
+  <ProgressHeader current={id} />
+  <ChangesSidebar current={id} />
+  <DependencySidebar change={$change} />
+  <Placeholder loading text="Loading diff…" />
+  <Footer />
+</Page>

@@ -3,11 +3,9 @@
 
   let {
     children,
-    sidebars,
     title
   }: {
     children: Snippet
-    sidebars?: boolean
     title: string
   } = $props()
 
@@ -31,7 +29,7 @@
   })
 </script>
 
-<div class="page" class:is-sidebar={sidebars}>
+<div class="page">
   {@render children()}
 </div>
 
@@ -43,8 +41,12 @@
     min-height: 100vh;
     padding-block: var(--panel-height);
 
-    &.is-sidebar {
-      padding-inline: var(--sidebar-width);
+    :global(body.is-left-sidebar) & {
+      padding-left: var(--sidebar-width);
+    }
+
+    :global(body.is-right-sidebar) & {
+      padding-right: var(--sidebar-width);
     }
   }
 </style>

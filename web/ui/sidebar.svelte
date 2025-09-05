@@ -7,6 +7,13 @@
     position
   }: { children: Snippet; padding?: boolean; position: 'left' | 'right' } =
     $props()
+
+  $effect(() => {
+    document.body.classList.add(`is-${position}-sidebar`)
+    return () => {
+      document.body.classList.remove(`is-${position}-sidebar`)
+    }
+  })
 </script>
 
 <aside class:is-padding={padding} class:is-right={position === 'right'}>

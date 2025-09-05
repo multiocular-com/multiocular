@@ -101,6 +101,16 @@
   </Scene>
 </Story>
 
+<Story name="Unloaded Change" asChild parameters={{ layout: 'fullscreen' }}>
+  <Scene
+    changes={[]}
+    hash="#change/npm:@typescript-eslint/project-service@8.40.0%3E8.41.0"
+    step="versions"
+  >
+    <Main />
+  </Scene>
+</Story>
+
 <Story name="No Changes" asChild parameters={{ layout: 'fullscreen' }}>
   <Scene changes={[]} step="done">
     <Main />
