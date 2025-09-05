@@ -56,7 +56,8 @@ test('shows scoped dependency changes with pnpm', async () => {
     {
       after: '20.1.0',
       before: '20.0.0',
-      name: '@types/node'
+      name: '@types/node',
+      repository: 'https://github.com/DefinitelyTyped/DefinitelyTyped'
     }
   ])
 })
