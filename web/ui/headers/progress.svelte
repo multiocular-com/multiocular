@@ -2,12 +2,12 @@
   import {
     $progress as progressStore,
     $step as stepStore
-  } from '../../common/stores.ts'
-  import type { ChangeId } from '../../common/types.ts'
-  import { getChangeUrl } from '../stores/router.ts'
-  import Header from '../ui/header.svelte'
-  import Home from '../ui/home.svelte'
-  import Loading from '../ui/loading.svelte'
+  } from '../../../common/stores.ts'
+  import type { ChangeId } from '../../../common/types.ts'
+  import { getChangeUrl } from '../../stores/router.ts'
+  import Header from '../../ui/header.svelte'
+  import Home from '../../ui/home.svelte'
+  import Loading from '../../ui/loading.svelte'
 
   let { current }: { current?: ChangeId } = $props()
 

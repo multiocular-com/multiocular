@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Button from './button.svelte'
-  import Header from './header.svelte'
-  import Home from './home.svelte'
-  import GithubIcon from './icons/github.svelte'
+  import Button from '../button.svelte'
+  import Header from '../header.svelte'
+  import Home from '../home.svelte'
+  import GithubIcon from '../icons/github.svelte'
 </script>
 
 <Header>

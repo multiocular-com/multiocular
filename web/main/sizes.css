@@ -1,7 +1,9 @@
 html {
   --page-width: 40rem;
   --panel-height: 2.2rem;
+  --sidebar-width: 17rem;
   --progress-stroke: 0.125rem;
   --button-height: 1.75rem;
+  --safe-padding: 0.5rem;
   --radius: 0.25rem;
 }

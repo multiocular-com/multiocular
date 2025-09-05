@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { $sortedChanges as sortedChangesStore } from '../../common/stores.ts'
-  import type { ChangeId } from '../../common/types.ts'
-  import { getChangeUrl } from '../stores/router.ts'
+  import { $sortedChanges as sortedChangesStore } from '../../../common/stores.ts'
+  import type { ChangeId } from '../../../common/types.ts'
+  import { getChangeUrl } from '../../stores/router.ts'
 
   let { current }: { current: ChangeId } = $props()
 </script>
@@ -32,7 +32,7 @@
     bottom: var(--panel-height);
     left: 0;
     z-index: 1;
-    width: 20rem;
+    width: var(--sidebar-width);
     overflow: auto;
     box-shadow: var(--panel-shadow);
   }

@@ -3,9 +3,11 @@
 
   let {
     children,
+    sidebars,
     title
   }: {
     children: Snippet
+    sidebars?: boolean
     title: string
   } = $props()
 
@@ -29,7 +31,7 @@
   })
 </script>
 
-<div class="page">
+<div class="page" class:is-sidebar={sidebars}>
   {@render children()}
 </div>
 
@@ -39,6 +41,10 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding: calc(var(--panel-height) + 0.5rem) 0.5rem;
+    padding-block: var(--panel-height);
+
+    &.is-sidebar {
+      padding-inline: var(--sidebar-width);
+    }
   }
 </style>
