@@ -2,41 +2,33 @@
   import { $sortedChanges as sortedChangesStore } from '../../../common/stores.ts'
   import type { ChangeId } from '../../../common/types.ts'
   import { getChangeUrl } from '../../stores/router.ts'
+  import Sidebar from '../sidebar.svelte'
 
   let { current }: { current: ChangeId } = $props()
 </script>
 
-<nav>
-  <ul>
-    {#each $sortedChangesStore as change (change.id)}
-      <li class:is-loading={change.status === 'loading'}>
-        <a
-          aria-current={current === change.id ? 'true' : 'false'}
-          aria-disabled={change.status === 'loading'}
-          href={getChangeUrl(change.id)}
-        >
-          <div class="name">{change.name}</div>
-          <div class="versions">
-            {change.before} → {change.after}
-          </div>
-        </a>
-      </li>
-    {/each}
-  </ul>
-</nav>
+<Sidebar position="left">
+  <nav>
+    <ul>
+      {#each $sortedChangesStore as change (change.id)}
+        <li class:is-loading={change.status === 'loading'}>
+          <a
+            aria-current={current === change.id ? 'true' : 'false'}
+            aria-disabled={change.status === 'loading'}
+            href={getChangeUrl(change.id)}
+          >
+            <div class="name">{change.name}</div>
+            <div class="versions">
+              {change.before} → {change.after}
+            </div>
+          </a>
+        </li>
+      {/each}
+    </ul>
+  </nav>
+</Sidebar>
 
 <style>
-  nav {
-    position: fixed;
-    top: var(--panel-height);
-    bottom: var(--panel-height);
-    left: 0;
-    z-index: 1;
-    width: var(--sidebar-width);
-    overflow: auto;
-    box-shadow: var(--panel-shadow);
-  }
-
   li {
     list-style: none;
 

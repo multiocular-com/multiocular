@@ -11,6 +11,7 @@
     disabled,
     onclick,
     padding = 'm',
+    size,
     state,
     variant = 'simple',
     ...props
@@ -19,6 +20,7 @@
     disabled?: boolean
     onclick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
     padding?: 'm' | 's' | false
+    size?: 'inline' | 'wide'
     state?: 'hover' | 'pressed'
     variant?: 'ghost' | 'simple'
   } & (
@@ -37,6 +39,7 @@
     class:is-padding-s={padding === 's'}
     class:is-pressed={state === 'pressed'}
     class:is-simple={variant === 'simple'}
+    class:is-wide={size === 'wide'}
     aria-disabled={disabled}
     href={props.href}
     onclick={onclick
@@ -59,6 +62,7 @@
     class:is-padding-s={padding === 's'}
     class:is-pressed={state === 'pressed'}
     class:is-simple={variant === 'simple'}
+    class:is-wide={size === 'wide'}
     aria-disabled={disabled}
     onclick={onclick
       ? e => {
@@ -90,6 +94,10 @@
 
     &.is-padding-s {
       padding-inline: 0.2rem;
+    }
+
+    &.is-wide {
+      width: stretch;
     }
 
     &.is-simple {

@@ -7,6 +7,7 @@
   import Page from '../ui/page.svelte'
   import Placeholder from '../ui/placeholder.svelte'
   import ChangesSidebar from '../ui/sidebars/changes.svelte'
+  import DependencySidebar from '../ui/sidebars/dependency.svelte'
 
   let { id }: { id: ChangeId } = $props()
 
@@ -20,7 +21,12 @@
   >
     <ProgressHeader current={id} />
     <ChangesSidebar current={id} />
-    <Placeholder loading text="Loading diff…" />
+    {#if $change.isLoading}
+      <Placeholder loading text="Loading diff…" />
+    {:else}
+      <DependencySidebar change={$change} />
+      <Placeholder loading text="Loading diff…" />
+    {/if}
     <Footer />
   </Page>
 {/if}
