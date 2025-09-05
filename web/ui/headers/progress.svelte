@@ -5,9 +5,9 @@
   } from '../../../common/stores.ts'
   import type { ChangeId } from '../../../common/types.ts'
   import { getChangeUrl } from '../../stores/router.ts'
-  import Header from '../../ui/header.svelte'
   import Home from '../../ui/home.svelte'
   import Loading from '../../ui/loading.svelte'
+  import Panel from '../panel.svelte'
 
   let { current }: { current?: ChangeId } = $props()
 
@@ -17,7 +17,7 @@
   )
 </script>
 
-<Header>
+<Panel position="top">
   <div style:--move={moveEyes / 100} class="eyes">
     <Home href="#settings" />
   </div>
@@ -45,7 +45,7 @@
       {/each}
     </ul>
   {/if}
-</Header>
+</Panel>
 
 <style>
   :root {

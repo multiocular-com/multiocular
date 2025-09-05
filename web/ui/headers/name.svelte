@@ -1,11 +1,11 @@
 <script lang="ts">
   import Button from '../button.svelte'
-  import Header from '../header.svelte'
   import Home from '../home.svelte'
   import GithubIcon from '../icons/github.svelte'
+  import Panel from '../panel.svelte'
 </script>
 
-<Header>
+<Panel position="top">
   <div class="center">
     <div>
       <Home name href="#" />
@@ -27,7 +27,7 @@
       </Button>
     </div>
   </div>
-</Header>
+</Panel>
 
 <style>
   div {

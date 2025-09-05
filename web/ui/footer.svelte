@@ -7,7 +7,7 @@
 </script>
 
 <footer>
-  <Panel>
+  <Panel position="bottom">
     {#if children}
       {@render children()}
     {/if}

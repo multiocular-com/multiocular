@@ -1,15 +1,29 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
 
-  let { children }: { children: Snippet } = $props()
+  let {
+    children,
+    position
+  }: { children: Snippet; position: 'bottom' | 'top' } = $props()
 </script>
 
-<div>
-  {@render children()}
-</div>
+{#if position === 'top'}
+  <header>
+    {@render children()}
+  </header>
+{:else}
+  <footer>
+    {@render children()}
+  </footer>
+{/if}
 
 <style>
-  div {
+  header,
+  footer {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 2;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -18,5 +32,13 @@
     padding: 0 0.2rem;
     background: var(--panel-color);
     box-shadow: var(--panel-shadow);
+  }
+
+  header {
+    top: 0;
+  }
+
+  footer {
+    bottom: 0;
   }
 </style>
