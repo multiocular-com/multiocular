@@ -36,7 +36,7 @@
     "test:js": "eslint --cache --concurrency auto .",
     "test:css": "stylelint **/*.css **/*.svelte",
     "test:types": "svelte-check",
-    "test:audit": "pnpm audit --prod",
+    "test:audit": "pnpm audit",
     "test:web": "node --run build:web",
     "start:web": "vite web/ --host 0.0.0.0",
     "start:server": "node --watch ./server/bin.ts --web --commit ffe6ff",
