@@ -11,6 +11,7 @@ test/
 .prettierrc.json
 .eslintcache
 eslint.config.ts
+.stylelintignore
 .stylelintrc.json
 nano-staged.json
 tsconfig.*

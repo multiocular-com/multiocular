@@ -22,6 +22,7 @@ const IGNORE = new Set([
   'node_modules',
   'scripts',
   'server/test',
+  'storybook-static',
   'web'
 ])
 
