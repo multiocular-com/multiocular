@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.0
+
+- Added web UI for review.
+- Added `--debug` argument.
+- Added repository URL extracting.
+
 ## 0.3.0
 
 - Added GitHub Actions support.
