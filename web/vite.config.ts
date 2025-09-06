@@ -15,7 +15,7 @@ export default defineConfig(({ command }) => ({
   define: {
     __MULTIOCULAR_VERSION__: JSON.stringify(getVersion()),
     __SERVER_URL__: JSON.stringify(
-      command === 'build' ? 'ws:///' : 'ws://localhost:31337'
+      command === 'build' ? '' : 'ws://localhost:31337'
     )
   },
   plugins: [svelte()]

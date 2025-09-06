@@ -11,8 +11,18 @@ import {
 } from '../../common/api.ts'
 import { $changes, $step, addDiff, updateChange } from '../../common/stores.ts'
 
+let server = __SERVER_URL__
+
+if (server === '') {
+  server =
+    (location.protocol === 'https:' ? 'wss:' : 'ws:') +
+    '//' +
+    location.host +
+    '/'
+}
+
 export const client = new CrossTabClient({
-  server: __SERVER_URL__,
+  server,
   subprotocol,
   userId: 'reviewer'
 })
