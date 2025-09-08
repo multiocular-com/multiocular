@@ -1,5 +1,5 @@
 import { loguxSubscribe } from '@logux/actions'
-import { CrossTabClient } from '@logux/client'
+import { CrossTabClient, log } from '@logux/client'
 
 import {
   addDiffAction,
@@ -26,6 +26,8 @@ export const client = new CrossTabClient({
   subprotocol,
   userId: 'reviewer'
 })
+
+if (import.meta.env.DEV) log(client)
 
 client.log.add(loguxSubscribe({ channel: 'projects/main' }), { sync: true })
 
