@@ -13,5 +13,5 @@ html {
   --secondary-font: 400 0.875rem/1.4 var(--regular-family);
   --control-font: 500 0.9375rem/1.4 var(--regular-family);
   --code-font: 400 0.875rem/2 var(--monospace-family);
-  --cool-font: 400 1.5625rem/1 var(--decorative-family);
+  --cool-font: 400 2rem/1 var(--decorative-family);
 }
