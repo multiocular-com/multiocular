@@ -6,6 +6,7 @@ import {
 import { $changes, $step, addDiff, updateChange } from '../../common/stores.ts'
 import {
   change,
+  type Diff,
   type DiffSize,
   type FilePath,
   isLoaded
@@ -76,6 +77,10 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
     changes.map(async i => {
       let id = i.id
       let diff = await diffLoaders[i.type](i)
+      if (diff.length > 1024 * 1024) {
+        diff = ('The diff file is too big. It could be a binary. ' +
+          'We will support it in next releases.') as Diff
+      }
       addDiff(id, diff)
       send(addDiffAction({ diff, id }))
       let update = change({
