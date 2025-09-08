@@ -12,7 +12,7 @@
   })
 
   const CHANGES = [
-    { after: '5.1.5', before: '5.1.4', name: 'nanoid', status: 'reviewed' },
+    { after: '5.1.5', before: '5.1.4', name: 'nanoid' },
     {
       after: '9.0.0',
       before: '8.0.0',
@@ -119,7 +119,10 @@ index v8.40.0..v8.41.0 100644
 </Story>
 
 <Story name="Finish" asChild parameters={{ layout: 'fullscreen' }}>
-  <Scene hash="finish">
+  <Scene
+    changes={CHANGES.map(i => ({ ...i, status: 'reviewed' }))}
+    hash="finish"
+  >
     <Main />
   </Scene>
 </Story>
@@ -129,7 +132,10 @@ index v8.40.0..v8.41.0 100644
   asChild
   parameters={{ layout: 'fullscreen', themes: { themeOverride: 'dark' } }}
 >
-  <Scene hash="finish">
+  <Scene
+    changes={CHANGES.map(i => ({ ...i, status: 'reviewed' }))}
+    hash="finish"
+  >
     <Main />
   </Scene>
 </Story>
