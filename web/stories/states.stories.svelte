@@ -1,6 +1,8 @@
 <script context="module" lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf'
 
+  import type { Change } from '../../common/stores.ts'
+  import type { Debrand } from '../../common/types.ts'
   import Main from '../main/main.svelte'
   import Scene from './scene.svelte'
 
@@ -8,6 +10,51 @@
     component: Main,
     title: 'States'
   })
+
+  const CHANGES = [
+    { after: '5.1.5', before: '5.1.4', name: 'nanoid', status: 'reviewed' },
+    {
+      after: '9.0.0',
+      before: '8.0.0',
+      name: 'nanoevents',
+      size: 10
+    },
+    {
+      after: '8.41.0',
+      before: '8.40.0',
+      name: '@typescript-eslint/project-service',
+      size: 100,
+      status: 'reviewed'
+    },
+    {
+      after: '8.41.0',
+      before: '8.40.0',
+      name: 'typescript-eslint',
+      size: 10
+    },
+    {
+      after: '8.0.1',
+      before: '8.0.0',
+      name: 'postcss',
+      size: 50,
+      status: 'reviewed'
+    }
+  ] satisfies Partial<Debrand<Change>>[]
+
+  const DIFFS = {
+    'npm:typescript-eslint@8.40.0>8.41.0': `diff --git npm:typescript-eslint@8.40.0/package.json npm:typescript-eslint@8.41.0/package.json
+index v8.40.0..v8.41.0 100644
+--- npm:typescript-eslint@8.40.0/package.json
++++ npm:typescript-eslint@8.41.0/package.json
+@@ -1,6 +1,6 @@
+{
+  "name": "typescript-eslint",
+-  "version": "8.40.0",
++  "version": "8.41.0",
+  "description": "Tooling which enables you to use TypeScript with ESLint",
+  "files": [
+    "dist",`
+  }
 </script>
 
 <Story name="Initialize" asChild parameters={{ layout: 'fullscreen' }}>
@@ -28,29 +75,17 @@
 
 <Story name="Diff Loading" asChild parameters={{ layout: 'fullscreen' }}>
   <Scene
-    changes={[
-      { after: '5.1.5', before: '5.1.4', name: 'nanoid', status: 'loading' },
-      {
-        after: '8.0.0',
-        before: '9.0.0',
-        name: 'nanoevents',
-        status: 'loading'
-      },
-      {
-        after: '8.41.0',
-        before: '8.40.0',
-        name: '@typescript-eslint/project-service',
-        size: 100
-      },
-      {
-        after: '8.41.0',
-        before: '8.40.0',
-        name: 'typescript-eslint',
-        size: 10
-      },
-      { after: '8.0.1', before: '8.0.0', name: 'postcss', size: 50 }
-    ]}
-    hash="change/npm:@typescript-eslint/project-service@8.40.0%3E8.41.0"
+    changes={CHANGES.map(i => {
+      if (i.status === 'reviewed') {
+        return {
+          ...i,
+          status: 'loading'
+        }
+      } else {
+        return i
+      }
+    })}
+    hash="change/npm:nanoevents@8.0.0%3E9.0.0"
     step="diffs"
   >
     <Main />
@@ -59,49 +94,8 @@
 
 <Story name="Diff" asChild parameters={{ layout: 'fullscreen' }}>
   <Scene
-    changes={[
-      { after: '5.1.5', before: '5.1.4', name: 'nanoid', status: 'reviewed' },
-      {
-        after: '8.0.0',
-        before: '9.0.0',
-        name: 'nanoevents',
-        size: 10
-      },
-      {
-        after: '8.41.0',
-        before: '8.40.0',
-        name: '@typescript-eslint/project-service',
-        size: 100,
-        status: 'reviewed'
-      },
-      {
-        after: '8.41.0',
-        before: '8.40.0',
-        name: 'typescript-eslint',
-        size: 10
-      },
-      {
-        after: '8.0.1',
-        before: '8.0.0',
-        name: 'postcss',
-        size: 50,
-        status: 'reviewed'
-      }
-    ]}
-    diffs={{
-      'npm:typescript-eslint@8.40.0>8.41.0': `diff --git npm:typescript-eslint@8.40.0/package.json npm:typescript-eslint@8.41.0/package.json
-index v8.40.0..v8.41.0 100644
---- npm:typescript-eslint@8.40.0/package.json
-+++ npm:typescript-eslint@8.41.0/package.json
-@@ -1,6 +1,6 @@
-  {
-    "name": "typescript-eslint",
--  "version": "8.40.0",
-+  "version": "8.41.0",
-    "description": "Tooling which enables you to use TypeScript with ESLint",
-    "files": [
-      "dist",`
-    }}
+    changes={CHANGES}
+    diffs={DIFFS}
     hash="#change/npm:typescript-eslint@8.40.0%3E8.41.0"
     step="diffs"
   >
@@ -115,50 +109,8 @@ index v8.40.0..v8.41.0 100644
   parameters={{ layout: 'fullscreen', themes: { themeOverride: 'dark' } }}
 >
   <Scene
-    changes={[
-      { after: '5.1.5', before: '5.1.4', name: 'nanoid', status: 'reviewed' },
-      {
-        after: '8.0.0',
-        before: '9.0.0',
-        name: 'nanoevents',
-        size: 10,
-        status: 'reviewed'
-      },
-      {
-        after: '8.41.0',
-        before: '8.40.0',
-        name: '@typescript-eslint/project-service',
-        size: 100,
-        status: 'reviewed'
-      },
-      {
-        after: '8.41.0',
-        before: '8.40.0',
-        name: 'typescript-eslint',
-        size: 10
-      },
-      {
-        after: '8.0.1',
-        before: '8.0.0',
-        name: 'postcss',
-        size: 50,
-        status: 'reviewed'
-      }
-    ]}
-    diffs={{
-      'npm:typescript-eslint@8.40.0>8.41.0': `diff --git npm:typescript-eslint@8.40.0/package.json npm:typescript-eslint@8.41.0/package.json
-index v8.40.0..v8.41.0 100644
---- npm:typescript-eslint@8.40.0/package.json
-+++ npm:typescript-eslint@8.41.0/package.json
-@@ -1,6 +1,6 @@
-  {
-    "name": "typescript-eslint",
--  "version": "8.40.0",
-+  "version": "8.41.0",
-    "description": "Tooling which enables you to use TypeScript with ESLint",
-    "files": [
-      "dist",`
-    }}
+    changes={CHANGES}
+    diffs={DIFFS}
     hash="change/npm:typescript-eslint@8.40.0%3E8.41.0"
     step="diffs"
   >
