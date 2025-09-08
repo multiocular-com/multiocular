@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from './button.svelte'
-  import Logo from './logo.svelte'
+  import Logo from './icons/logo.svelte'
 
   let { href = '#', name = false }: { href?: string; name?: boolean } = $props()
 </script>

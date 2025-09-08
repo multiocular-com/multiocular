@@ -1,6 +1,6 @@
 <script lang="ts">
-  import iconSvg from '../public/icon.svg?raw'
-  import Icon from './icon.svelte'
+  import Icon from '../icon.svelte'
+  import iconSvg from './icon.svg?raw'
 
   let pathMatch = iconSvg.match(/ d="([^"]+)"/)
   let iconPath = pathMatch?.[1] ?? ''
