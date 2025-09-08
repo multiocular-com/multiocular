@@ -36,6 +36,7 @@ export type File = LoadedFile | MissingFile
 export interface Dependency {
   from: 'github-actions' | 'npm' | 'pnpm' | 'yarn'
   name: DependencyName
+  realVersion?: string
   repository: Repository
   source: FilePath
   type: 'github-actions' | 'npm'
@@ -71,7 +72,7 @@ export function change(object: Partial<Debrand<Change>>): Partial<Change>
 export function change(
   object: Partial<Debrand<Change>>
 ): Change | Partial<Change> {
-  return object as any
+  return object as Change | Partial<Change>
 }
 
 export function serverURL(

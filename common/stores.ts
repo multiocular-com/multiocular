@@ -20,6 +20,8 @@ export type Change = {
   from: Dependency['from']
   id: ChangeId
   name: DependencyName
+  realAfter?: string
+  realBefore?: string
   repository: Repository
   type: Dependency['type']
 } & (

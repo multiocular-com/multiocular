@@ -46,9 +46,11 @@ export const githubActions = (async change => {
     }
     return diff(fileDiffs.join('\n'))
   } else {
+    let beforeRef = change.realBefore || change.before
+    let afterRef = change.realAfter || change.after
     let response = await load(
       `https://github.com/${change.name}/compare/` +
-        `${change.before}...${change.after}.diff`
+        `${beforeRef}...${afterRef}.diff`
     )
     return diff(
       (await response.text())

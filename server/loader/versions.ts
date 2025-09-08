@@ -5,7 +5,7 @@ function createChange(
   before: Dependency | undefined,
   after: Dependency
 ): Change {
-  return {
+  let change: Change = {
     after: after.version,
     before: before ? before.version : false,
     from: after.from,
@@ -15,6 +15,9 @@ function createChange(
     status: 'loading',
     type: after.type
   }
+  if (after.realVersion) change.realAfter = after.realVersion
+  if (before?.realVersion) change.realBefore = before.realVersion
+  return change
 }
 
 function compareVersions(a: string, b: string): number {

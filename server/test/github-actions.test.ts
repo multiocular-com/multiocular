@@ -59,6 +59,86 @@ test('shows GitHub Actions changes in workflows', async () => {
   ])
 })
 
+test('shows changes if actions was pinned with comments', async () => {
+  await writeProjectFile(
+    '.github/workflows/test.yml',
+    `jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+on:
+  - push
+`
+  )
+
+  await run('git add .')
+  await run('git commit -m "Add workflow with checkout v4.2.0"')
+
+  await writeProjectFile(
+    '.github/workflows/test.yml',
+    `jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+on:
+  - push
+`
+  )
+
+  await cliJsonMatch([
+    {
+      after: 'v4.2.1',
+      before: 'v4.2.0',
+      diff: /Check out other refs.*by commit if provided/,
+      from: 'github-actions',
+      name: 'actions/checkout',
+      type: 'github-actions'
+    }
+  ])
+})
+
+test('shows changes if actions was pinned without comments', async () => {
+  await writeProjectFile(
+    '.github/workflows/test.yml',
+    `jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
+on:
+  - push
+`
+  )
+
+  await run('git add .')
+  await run('git commit -m "Add workflow with checkout v4.2.0"')
+
+  await writeProjectFile(
+    '.github/workflows/test.yml',
+    `jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871
+on:
+  - push
+`
+  )
+
+  await cliJsonMatch([
+    {
+      after: 'eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871',
+      before: 'd632683dd7b4114ad314bca15554477dd762a938',
+      diff: /Check out other refs.*by commit if provided/,
+      from: 'github-actions',
+      name: 'actions/checkout',
+      type: 'github-actions'
+    }
+  ])
+})
+
 test('shows new GitHub Actions', async () => {
   await writeProjectFile('.github/workflows/test.yml', {
     jobs: {
