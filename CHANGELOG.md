@@ -2,6 +2,11 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.4.1
+
+- Fixed web UI when user open it in multiple browser tab.
+- Fixed big binary diffs.
+
 ## 0.4.0
 
 - Added web UI for review.
