@@ -31,7 +31,7 @@ if (import.meta.env.DEV) log(client)
 
 client.log.add(loguxSubscribe({ channel: 'projects/main' }), { sync: true })
 
-client.log.on('add', action => {
+client.on('add', action => {
   if (changeStepAction.match(action)) {
     $step.set(action.value)
   } else if (replaceChangesAction.match(action)) {
