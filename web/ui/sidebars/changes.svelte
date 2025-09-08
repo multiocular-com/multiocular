@@ -63,11 +63,12 @@
     &.is-reviewed {
       padding-left: var(--safe-padding);
       border-left: 0.25rem solid var(--approve-background);
-      opacity: 70%;
+      opacity: 60%;
     }
 
     &[aria-disabled='true'] {
       pointer-events: none;
+      opacity: 30%;
     }
 
     &[aria-current='true'] {
