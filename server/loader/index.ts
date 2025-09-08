@@ -69,6 +69,11 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
     debug('')
   }
 
+  for (let changeItem of changes) {
+    let repository = diffLoaders[changeItem.type].findRepository(changeItem)
+    changeItem.repository = repository
+  }
+
   $changes.set(changes)
   send(replaceChangesAction({ changes }))
 
@@ -76,7 +81,7 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
   await Promise.all(
     changes.map(async i => {
       let id = i.id
-      let diff = await diffLoaders[i.type](i)
+      let diff = await diffLoaders[i.type].loadDiff(i)
       if (diff.length > 1024 * 1024) {
         diff = ('The diff file is too big. It could be a binary. ' +
           'We will support it in next releases.') as Diff

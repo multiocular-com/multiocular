@@ -22,7 +22,7 @@ export type Change = {
   name: DependencyName
   realAfter?: string
   realBefore?: string
-  repository: Repository
+  repository?: Repository
   type: Dependency['type']
 } & (
   | {

@@ -3,7 +3,7 @@ import { parse } from 'yaml'
 
 import { dependency, type Dependency } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
-import { findRepositorySource, splitPackage } from './common.ts'
+import { splitPackage } from './common.ts'
 
 type ParsedDependency = {
   name: string
@@ -127,7 +127,6 @@ export const yarn = {
           dependency({
             from: 'yarn',
             name: dep.name,
-            repository: findRepositorySource(dep.resolved, dep.name),
             source: file.path,
             type: 'npm',
             version

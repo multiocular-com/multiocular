@@ -11,7 +11,6 @@ function createChange(
     from: after.from,
     id: getChangeId(after.type, after.name, before?.version, after.version),
     name: after.name,
-    repository: after.repository,
     status: 'loading',
     type: after.type
   }

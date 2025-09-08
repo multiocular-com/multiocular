@@ -1,8 +1,9 @@
 import type { Change } from '../../../common/stores.ts'
-import type { Diff } from '../../../common/types.ts'
+import type { Diff, Repository } from '../../../common/types.ts'
 
 export interface DiffLoader {
-  (version: Change): Promise<Diff>
+  findRepository(change: Change): Repository
+  loadDiff(version: Change): Promise<Diff>
 }
 
 export function getDiffPrefixes(change: Change): {

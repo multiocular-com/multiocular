@@ -37,7 +37,6 @@ export interface Dependency {
   from: 'github-actions' | 'npm' | 'pnpm' | 'yarn'
   name: DependencyName
   realVersion?: string
-  repository: Repository
   source: FilePath
   type: 'github-actions' | 'npm'
   version: DependencyVersion

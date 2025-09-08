@@ -12,15 +12,17 @@
 
 <Sidebar padding position="right">
   <h1>{change.name}</h1>
-  <Button href={change.repository} size="big" target="_blank">
-    {#if change.repository.startsWith('https://github.com/')}
-      <Icon path={github} />
-      Repository
-    {:else}
-      <Icon path={mdiOpenInNew} />
-      Project link
-    {/if}
-  </Button>
+  {#if change.repository}
+    <Button href={change.repository} size="big" target="_blank">
+      {#if change.repository.startsWith('https://github.com/')}
+        <Icon path={github} />
+        Repository
+      {:else}
+        <Icon path={mdiOpenInNew} />
+        Project link
+      {/if}
+    </Button>
+  {/if}
 </Sidebar>
 
 <style>
