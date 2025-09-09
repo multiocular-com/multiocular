@@ -1,24 +1,22 @@
 # ꙮ Multiocular
 
-A Node.js tool to review dependencies changes to prevent supply chain attack.
+<img width="200" height="200" alt="Multiocular logo" aligh="right" src="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39" />
 
-```diff
-$ npm update
-$ npx multiocular --text
+A Node.js tool to **review dependencies** changes to:
 
---- npm:better-node-test@0.7.1/bin.js
-+++ npm:better-node-test@0.7.2/bin.js
-@@ -76,7 +84,7 @@
-   }
-   if (loader) {
-     base.push('--enable-source-maps', '--import', loader)
--  } else if (checkNodeVersion(22.6)) {
-+  } else if (checkNodeVersion(22, 6)) {
-     base.push(
-       '--experimental-strip-types',
-       '--disable-warning=ExperimentalWarning'
+- Prevent **supply-chain attack**.
+- Catch **API breaking changes**.
+- **Learn** from your dependencies.
 
-```
+In general, it adds **open dependencies** practice to your project and stop treating node_modules as a black box.
+
+It supports: npm, pnpm, yarn 1, yarn berry, GitHub Actions.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/07ed01ee-694a-4553-bd7d-dbb248a08385">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/beb86f60-772e-4c01-9de7-99613b354d67">
+  <img alt="Fallback image description" src="https://github.com/user-attachments/assets/beb86f60-772e-4c01-9de7-99613b354d67">
+</picture>
 
 ---
 
@@ -27,12 +25,40 @@ $ npx multiocular --text
 
 ---
 
-# Install
+## Usage
+
+Install tool:
 
 ```sh
 npm install multiocular
+# pnpm install multiocular
 ```
 
+Update dependencies
+
 ```sh
-pnpm install multiocular
+# For npm
+npx npm-check-updates
+npm update
+
+# For pnpm
+pnpm update-interactive --latest
+pnpm update
+
+# For GitHub Actions
+npx actions-up
 ```
+
+Start web UI to review changes:
+
+```sh
+npx multiocular
+```
+
+## Motivation
+
+Current practice of treating dependencies and free **black boxes** is creating a lot of issues in our industries.
+
+For instance, **Supply-chain attack** when malware added to dependencies by stealing maintainer account. Recent, [chalk/debug](https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised), [nx](https://www.aikido.dev/blog/popular-nx-packages-compromised-on-npm), and [GitHub Actions](https://www.wiz.io/blog/github-action-tj-actions-changed-files-supply-chain-attack-cve-2025-30066) examples are showing that it is just beginning.
+
+We suggest another **open dependencies** model, when team should track dependencies. It means less dependencies and more attention to it. But this is the only solution we see.
