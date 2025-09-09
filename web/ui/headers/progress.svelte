@@ -31,7 +31,7 @@
     <Home href="#settings" />
   </div>
   {#if $stepStore === 'initialize' || $stepStore === 'versions'}
-    <Loading animated />
+    <Loading />
   {:else}
     <ul aria-hidden="true">
       {#each $progressStore as change, index (change.id)}

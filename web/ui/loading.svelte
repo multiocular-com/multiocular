@@ -1,8 +1,4 @@
-<script lang="ts">
-  let { animated }: { animated?: boolean } = $props()
-</script>
-
-<div class="loading" class:is-animated={animated}></div>
+<div class="loading"></div>
 
 <style>
   /* From https://css-tricks.com/how-to-create-wavy-shapes-patterns-in-css/ */
@@ -12,6 +8,7 @@
     display: grid;
     flex-grow: 1;
     height: calc(2 * var(--loading-size));
+    animation: --loading 0.5s infinite linear;
 
     &::before {
       --g:
@@ -30,10 +27,6 @@
         radial-gradient(var(--r) top var(--g)) calc(50% + var(--loading-size))
           calc(50% + var(--loading-size)) / calc(4 * var(--loading-size))
           calc(2 * var(--loading-size));
-    }
-
-    &.is-animated::before {
-      animation: --loading 0.5s infinite linear;
     }
   }
 
