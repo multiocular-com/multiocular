@@ -71,7 +71,7 @@ function normalizeRepositoryUrl(url: string): RepositoryURL {
 
 export const npm = {
   findRepository(root, change) {
-    let packageDir = findNpmRoot(root, change.name)
+    let packageDir = findNpmRoot(root, change.name, change.after)
     if (packageDir) {
       let repoUrl = extractRepositoryUrl(
         readFileSync(join(packageDir, 'package.json'), 'utf8')

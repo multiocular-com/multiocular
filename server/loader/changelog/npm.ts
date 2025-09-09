@@ -12,7 +12,7 @@ import {
 
 export const npm = (async (root, change) => {
   if (change.type !== 'npm') return null
-  let packageDir = findNpmRoot(root, change.name)
+  let packageDir = findNpmRoot(root, change.name, change.after)
   if (!packageDir) return null
   for (let filename of CHANGELOG_NAMES) {
     let filePath = join(packageDir, filename)
