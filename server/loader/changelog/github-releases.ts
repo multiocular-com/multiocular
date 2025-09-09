@@ -15,7 +15,7 @@ interface GitHubRelease {
 async function fetchGitHubReleases(
   repository: GitHubRepositoryURL
 ): Promise<ChangeLog | null> {
-  let releases = await githubApi<GitHubRelease[]>(repository, 'releases')
+  let releases = await githubApi<GitHubRelease[]>(repository, '/releases')
   if (!Array.isArray(releases)) return null
   let changelog: ChangeLog = []
   for (let release of releases) {

@@ -34,7 +34,7 @@ export async function githubApi<Response>(
   if (process.env.GITHUB_TOKEN) {
     headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`
   }
-  let response = await fetch(`https://api.github.com/repos/${name}/${path}`, {
+  let response = await fetch(`https://api.github.com/repos/${name}${path}`, {
     headers
   })
   if (response.status === 404) return null

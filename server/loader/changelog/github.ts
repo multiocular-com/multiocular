@@ -27,7 +27,7 @@ async function fetchGitHubChangelog(
   if (!repoInfo) return null
 
   let branch = repoInfo.default_branch
-  let tree = await githubApi<GitHubTree>(repository, `git/trees/${branch}`)
+  let tree = await githubApi<GitHubTree>(repository, `/git/trees/${branch}`)
   if (!tree) return null
 
   let files = tree.tree

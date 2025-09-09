@@ -34,7 +34,7 @@ export const githubActions = {
       // For new actions, show all files by getting initial commit diff
       let contents = await githubApi<GitHubContent[]>(
         change.name as GitHubRepository,
-        'contents'
+        '/contents'
       )
       if (!contents) return diff('')
 
