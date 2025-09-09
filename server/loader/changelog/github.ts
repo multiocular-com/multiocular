@@ -1,3 +1,5 @@
+import type { GitHubRepositoryURL } from '../../../common/types.ts'
+import { getFileForGithub, githubApi, isGitHubUrl } from '../github.ts'
 import type { ChangeLogLoader } from './common.ts'
 import {
   CHANGELOG_NAMES,
@@ -5,35 +7,45 @@ import {
   parseChangelog
 } from './common.ts'
 
-async function fetchGitHubChangelog(
-  repository: string
-): Promise<null | string> {
-  let match = repository.match(/github\.com\/([^/]+)\/([^/]+)/)
-  if (!match) return null
-  let [, owner, repo] = match
-  if (!repo) return null
-  repo = repo.replace(/\.git$/, '')
+interface GitHubRepo {
+  default_branch: string
+}
 
-  for (let path of CHANGELOG_NAMES) {
-    for (let branch of ['main', 'master']) {
-      try {
-        let response = await fetch(
-          `https://raw.githubusercontent.com/` +
-            `${owner}/${repo}/${branch}/${path}`
-        )
-        if (response.ok) return await response.text()
-      } catch {
-        // Try next combination
-      }
+interface GitHubTreeItem {
+  path: string
+  type: string
+}
+
+interface GitHubTree {
+  tree: GitHubTreeItem[]
+}
+
+async function fetchGitHubChangelog(
+  repository: GitHubRepositoryURL
+): Promise<null | string> {
+  let repoInfo = await githubApi<GitHubRepo>(repository, '')
+  if (!repoInfo) return null
+
+  let branch = repoInfo.default_branch
+  let tree = await githubApi<GitHubTree>(repository, `git/trees/${branch}`)
+  if (!tree) return null
+
+  let files = tree.tree
+    .filter(item => item.type === 'blob')
+    .map(item => item.path)
+
+  for (let changelogName of CHANGELOG_NAMES) {
+    if (files.includes(changelogName)) {
+      let content = await getFileForGithub(repository, branch, changelogName)
+      if (content) return content
     }
   }
+
   return null
 }
 
 export const github = (async (root, change) => {
-  if (!change.repository || !change.repository.includes('github.com')) {
-    return null
-  }
+  if (!isGitHubUrl(change.repository)) return null
 
   try {
     let changelogContent = await fetchGitHubChangelog(change.repository)

@@ -2,6 +2,8 @@ import type { Change } from './stores.ts'
 
 declare const __brand: unique symbol
 
+declare const __extra: unique symbol
+
 // Avoid using string for everything. With this fake __brand key we are adding
 // branding types to TypeScript (like ID, Email, FilePath instead of string).
 export type Brand<T, B> = { [__brand]: B } & T
@@ -27,7 +29,9 @@ export type ChangeId = Brand<string, 'ChangeId'>
 export type Diff = Brand<string, 'Diff'>
 export type DiffSize = Brand<number, 'DiffSize'>
 export type ServerURL = Brand<string, 'ServerURL'>
-export type Repository = Brand<string, 'Repository'>
+export type RepositoryURL = Brand<string, 'RepositoryURL'>
+export type GitHubRepositoryURL = { [__extra]: 'GitHub' } & RepositoryURL
+export type GitHubRepository = { [__extra]: 'GitHub' } & DependencyName
 export type ChangeLogTitle = Brand<string, 'ChangeLogTitle'>
 export type ChangeLogContent = Brand<string, 'ChangeLogContent'>
 

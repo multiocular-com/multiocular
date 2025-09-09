@@ -1,6 +1,9 @@
 import type { ChangeLog } from '../../../common/stores.ts'
-import type { ChangeLogContent, Repository } from '../../../common/types.ts'
-import { githubApi } from '../github.ts'
+import type {
+  ChangeLogContent,
+  GitHubRepositoryURL
+} from '../../../common/types.ts'
+import { githubApi, isGitHubUrl } from '../github.ts'
 import type { ChangeLogLoader } from './common.ts'
 import { filterChangelogByVersionRange, normalizeVersion } from './common.ts'
 
@@ -10,7 +13,7 @@ interface GitHubRelease {
 }
 
 async function fetchGitHubReleases(
-  repository: Repository
+  repository: GitHubRepositoryURL
 ): Promise<ChangeLog | null> {
   let releases = await githubApi<GitHubRelease[]>(repository, 'releases')
   if (!Array.isArray(releases)) return null
@@ -25,9 +28,7 @@ async function fetchGitHubReleases(
 }
 
 export const githubReleases = (async (root, change) => {
-  if (!change.repository || !change.repository.includes('github.com')) {
-    return null
-  }
+  if (!isGitHubUrl(change.repository)) return null
   let releases = await fetchGitHubReleases(change.repository)
   if (!releases) return null
   return filterChangelogByVersionRange(releases, change.after, change.before)

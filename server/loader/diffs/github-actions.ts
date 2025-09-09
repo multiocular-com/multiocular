@@ -1,4 +1,8 @@
-import { diff, type Repository } from '../../../common/types.ts'
+import {
+  diff,
+  type GitHubRepository,
+  type GitHubRepositoryURL
+} from '../../../common/types.ts'
 import { githubApi } from '../github.ts'
 import { type DiffLoader, getDiffPrefixes } from './common.ts'
 
@@ -20,7 +24,7 @@ async function load(url: string): Promise<Response> {
 
 export const githubActions = {
   findRepository(root, change) {
-    return `https://github.com/${change.name}` as Repository
+    return `https://github.com/${change.name}` as GitHubRepositoryURL
   },
 
   async loadDiff(change) {
@@ -28,7 +32,10 @@ export const githubActions = {
 
     if (change.before === false) {
       // For new actions, show all files by getting initial commit diff
-      let contents = await githubApi<GitHubContent[]>(change.name, 'contents')
+      let contents = await githubApi<GitHubContent[]>(
+        change.name as GitHubRepository,
+        'contents'
+      )
       if (!contents) return diff('')
 
       let fileDiffs = []

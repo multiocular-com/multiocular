@@ -1,8 +1,8 @@
 import type { Change } from '../../../common/stores.ts'
-import type { Diff, FilePath, Repository } from '../../../common/types.ts'
+import type { Diff, FilePath, RepositoryURL } from '../../../common/types.ts'
 
 export interface DiffLoader {
-  findRepository(root: FilePath, change: Change): Repository
+  findRepository(root: FilePath, change: Change): RepositoryURL
   loadDiff(version: Change): Promise<Diff>
 }
 

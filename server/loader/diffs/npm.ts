@@ -5,7 +5,7 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { diff, type Repository } from '../../../common/types.ts'
+import { diff, type RepositoryURL } from '../../../common/types.ts'
 import { findNpmRoot } from '../npm.ts'
 import { type DiffLoader, getDiffPrefixes } from './common.ts'
 
@@ -16,7 +16,7 @@ interface PackageJson {
   repository?: { type?: string; url: string } | string
 }
 
-function extractRepositoryUrl(packageJson: string): null | Repository {
+function extractRepositoryUrl(packageJson: string): null | RepositoryURL {
   let pkg = JSON.parse(packageJson) as PackageJson
   if (pkg.private) return null
   if (pkg.repository) {
@@ -38,7 +38,7 @@ function extractRepositoryUrl(packageJson: string): null | Repository {
 
 const GIT_URL_POSTFIX = /\.git(#\w+)?$/
 
-function normalizeRepositoryUrl(url: string): Repository {
+function normalizeRepositoryUrl(url: string): RepositoryURL {
   if (url.startsWith('git+http')) {
     url = url.replace('git+', '').replace(GIT_URL_POSTFIX, '')
   }
@@ -66,7 +66,7 @@ function normalizeRepositoryUrl(url: string): Repository {
   ) {
     url = `https://github.com/${url}`
   }
-  return url as Repository
+  return url as RepositoryURL
 }
 
 export const npm = {
@@ -78,7 +78,7 @@ export const npm = {
       )
       if (repoUrl) return repoUrl
     }
-    return `https://www.npmjs.com/package/${change.name}` as Repository
+    return `https://www.npmjs.com/package/${change.name}` as RepositoryURL
   },
 
   async loadDiff(change) {
