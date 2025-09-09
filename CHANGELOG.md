@@ -2,6 +2,11 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.5.0
+
+- Added ChangeLog extracting.
+- Fixed UI for new dependencies.
+
 ## 0.4.1
 
 - Fixed web UI when user open it in multiple browser tab.
