@@ -36,10 +36,6 @@
 <pre>{@html html}</pre>
 
 <style>
-  pre {
-    padding: var(--safe-padding) 0;
-  }
-
   :global(.diff-line) {
     display: inline-block;
     width: 100%;
