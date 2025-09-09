@@ -28,9 +28,7 @@ html {
     --secondary-text-color: oklch(0.68 0.015 254);
     --page-background: oklch(0.18 0.015 254);
     --panel-background: oklch(0.11 0.019 248);
-    --panel-shadow:
-      0 1px 0 oklch(0.38 0.02 254), 0 -1px 0 oklch(0.38 0.02 254),
-      1px 0 0 oklch(0.38 0.02 254), -1px 0 0 oklch(0.38 0.02 254);
+    --panel-border-color: oklch(0.38 0.02 254);
     --pressed-shadow:
       inset 0 -0.5px 0 oklch(1 0 0 / 20%), inset 0 1px 2px oklch(0 0 0 / 80%),
       inset 0 1px 4px oklch(0 0 0 / 80%);
