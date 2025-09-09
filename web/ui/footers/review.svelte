@@ -86,6 +86,5 @@
     flex-grow: 1;
     gap: 0.5rem;
     justify-content: flex-end;
-    margin-inline: var(--sidebar-width);
   }
 </style>

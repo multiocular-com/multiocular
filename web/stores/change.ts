@@ -49,3 +49,21 @@ export function reviewChange(
 ): void {
   client.log.add(reviewChangeAction({ id, value }), { sync: true })
 }
+
+export type LoadingValue<Value> =
+  | { isLoading: false; value: Value }
+  | { isLoading: true }
+
+export function getById<Value>(
+  store: ReadableAtom<Record<ChangeId, Value>>,
+  id: ChangeId
+): ReadableAtom<LoadingValue<Value>> {
+  return computed([store], values => {
+    let value = values[id]
+    if (value) {
+      return { isLoading: false, value } as const
+    } else {
+      return { isLoading: true } as const
+    }
+  })
+}

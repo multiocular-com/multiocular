@@ -40,14 +40,15 @@
     height: var(--panel-height);
     padding: 0 0.2rem;
     background: var(--panel-background);
-    box-shadow: var(--panel-shadow);
   }
 
   header {
     top: 0;
+    border-bottom: 1px solid var(--panel-border-color);
   }
 
   footer {
     bottom: 0;
+    border-top: 1px solid var(--panel-border-color);
   }
 </style>

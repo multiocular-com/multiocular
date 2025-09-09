@@ -27,21 +27,21 @@
 <style>
   aside {
     position: fixed;
-    /* stylelint-disable unit-disallowed-list */
-    top: calc(var(--panel-height) + 1px);
-    bottom: calc(var(--panel-height) + 1px);
-    /* stylelint-enable unit-disallowed-list */
+    top: var(--panel-height);
+    bottom: var(--panel-height);
     left: 0;
     z-index: 1;
     box-sizing: border-box;
     width: var(--sidebar-width);
     overflow: auto;
     background: var(--page-background);
-    box-shadow: var(--panel-shadow);
+    border-right: 1px solid var(--panel-border-color);
 
     &.is-right {
       right: 0;
       left: auto;
+      border-right: none;
+      border-left: 1px solid var(--panel-border-color);
     }
 
     &.is-padding {

@@ -4,6 +4,8 @@
   import {
     type Change,
     type ChangeDiffs,
+    type ChangeLogs,
+    $changelogs as changelogsStore,
     $changes as changesStore,
     $diffs as diffsStore,
     getChangeId,
@@ -35,12 +37,14 @@
   }
 
   let {
+    changelogs = {},
     changes = [],
     children,
     diffs = {},
     hash = '',
     step = 'done'
   }: {
+    changelogs?: Record<string, string[][]>
     changes?: Partial<Debrand<Change>>[]
     children: Snippet
     diffs?: Record<string, string>
@@ -53,11 +57,13 @@
     changesStore.set(changes.map(i => mockChange(i)))
     hashStore.set(hash)
     diffsStore.set(diffs as ChangeDiffs)
+    changelogsStore.set(changelogs as ChangeLogs)
     return () => {
       hashStore.set('settings')
       stepStore.set('done')
       changesStore.set([])
       diffsStore.set({})
+      changelogsStore.set({})
     }
   })
 </script>

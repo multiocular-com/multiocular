@@ -1,29 +1,46 @@
 <script lang="ts">
-  import { $changes as changesStore } from '../../common/stores.ts'
+  import {
+    $changelogs as changelogsStore,
+    $changes as changesStore,
+    $diffs as diffsStore
+  } from '../../common/stores.ts'
   import type { ChangeId } from '../../common/types.ts'
-  import { getChange, getChangeIndex, getNextUrl } from '../stores/change.ts'
-  import { getDiff } from '../stores/diff.ts'
+  import {
+    getById,
+    getChange,
+    getChangeIndex,
+    getNextUrl
+  } from '../stores/change.ts'
+  import Changelog from '../ui/changelog.svelte'
+  import Dependency from '../ui/dependency.svelte'
   import Diff from '../ui/diff.svelte'
   import ReviewFooter from '../ui/footers/review.svelte'
   import ProgressHeader from '../ui/headers/progress.svelte'
+  import InlinePlaceholder from '../ui/inline-placeholder.svelte'
   import Page from '../ui/page.svelte'
-  import Placeholder from '../ui/placeholder.svelte'
   import ChangesSidebar from '../ui/sidebars/changes.svelte'
-  import DependencySidebar from '../ui/sidebars/dependency.svelte'
+  import FilesSidebar from '../ui/sidebars/files.svelte'
 
   let { id }: { id: ChangeId } = $props()
 
   let change = $derived(getChange(id))
-  let diff = $derived(getDiff(id))
+  let diff = $derived(getById(diffsStore, id))
+  let changelog = $derived(getById(changelogsStore, id))
   let next = $derived(getNextUrl($changesStore, id))
 </script>
 
 <Page title={getChangeIndex($changesStore, id)}>
   <ProgressHeader current={id} />
   <ChangesSidebar current={id} />
-  <DependencySidebar change={$change} />
+  <FilesSidebar />
+  <Dependency change={$change} />
+  {#if $changelog.isLoading}
+    <InlinePlaceholder text="Loading changelog…" />
+  {:else}
+    <Changelog content={$changelog.value} />
+  {/if}
   {#if $diff.isLoading}
-    <Placeholder loading text="Loading diff…" />
+    <InlinePlaceholder text="Loading diff…" />
   {:else}
     <Diff content={$diff.value} />
   {/if}
