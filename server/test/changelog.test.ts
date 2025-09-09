@@ -66,4 +66,10 @@ test('normalizes versions in changelog', () => {
   assert.equal(normalizeVersion('v1.0.0-beta'), '1.0.0-beta')
   assert.equal(normalizeVersion('package@1.0.0-beta'), '1.0.0-beta')
   assert.equal(normalizeVersion('1.0.0 “Supername”'), '1.0.0')
+  assert.equal(
+    normalizeVersion(
+      '[1.0.0](https://github.com/ai/test/compare/v0.9.0...v1.0.0) (2023-08-21)'
+    ),
+    '1.0.0'
+  )
 })

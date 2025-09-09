@@ -42,7 +42,7 @@ export function parseChangelog(content: string): ChangeLog {
   for (let line of lines) {
     // Match version headers (## 1.2.3, ### v1.2.3, etc.)
     let versionMatch = line.match(
-      /^#{2,3}\s*(?:v)?(\d+\.\d+\.\d+(?:\.\d+)?(?:-[\w.]+)?)\s*(.*)$/
+      /^#{2,3}\s+.*(\d+\.\d+\.\d+(?:\.\d+)?(?:-[\w.]+)?).*$/
     )
     if (versionMatch) {
       if (current) {
