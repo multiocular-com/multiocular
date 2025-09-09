@@ -1,4 +1,5 @@
 import { diff, type Repository } from '../../../common/types.ts'
+import { githubApi } from '../github.ts'
 import { type DiffLoader, getDiffPrefixes } from './common.ts'
 
 interface GitHubContent {
@@ -27,10 +28,9 @@ export const githubActions = {
 
     if (change.before === false) {
       // For new actions, show all files by getting initial commit diff
-      let response = await load(
-        `https://api.github.com/repos/${change.name}/contents`
-      )
-      let contents = (await response.json()) as GitHubContent[]
+      let contents = await githubApi<GitHubContent[]>(change.name, 'contents')
+      if (!contents) return diff('')
+
       let fileDiffs = []
       for (let item of contents) {
         if (item.type === 'file') {

@@ -1,6 +1,6 @@
 import type { ChangeLog } from '../../../common/stores.ts'
-import type { ChangeLogContent } from '../../../common/types.ts'
-import { warn } from '../../cli/print.ts'
+import type { ChangeLogContent, Repository } from '../../../common/types.ts'
+import { githubApi } from '../github.ts'
 import type { ChangeLogLoader } from './common.ts'
 import { filterChangelogByVersionRange, normalizeVersion } from './common.ts'
 
@@ -10,39 +10,18 @@ interface GitHubRelease {
 }
 
 async function fetchGitHubReleases(
-  repository: string
+  repository: Repository
 ): Promise<ChangeLog | null> {
-  let match = repository.match(/github\.com\/([^/]+)\/([^/]+)/)
-  if (!match) return null
-  let [, owner, repo] = match
-  if (!repo) return null
-  repo = repo.replace(/\.git$/, '')
-
-  try {
-    let response = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/releases`
-    )
-    if (response.status === 404) return null
-    if (!response.ok) {
-      warn('Network error on retrieving changelog', await response.text())
-      return null
+  let releases = await githubApi<GitHubRelease[]>(repository, 'releases')
+  if (!Array.isArray(releases)) return null
+  let changelog: ChangeLog = []
+  for (let release of releases) {
+    if (release.tag_name && release.body) {
+      let version = normalizeVersion(release.tag_name)
+      changelog.push([version, release.body.trim() as ChangeLogContent])
     }
-
-    let releases = (await response.json()) as GitHubRelease[]
-    if (!Array.isArray(releases)) return null
-
-    let changelog: ChangeLog = []
-    for (let release of releases) {
-      if (release.tag_name && release.body) {
-        let version = normalizeVersion(release.tag_name)
-        changelog.push([version, release.body.trim() as ChangeLogContent])
-      }
-    }
-
-    return changelog
-  } catch {
-    return null
   }
+  return changelog
 }
 
 export const githubReleases = (async (root, change) => {
