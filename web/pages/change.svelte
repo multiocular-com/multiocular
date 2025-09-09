@@ -34,10 +34,12 @@
   <ChangesSidebar current={id} />
   <FilesSidebar />
   <Dependency change={$change} />
-  {#if $changelog.isLoading}
-    <InlinePlaceholder text="Loading changelog…" />
-  {:else}
-    <Changelog content={$changelog.value} />
+  {#if $change.before}
+    {#if $changelog.isLoading}
+      <InlinePlaceholder text="Loading changelog…" />
+    {:else}
+      <Changelog content={$changelog.value} />
+    {/if}
   {/if}
   {#if $diff.isLoading}
     <InlinePlaceholder text="Loading diff…" />
