@@ -20,7 +20,7 @@
           >
             <div class="name">{change.name}</div>
             <div class="versions">
-              {change.before} → {change.after}
+              {change.before || 'none'} → {change.after}
             </div>
           </a>
         </li>
