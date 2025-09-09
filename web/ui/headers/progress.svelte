@@ -66,6 +66,9 @@
     position: relative;
     left: calc(var(--move, 0) * (100% - var(--eyes-width)));
     z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: var(--eyes-width);
     transition: left 300ms cubic-bezier(0.5, 0, 0.75, 0);
   }
