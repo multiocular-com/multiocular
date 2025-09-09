@@ -3,9 +3,17 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '*.md'
+      - '*/*.md'
+      - '.devcontainer/**'
     tags-ignore:
       - '*'
   pull_request:
+    paths-ignore:
+      - '*.md'
+      - '*/*.md'
+      - '.devcontainer/**'
   workflow_call:
 permissions:
   contents: read
