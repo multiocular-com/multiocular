@@ -1,4 +1,4 @@
-# ꙮ Multiocular
+# Multiocular
 
 <img width="100" height="100" alt="Multiocular logo" align="right" src="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39" />
 
@@ -10,7 +10,7 @@ A Node.js tool to **review dependencies** changes to:
 
 In general, it adds **open dependencies** practice to your project and stop treating node_modules as a black box.
 
-It supports: npm, pnpm, yarn 1, yarn berry, GitHub Actions.
+It supports: `npm`, `pnpm`, `yarn 1`, `yarn berry`, GitHub Actions.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/07ed01ee-694a-4553-bd7d-dbb248a08385">
@@ -59,6 +59,6 @@ npx multiocular
 
 Current practice of treating dependencies and free **black boxes** is creating a lot of issues in our industries.
 
-For instance, **Supply-chain attack** when malware added to dependencies by stealing maintainer account. Recent, [chalk/debug](https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised), [nx](https://www.aikido.dev/blog/popular-nx-packages-compromised-on-npm), and [GitHub Actions](https://www.wiz.io/blog/github-action-tj-actions-changed-files-supply-chain-attack-cve-2025-30066) examples are showing that it is just beginning.
+For instance, **Supply-chain attack** when malware added to dependencies by stealing maintainer account. Recent, [`chalk`/`debug`](https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised), [`nx`](https://www.aikido.dev/blog/popular-nx-packages-compromised-on-npm), and [GitHub Actions](https://www.wiz.io/blog/github-action-tj-actions-changed-files-supply-chain-attack-cve-2025-30066) examples are showing that it is just beginning.
 
 We suggest another **open dependencies** model, when team should track dependencies. It means less dependencies and more attention to it. But this is the only solution we see.
