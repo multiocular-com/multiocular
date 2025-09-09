@@ -34,9 +34,9 @@ async function fetchGitHubChangelog(
     .filter(item => item.type === 'blob')
     .map(item => item.path)
 
-  for (let changelogName of CHANGELOG_NAMES) {
-    if (files.includes(changelogName)) {
-      let content = await getFileForGithub(repository, branch, changelogName)
+  for (let name of CHANGELOG_NAMES) {
+    if (files.includes(name)) {
+      let content = await getFileForGithub(repository, branch, name)
       if (content) return content
     }
   }
