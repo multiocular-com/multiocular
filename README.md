@@ -1,4 +1,4 @@
-# Multiocular
+# ꙮ Multiocular
 
 <img width="100" height="100" alt="Multiocular logo" align="right" src="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39" />
 
