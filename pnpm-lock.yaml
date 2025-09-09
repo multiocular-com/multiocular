@@ -28,37 +28,37 @@ importers:
         version: 2.8.1
     devDependencies:
       '@fontsource/jacquard-12':
-        specifier: ^5.2.6
+        specifier: 5.2.6
         version: 5.2.6
       '@logux/actions':
-        specifier: ^0.5.0
+        specifier: 0.5.0
         version: 0.5.0(@logux/core@0.10.0)
       '@logux/client':
-        specifier: ^0.22.0
+        specifier: 0.22.0
         version: 0.22.0(nanostores@1.0.1)(react@19.1.1)
       '@logux/eslint-config':
         specifier: 56.1.0
         version: 56.1.0(@typescript-eslint/utils@8.42.0(eslint@9.35.0(jiti@2.5.1))(typescript@5.9.2))(eslint-plugin-svelte@3.12.1(eslint@9.35.0(jiti@2.5.1))(svelte@5.38.7))(eslint@9.35.0(jiti@2.5.1))(svelte-eslint-parser@1.3.1(svelte@5.38.7))(svelte@5.38.7)(typescript@5.9.2)
       '@logux/stylelint-config':
-        specifier: ^0.21.0
+        specifier: 0.21.0
         version: 0.21.0(stylelint@16.23.1(typescript@5.9.2))
       '@mdi/js':
-        specifier: ^7.4.47
+        specifier: 7.4.47
         version: 7.4.47
       '@storybook/addon-svelte-csf':
-        specifier: ^5.0.8
+        specifier: 5.0.8
         version: 5.0.8(@storybook/svelte@9.1.5(storybook@9.1.5(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1)))(svelte@5.38.7))(@sveltejs/vite-plugin-svelte@6.1.4(svelte@5.38.7)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1)))(storybook@9.1.5(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1)))(svelte@5.38.7)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1))
       '@storybook/addon-themes':
-        specifier: ^9.1.5
+        specifier: 9.1.5
         version: 9.1.5(storybook@9.1.5(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1)))
       '@storybook/svelte':
-        specifier: ^9.1.5
+        specifier: 9.1.5
         version: 9.1.5(storybook@9.1.5(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1)))(svelte@5.38.7)
       '@storybook/svelte-vite':
-        specifier: ^9.1.5
+        specifier: 9.1.5
         version: 9.1.5(@sveltejs/vite-plugin-svelte@6.1.4(svelte@5.38.7)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1)))(storybook@9.1.5(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1)))(svelte@5.38.7)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1))
       '@sveltejs/vite-plugin-svelte':
-        specifier: ^6.1.4
+        specifier: 6.1.4
         version: 6.1.4(svelte@5.38.7)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1))
       '@types/libnpmdiff':
         specifier: 2.0.3
@@ -67,25 +67,22 @@ importers:
         specifier: 24.3.1
         version: 24.3.1
       '@types/npmcli__arborist':
-        specifier: ^6.3.1
+        specifier: 6.3.1
         version: 6.3.1
       '@types/ws':
         specifier: 8.18.1
         version: 8.18.1
       actions-up:
-        specifier: ^1.3.1
+        specifier: 1.3.1
         version: 1.3.1
-      arborist:
-        specifier: link:@types/npmcli/arborist
-        version: link:@types/npmcli/arborist
       autoprefixer:
-        specifier: ^10.4.21
+        specifier: 10.4.21
         version: 10.4.21(postcss@8.5.6)
       better-node-test:
         specifier: 0.7.2
         version: 0.7.2
       escape-html:
-        specifier: ^1.0.3
+        specifier: 1.0.3
         version: 1.0.3
       eslint:
         specifier: 9.35.0
@@ -100,22 +97,22 @@ importers:
         specifier: 2.5.1
         version: 2.5.1
       keyux:
-        specifier: ^0.11.3
+        specifier: 0.11.3
         version: 0.11.3
       nano-staged:
         specifier: 0.8.0
         version: 0.8.0
       postcss:
-        specifier: ^8.5.6
+        specifier: 8.5.6
         version: 8.5.6
       postcss-dark-theme-class:
-        specifier: ^2.0.0
+        specifier: 2.0.0
         version: 2.0.0(postcss@8.5.6)
       postcss-html:
         specifier: 1.8.0
         version: 1.8.0
       postcss-load-config:
-        specifier: ^6.0.1
+        specifier: 6.0.1
         version: 6.0.1(jiti@2.5.1)(postcss@8.5.6)(yaml@2.8.1)
       prettier:
         specifier: 3.6.2
@@ -124,10 +121,10 @@ importers:
         specifier: 3.4.0
         version: 3.4.0(prettier@3.6.2)(svelte@5.38.7)
       react:
-        specifier: ^19.1.1
+        specifier: 19.1.1
         version: 19.1.1
       storybook:
-        specifier: ^9.1.5
+        specifier: 9.1.5
         version: 9.1.5(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1))
       stylelint:
         specifier: 16.23.1
@@ -151,7 +148,7 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
       vite:
-        specifier: ^7.1.4
+        specifier: 7.1.4
         version: 7.1.4(@types/node@24.3.1)(jiti@2.5.1)(yaml@2.8.1)
 
 packages:
