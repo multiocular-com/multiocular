@@ -1,6 +1,6 @@
 # ꙮ Multiocular
 
-<img width="200" height="200" alt="Multiocular logo" aligh="right" src="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39" />
+<img width="100" height="100" alt="Multiocular logo" align="right" src="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39" />
 
 A Node.js tool to **review dependencies** changes to:
 
