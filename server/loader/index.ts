@@ -1,9 +1,17 @@
 import {
+  addChangelogAction,
   addDiffAction,
   replaceChangesAction,
   updateChangeAction
 } from '../../common/api.ts'
-import { $changes, $step, addDiff, updateChange } from '../../common/stores.ts'
+import {
+  $changes,
+  $step,
+  addToChangelogs,
+  addToDiffs,
+  type ChangeLog,
+  updateChange
+} from '../../common/stores.ts'
 import {
   change,
   type Diff,
@@ -14,6 +22,7 @@ import {
 import type { Config } from '../cli/args.ts'
 import { debug } from '../cli/print.ts'
 import { send } from '../web/sync.ts'
+import { changelogLoaders } from './changelog/index.ts'
 import { diffLoaders } from './diffs/index.ts'
 import { getChangedFiles, loadFile } from './git.ts'
 import { calculateVersionDiff } from './versions.ts'
@@ -69,33 +78,44 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
     debug('')
   }
 
-  for (let changeItem of changes) {
-    let repository = diffLoaders[changeItem.type].findRepository(changeItem)
-    changeItem.repository = repository
+  for (let i of changes) {
+    i.repository = diffLoaders[i.type].findRepository(root, i)
   }
 
   $changes.set(changes)
   send(replaceChangesAction({ changes }))
 
   $step.set('diffs')
-  await Promise.all(
-    changes.map(async i => {
-      let id = i.id
+  await Promise.all([
+    ...changes.map(async i => {
+      let changelog: ChangeLog = []
+      for (let loader of changelogLoaders) {
+        let result = await loader(root, i)
+        if (result !== null) {
+          changelog = result
+          break
+        }
+      }
+      addToChangelogs(i.id, changelog)
+      send(addChangelogAction({ changelog, id: i.id }))
+    }),
+    ...changes.map(async i => {
       let diff = await diffLoaders[i.type].loadDiff(i)
-      if (diff.length > 1024 * 1024) {
+      if (diff.length > 2 * 1024 * 1024) {
         diff = ('The diff file is too big. It could be a binary. ' +
           'We will support it in next releases.') as Diff
       }
-      addDiff(id, diff)
-      send(addDiffAction({ diff, id }))
+      addToDiffs(i.id, diff)
+      send(addDiffAction({ diff, id: i.id }))
+
       let update = change({
         size: calcSize(diff),
         status: 'loaded'
       })
-      updateChange(id, update)
-      send(updateChangeAction({ id, update }))
+      updateChange(i.id, update)
+      send(updateChangeAction({ id: i.id, update }))
     })
-  )
+  ])
 
   $step.set('done')
 }

@@ -1,4 +1,3 @@
-import type { Change } from '../../../common/stores.ts'
 import { diff, type Repository } from '../../../common/types.ts'
 import { type DiffLoader, getDiffPrefixes } from './common.ts'
 
@@ -19,11 +18,11 @@ async function load(url: string): Promise<Response> {
 }
 
 export const githubActions = {
-  findRepository(change: Change): Repository {
+  findRepository(root, change) {
     return `https://github.com/${change.name}` as Repository
   },
 
-  async loadDiff(change: Change) {
+  async loadDiff(change) {
     let { diffDstPrefix, diffSrcPrefix } = getDiffPrefixes(change)
 
     if (change.before === false) {

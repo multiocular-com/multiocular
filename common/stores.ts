@@ -2,6 +2,8 @@ import { atom, computed } from 'nanostores'
 
 import type {
   ChangeId,
+  ChangeLogContent,
+  ChangeLogTitle,
   Dependency,
   DependencyName,
   DependencyVersion,
@@ -39,6 +41,12 @@ export type ChangeDiffs = Record<ChangeId, Diff>
 export const $changes = atom<Change[]>([])
 
 export const $diffs = atom<ChangeDiffs>({})
+
+export type ChangeLog = [ChangeLogTitle, ChangeLogContent][]
+
+export type ChangeLogs = Record<ChangeId, ChangeLog>
+
+export const $changelogs = atom<ChangeLogs>({})
 
 export const $sortedChanges = computed($changes, changes =>
   [...changes].sort((a, b) => {
@@ -103,10 +111,17 @@ export function updateChange(id: ChangeId, update: Partial<Change>): void {
   )
 }
 
-export function addDiff(id: ChangeId, diff: Diff): void {
+export function addToDiffs(id: ChangeId, diff: Diff): void {
   $diffs.set({
     ...$diffs.get(),
     [id]: diff
+  })
+}
+
+export function addToChangelogs(id: ChangeId, changelog: ChangeLog): void {
+  $changelogs.set({
+    ...$changelogs.get(),
+    [id]: changelog
   })
 }
 

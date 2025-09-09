@@ -2,12 +2,11 @@ import Arborist from '@npmcli/arborist'
 import libnpmdiff from 'libnpmdiff'
 import { readFileSync } from 'node:fs'
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
-import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import type { Change } from '../../../common/stores.ts'
 import { diff, type Repository } from '../../../common/types.ts'
+import { findNpmRoot } from '../npm.ts'
 import { type DiffLoader, getDiffPrefixes } from './common.ts'
 
 interface PackageJson {
@@ -71,20 +70,18 @@ function normalizeRepositoryUrl(url: string): Repository {
 }
 
 export const npm = {
-  findRepository(change: Change): Repository {
-    try {
-      let require = createRequire(import.meta.url)
+  findRepository(root, change) {
+    let packageDir = findNpmRoot(root, change.name)
+    if (packageDir) {
       let repoUrl = extractRepositoryUrl(
-        readFileSync(require.resolve(`${change.name}/package.json`), 'utf8')
+        readFileSync(join(packageDir, 'package.json'), 'utf8')
       )
       if (repoUrl) return repoUrl
-    } catch {
-      // Package not found in node_modules
     }
     return `https://www.npmjs.com/package/${change.name}` as Repository
   },
 
-  async loadDiff(change: Change) {
+  async loadDiff(change) {
     let { diffDstPrefix, diffSrcPrefix } = getDiffPrefixes(change)
 
     if (change.before === false) {
