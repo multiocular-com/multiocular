@@ -4,7 +4,7 @@
 
 A Node.js tool to **review dependencies** changes to:
 
-- Prevent **supply-chain attack**.
+- Prevent **supply chain attack**.
 - Catch **API breaking changes**.
 - **Learn** from your dependencies.
 
@@ -59,6 +59,6 @@ npx multiocular
 
 Current practice of treating dependencies and free **black boxes** is creating a lot of issues in our industries.
 
-For instance, **Supply-chain attack** when malware added to dependencies by stealing maintainer account. Recent, [`chalk`/`debug`](https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised), [`nx`](https://www.aikido.dev/blog/popular-nx-packages-compromised-on-npm), and [GitHub Actions](https://www.wiz.io/blog/github-action-tj-actions-changed-files-supply-chain-attack-cve-2025-30066) examples are showing that it is just beginning.
+For instance, **Supply chain attack** when malware added to dependencies by stealing maintainer account. Recent, [`chalk`/`debug`](https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised), [`nx`](https://www.aikido.dev/blog/popular-nx-packages-compromised-on-npm), and [GitHub Actions](https://www.wiz.io/blog/github-action-tj-actions-changed-files-supply-chain-attack-cve-2025-30066) examples are showing that it is just beginning.
 
 We suggest another **open dependencies** model, when team should track dependencies. It means less dependencies and more attention to it. But this is the only solution we see.
