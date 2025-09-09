@@ -44,6 +44,8 @@ jobs:
         run: pnpm install --ignore-scripts
       - name: Run tests and build in parallel
         run: pnpm test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   short:
     runs-on: ubuntu-latest
     strategy:
@@ -81,3 +83,5 @@ jobs:
         run: pnpm install --ignore-scripts
       - name: Run unit tests
         run: pnpm test:real
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
