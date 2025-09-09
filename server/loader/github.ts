@@ -13,7 +13,13 @@ export async function githubApi<Response>(
   } else {
     where = repository
   }
-  let response = await fetch(`https://api.github.com/repos/${where}/${path}`)
+  let headers: HeadersInit = {}
+  if (process.env.GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`
+  }
+  let response = await fetch(`https://api.github.com/repos/${where}/${path}`, {
+    headers
+  })
   if (response.status === 404) return null
   if (!response.ok) {
     warn('Network error on retrieving changelog', await response.text())
