@@ -1,5 +1,7 @@
+import assert from 'node:assert/strict'
 import { afterEach, beforeEach, test } from 'node:test'
 
+import { normalizeVersion } from '../index.ts'
 import { cliJsonMatch, removeProject, run, startProject } from './utils.ts'
 
 beforeEach(async () => {
@@ -56,4 +58,12 @@ test('loads from GitHub Releases', async () => {
       name: '@lukeed/uuid'
     }
   ])
+})
+
+test('normalizes versions in changelog', () => {
+  assert.equal(normalizeVersion('1.0.0'), '1.0.0')
+  assert.equal(normalizeVersion('1.0.0-beta'), '1.0.0-beta')
+  assert.equal(normalizeVersion('v1.0.0-beta'), '1.0.0-beta')
+  assert.equal(normalizeVersion('package@1.0.0-beta'), '1.0.0-beta')
+  assert.equal(normalizeVersion('1.0.0 “Supername”'), '1.0.0')
 })

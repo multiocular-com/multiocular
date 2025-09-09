@@ -23,7 +23,7 @@ export const CHANGELOG_NAMES = [
 ]
 
 export function normalizeVersion(version: string): ChangeLogTitle {
-  let versionMatch = version.match(/^\d+\.\d+(?:\.\d+)?(?:-[\w.]+)?/)
+  let versionMatch = version.match(/\d+\.\d+(?:\.\d+)?(?:-[\w.]+)?/)
   if (versionMatch) {
     return versionMatch[0] as ChangeLogTitle
   } else {
