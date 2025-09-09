@@ -1,5 +1,6 @@
 import type { ChangeLog } from '../../../common/stores.ts'
 import type { ChangeLogContent } from '../../../common/types.ts'
+import { warn } from '../../cli/print.ts'
 import type { ChangeLogLoader } from './common.ts'
 import { filterChangelogByVersionRange, normalizeVersion } from './common.ts'
 
@@ -21,7 +22,11 @@ async function fetchGitHubReleases(
     let response = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/releases`
     )
-    if (!response.ok) return null
+    if (response.status === 404) return null
+    if (!response.ok) {
+      warn('Network error on retrieving changelog', await response.text())
+      return null
+    }
 
     let releases = (await response.json()) as GitHubRelease[]
     if (!Array.isArray(releases)) return null
