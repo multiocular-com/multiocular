@@ -13,7 +13,6 @@ function mockChange(partial: Partial<Debrand<Change>>): Change {
     from: 'npm',
     id: 'mock-change',
     name: 'mock-package',
-    repository: 'https://www.npmjs.com/package/mock-package',
     size: 100,
     status: 'loaded',
     type: 'npm',

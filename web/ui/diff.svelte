@@ -13,6 +13,7 @@
   }
 
   let { content }: { content: Diff } = $props()
+
   let html = $derived.by(() => {
     return content
       .split('\n')
@@ -32,18 +33,13 @@
   })
 </script>
 
-<pre class="diff">{@html html}</pre>
+<pre>{@html html}</pre>
 
 <style>
-  .diff {
-    padding: var(--safe-padding) 1rem;
-  }
-
   :global(.diff-line) {
     display: inline-block;
     width: 100%;
-    padding: 0 1rem;
-    margin: 0 -1rem;
+    padding: 0 var(--safe-padding);
 
     &.is-note {
       color: var(--secondary-text-color);

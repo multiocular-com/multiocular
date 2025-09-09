@@ -1,6 +1,7 @@
 import { styleText } from 'node:util'
 
 import {
+  $changelogs,
   $diffs,
   $sortedChanges,
   $step,
@@ -12,6 +13,7 @@ import { print } from './print.ts'
 
 export type MultiocularJSON = Debrand<
   ({
+    changelog: [string, string][]
     diff: string
   } & Omit<Extract<Change, { status: string }>, 'id' | 'size' | 'status'>)[]
 >
@@ -41,9 +43,11 @@ export function outputProcess(config: Config): void {
         .filter(change => change.status === 'loaded')
       if (config.output === 'json') {
         let diffs = $diffs.get()
+        let changelogs = $changelogs.get()
         let json = changes.map(change => ({
           after: change.after,
           before: change.before,
+          changelog: changelogs[change.id]!,
           diff: diffs[change.id]!,
           from: change.from,
           name: change.name,

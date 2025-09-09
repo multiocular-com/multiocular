@@ -26,6 +26,9 @@ test('shows dependency changes with npm', async () => {
     {
       after: '5.1.5',
       before: '5.1.4',
+      changelog: [
+        ['5.1.5', '* Fixed latest version on npm after 3.x release.']
+      ],
       diff:
         'diff --git npm:nanoid@5.1.4/package.json npm:nanoid@5.1.5/package.json\n' +
         'index v5.1.4..v5.1.5 100644\n' +

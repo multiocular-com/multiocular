@@ -28,6 +28,8 @@ export type Diff = Brand<string, 'Diff'>
 export type DiffSize = Brand<number, 'DiffSize'>
 export type ServerURL = Brand<string, 'ServerURL'>
 export type Repository = Brand<string, 'Repository'>
+export type ChangeLogTitle = Brand<string, 'ChangeLogTitle'>
+export type ChangeLogContent = Brand<string, 'ChangeLogContent'>
 
 export type LoadedFile = { content: FileContent; path: FilePath }
 export type MissingFile = { missing: true; path: FilePath }
@@ -37,7 +39,6 @@ export interface Dependency {
   from: 'github-actions' | 'npm' | 'pnpm' | 'yarn'
   name: DependencyName
   realVersion?: string
-  repository: Repository
   source: FilePath
   type: 'github-actions' | 'npm'
   version: DependencyVersion

@@ -2,6 +2,7 @@ import { loguxSubscribe } from '@logux/actions'
 import { CrossTabClient, log } from '@logux/client'
 
 import {
+  addChangelogAction,
   addDiffAction,
   changeStepAction,
   replaceChangesAction,
@@ -9,7 +10,13 @@ import {
   subprotocol,
   updateChangeAction
 } from '../../common/api.ts'
-import { $changes, $step, addDiff, updateChange } from '../../common/stores.ts'
+import {
+  $changes,
+  $step,
+  addToChangelogs,
+  addToDiffs,
+  updateChange
+} from '../../common/stores.ts'
 
 let server = __SERVER_URL__
 
@@ -41,7 +48,9 @@ client.on('add', action => {
   } else if (reviewChangeAction.match(action)) {
     updateChange(action.id, { status: action.value })
   } else if (addDiffAction.match(action)) {
-    addDiff(action.id, action.diff)
+    addToDiffs(action.id, action.diff)
+  } else if (addChangelogAction.match(action)) {
+    addToChangelogs(action.id, action.changelog)
   }
 })
 

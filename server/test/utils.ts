@@ -175,7 +175,13 @@ export async function cliBad(...args: CliArg[]): Promise<string> {
 }
 
 export async function cliJson(...args: CliArg[]): Promise<MultiocularJSON> {
-  return JSON.parse(await cliGood('--json', ...args))
+  let output = await cliGood('--json', ...args)
+  try {
+    return JSON.parse(output)
+  } catch (e) {
+    process.stdout.write(output + '\n')
+    throw e
+  }
 }
 
 export async function cliJsonEqual(
@@ -185,39 +191,63 @@ export async function cliJsonEqual(
   assert.deepEqual(await cliJson(...args), expected)
 }
 
-type PartialMultiocularJSON = {
-  [K in keyof MultiocularJSON[0]]?: MultiocularJSON[0][K] | RegExp
-}[]
+type WithRegExp<T> = T extends string
+  ? RegExp | T
+  : T extends (infer U)[]
+    ? WithRegExp<U>[]
+    : T extends object
+      ? { [K in keyof T]?: WithRegExp<T[K]> }
+      : T
+
+type PartialMultiocularJSON = WithRegExp<MultiocularJSON>
+
+function assertDeepMatch(
+  actual: unknown,
+  expected: unknown,
+  path: string,
+  actualJson: string
+): void {
+  if (Array.isArray(expected)) {
+    if (!Array.isArray(actual)) {
+      assert.fail(`${path} should be array\n${actualJson}`)
+    }
+    assert.equal(
+      actual.length,
+      expected.length,
+      `${path} should have ${expected.length} items\n${actualJson}`
+    )
+    for (let i = 0; i < expected.length; i++) {
+      assertDeepMatch(actual[i], expected[i], `${path}[${i}]`, actualJson)
+    }
+  } else if (expected instanceof RegExp) {
+    assert.match(
+      String(actual),
+      expected,
+      `${path} should match ${String(expected)}\n${actualJson}`
+    )
+  } else if (expected && typeof expected === 'object') {
+    if (!actual || typeof actual !== 'object') {
+      assert.fail(`${path} should be object\n${actualJson}`)
+    }
+    for (let [key, expectedValue] of Object.entries(expected)) {
+      let actualValue = (actual as Record<string, unknown>)[key]
+      assertDeepMatch(actualValue, expectedValue, `${path}.${key}`, actualJson)
+    }
+  } else {
+    assert.equal(
+      actual,
+      expected,
+      `${path} should equal ${String(expected)}\n${actualJson}`
+    )
+  }
+}
 
 export async function cliJsonMatch(
   expected: PartialMultiocularJSON,
   ...args: CliArg[]
 ): Promise<void> {
   let actual = await cliJson(...args)
-  let actualJson = JSON.stringify(actual, null, 2)
-  assert.equal(
-    actual.length,
-    expected.length,
-    `Expect ${expected.length} diffs\n${actualJson}`
-  )
-  for (let i = 0; i < expected.length; i++) {
-    for (let [key, expectedValue] of Object.entries(expected[i]!)) {
-      let actualValue = actual[i]![key as keyof MultiocularJSON[0]]
-      if (expectedValue instanceof RegExp) {
-        assert.match(
-          String(actualValue),
-          expectedValue,
-          `${i}>${key} should match ${expectedValue}\n${actualJson}`
-        )
-      } else {
-        assert.equal(
-          actualValue,
-          expectedValue,
-          `${i}>${key} should equal ${expectedValue}\n${actualJson}`
-        )
-      }
-    }
-  }
+  assertDeepMatch(actual, expected, `json`, JSON.stringify(actual, null, 2))
 }
 
 let backgroundProcess: ReturnType<typeof spawn> | undefined

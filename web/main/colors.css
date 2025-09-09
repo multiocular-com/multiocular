@@ -5,9 +5,7 @@ html {
   --page-background: oklch(1 0 0);
   --panel-background: oklch(0.98 0.004 248);
   --focus-color: oklch(0.66 0.17 256);
-  --panel-shadow:
-    0 1px 0 oklch(0.88 0.013 254), 0 -1px 0 oklch(0.88 0.013 254),
-    1px 0 0 oklch(0.88 0.013 254), -1px 0 0 oklch(0.88 0.013 254);
+  --panel-border-color: oklch(0.88 0.013 254);
   --pressed-shadow:
     inset 0 0 0 0.5px oklch(0 0 0 / 5%), inset 0 1px 2px oklch(0 0 0 / 20%),
     inset 0 1px 4px oklch(0 0 0 / 20%);

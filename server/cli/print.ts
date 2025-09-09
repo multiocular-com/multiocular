@@ -17,6 +17,16 @@ export function debug(message: string): void {
   process.stderr.write(styleText('gray', message) + '\n')
 }
 
+export function warn(message: string, extra?: string): void {
+  process.stderr.write(
+    styleText(['bgYellow', 'bold'], ' WARN ') +
+      ' ' +
+      styleText('yellow', message) +
+      (extra ? '\n' + extra : '') +
+      '\n'
+  )
+}
+
 export function printError(message: string): void {
   process.stderr.write(
     styleText(['bgRed', 'bold'], ' ERROR ') +

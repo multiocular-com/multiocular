@@ -55,6 +55,16 @@ index v8.40.0..v8.41.0 100644
   "files": [
     "dist",`
   }
+
+  const CHANGELOGS = {
+    'npm:typescript-eslint@8.40.0>8.41.0': [
+      [
+        '8.41.0',
+        '### 🚀 Features\r\n\r\n' +
+          '- tighten `tsconfigRootDir` validation ([#11463](https://github.com/typ…int.netlify.app/users/versioning) and [releases](https://main--typescript-eslint.netlify.app/users/releases) on our website.'
+      ]
+    ]
+  }
 </script>
 
 <Story name="Initialize" asChild parameters={{ layout: 'fullscreen' }}>
@@ -92,8 +102,20 @@ index v8.40.0..v8.41.0 100644
   </Scene>
 </Story>
 
-<Story name="Diff" asChild parameters={{ layout: 'fullscreen' }}>
+<Story name="ChangeLog Loading" asChild parameters={{ layout: 'fullscreen' }}>
   <Scene
+    changes={CHANGES.map(i => ({ ...i, status: 'loaded' }))}
+    diffs={DIFFS}
+    hash="#change/npm:typescript-eslint@8.40.0%3E8.41.0"
+    step="diffs"
+  >
+    <Main />
+  </Scene>
+</Story>
+
+<Story name="Change" asChild parameters={{ layout: 'fullscreen' }}>
+  <Scene
+    changelogs={CHANGELOGS}
     changes={CHANGES}
     diffs={DIFFS}
     hash="#change/npm:typescript-eslint@8.40.0%3E8.41.0"
@@ -103,12 +125,28 @@ index v8.40.0..v8.41.0 100644
   </Scene>
 </Story>
 
+<Story name="New Dependency" asChild parameters={{ layout: 'fullscreen' }}>
+  <Scene
+    changelogs={{}}
+    changes={CHANGES.map(i => ({ ...i, before: false }))}
+    diffs={{
+      'npm:typescript-eslint@8.41.0':
+        DIFFS['npm:typescript-eslint@8.40.0>8.41.0']
+    }}
+    hash="#change/npm:typescript-eslint@8.41.0"
+    step="diffs"
+  >
+    <Main />
+  </Scene>
+</Story>
+
 <Story
-  name="Diff Dark"
+  name="Change Dark"
   asChild
   parameters={{ layout: 'fullscreen', themes: { themeOverride: 'dark' } }}
 >
   <Scene
+    changelogs={CHANGELOGS}
     changes={CHANGES}
     diffs={DIFFS}
     hash="change/npm:typescript-eslint@8.40.0%3E8.41.0"

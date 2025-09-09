@@ -3,7 +3,7 @@ import { parse } from 'yaml'
 
 import { dependency, type Dependency } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
-import { findRepositorySource, splitPackage } from './common.ts'
+import { splitPackage } from './common.ts'
 
 interface PnpmLock9 {
   packages: Record<string, { resolution?: { integrity: string } | string }>
@@ -35,10 +35,6 @@ export const pnpm = {
             dependency({
               from: 'pnpm',
               name,
-              repository: findRepositorySource(
-                lock.packages[pkg]?.resolution,
-                name
-              ),
               source: file.path,
               type: 'npm',
               version

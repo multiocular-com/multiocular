@@ -1,7 +1,7 @@
 import { basename } from 'node:path'
 
 import { dependency, type Dependency } from '../../../common/types.ts'
-import { findRepositorySource, type VersionsLoader } from './common.ts'
+import type { VersionsLoader } from './common.ts'
 
 interface NpmLock3 {
   lockfileVersion: number
@@ -60,7 +60,6 @@ export const npm = {
             dependency({
               from: 'npm',
               name,
-              repository: findRepositorySource(packageInfo.resolved, name),
               source: file.path,
               type: 'npm',
               version
