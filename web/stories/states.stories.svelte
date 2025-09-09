@@ -125,6 +125,21 @@ index v8.40.0..v8.41.0 100644
   </Scene>
 </Story>
 
+<Story name="New Dependency" asChild parameters={{ layout: 'fullscreen' }}>
+  <Scene
+    changelogs={{}}
+    changes={CHANGES.map(i => ({ ...i, before: false }))}
+    diffs={{
+      'npm:typescript-eslint@8.41.0':
+        DIFFS['npm:typescript-eslint@8.40.0>8.41.0']
+    }}
+    hash="#change/npm:typescript-eslint@8.41.0"
+    step="diffs"
+  >
+    <Main />
+  </Scene>
+</Story>
+
 <Story
   name="Change Dark"
   asChild

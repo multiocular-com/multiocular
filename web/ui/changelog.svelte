@@ -20,6 +20,10 @@
   h2 {
     margin-bottom: var(--safe-padding);
     font: var(--title-font);
+
+    &:not(:first-child) {
+      margin-top: 1rem;
+    }
   }
 
   p {
