@@ -1,6 +1,10 @@
 # ꙮ Multiocular
 
-<img width="100" height="100" alt="Multiocular logo" align="right" src="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39" />
+<picture >
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/1d99c3c5-6f52-453e-974a-7845c2e21100">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39">
+  <img width="100" height="100" alt="Multiocular logo" align="right" src="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39" />
+</picture>
 
 A Node.js tool to **review dependencies** changes to:
 
