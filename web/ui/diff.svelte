@@ -31,7 +31,6 @@
     :global(.d2h-file-header) {
       position: sticky;
       top: var(--panel-height);
-      z-index: 1;
       font: var(--title-font);
     }
 
@@ -48,8 +47,8 @@
       padding-inline: var(--safe-padding);
     }
 
-    :global(.d2h-tag, .d2h-code-linenumber, .d2h-icon) {
-      display: none;
+    :global(.d2h-tag, .d2h-code-linenumber, .d2h-icon, .d2h-file-collapse) {
+      display: none !important;
     }
 
     :global(.hljs) {
