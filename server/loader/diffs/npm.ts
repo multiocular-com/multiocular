@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
 import { diff, type RepositoryURL } from '../../../common/types.ts'
-import { findNpmRoot } from '../npm.ts'
+import { getNpmContent } from '../npm.ts'
 import { type DiffLoader, getDiffPrefixes } from './common.ts'
 
 interface PackageJson {
@@ -70,8 +70,8 @@ function normalizeRepositoryUrl(url: string): RepositoryURL {
 }
 
 export const npm = {
-  findRepository(root, change) {
-    let packageDir = findNpmRoot(root, change.name, change.after)
+  async findRepository(root, change) {
+    let packageDir = await getNpmContent(root, change.name, change.after)
     if (packageDir) {
       let repoUrl = extractRepositoryUrl(
         readFileSync(join(packageDir, 'package.json'), 'utf8')

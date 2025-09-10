@@ -78,9 +78,11 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
     debug('')
   }
 
-  for (let i of changes) {
-    i.repository = diffLoaders[i.type].findRepository(root, i)
-  }
+  await Promise.all(
+    changes.map(async i => {
+      i.repository = await diffLoaders[i.type].findRepository(root, i)
+    })
+  )
 
   $changes.set(changes)
   send(replaceChangesAction({ changes }))

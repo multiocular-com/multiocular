@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 import {
+  $step,
+  deleteTemporary,
   filePath,
   findProjectRoot,
   getVersion,
@@ -20,3 +22,7 @@ loadDiffs(root, config)
 outputProcess(config)
 let url = await startWebServerIfNecessary(config)
 if (url && !config.noOpen) openBrowser(url)
+
+$step.subscribe(async step => {
+  if (step === 'done') await deleteTemporary()
+})
