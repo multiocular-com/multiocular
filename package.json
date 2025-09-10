@@ -39,7 +39,7 @@
     "test:audit": "pnpm audit",
     "test:web": "node --run build:web",
     "start:web": "vite web/ --host 0.0.0.0",
-    "start:server": "node --watch ./server/bin.ts --web",
+    "start:server": "node --env-file=.env --watch ./server/bin.ts --web",
     "build:web": "vite build web/",
     "build:server": "node ./scripts/build-server.ts",
     "format:js": "eslint --fix --cache --concurrency auto .",
