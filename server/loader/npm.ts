@@ -39,11 +39,12 @@ export async function getNpmContent(
       }
     }
 
-    let manifest = await pacote.manifest(spec, opts)
-    let tarballBuffer = await pacote.tarball(manifest._resolved, {
+    let npmOpts = {
       ...opts,
       Arborist
-    })
+    }
+    let manifest = await pacote.manifest(spec, npmOpts)
+    let tarballBuffer = await pacote.tarball(manifest._resolved, npmOpts)
     let tempDir = filePath(await mkdtemp(join(tmpdir(), 'multiocular-')))
     await new Promise<void>((resolve, reject) => {
       let stream = Readable.from(tarballBuffer)
