@@ -28,7 +28,7 @@ input {
 
 pre,
 code {
-  font: var(--code-font);
+  font-family: var(--monospace-family);
 }
 
 :focus-visible {

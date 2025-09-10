@@ -14,15 +14,20 @@ import {
   startWebServerIfNecessary
 } from './index.ts'
 
-let config = await parseArgs(process.argv.slice(2))
-let root = findProjectRoot(filePath(process.cwd()))
-if (config.debug) printDebugInfo(getVersion(), config, root)
+try {
+  let config = await parseArgs(process.argv.slice(2))
+  let root = findProjectRoot(filePath(process.cwd()))
+  if (config.debug) printDebugInfo(getVersion(), config, root)
 
-loadDiffs(root, config)
-outputProcess(config)
-let url = await startWebServerIfNecessary(config)
-if (url && !config.noOpen) openBrowser(url)
+  loadDiffs(root, config)
+  outputProcess(config)
+  let url = await startWebServerIfNecessary(config)
+  if (url && !config.noOpen) openBrowser(url)
 
-$step.subscribe(async step => {
-  if (step === 'done') await deleteTemporary()
-})
+  $step.subscribe(async step => {
+    if (step === 'done') await deleteTemporary()
+  })
+} catch (e) {
+  await deleteTemporary()
+  throw e
+}

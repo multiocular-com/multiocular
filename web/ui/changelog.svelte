@@ -14,7 +14,6 @@
 <style>
   section {
     padding: var(--safe-padding);
-    border-bottom: 1px solid var(--panel-border-color);
   }
 
   h2 {

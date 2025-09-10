@@ -20,6 +20,13 @@ html {
     0 1px 3px oklch(0 0 0 / 30%);
   --add-text-background: oklch(0.95 0.05 152);
   --remove-text-background: oklch(0.95 0.022 24);
+  --keyword-color: oklch(0.6 0.2 20);
+  --entity-color: oklch(0.5 0.2 295);
+  --constant-color: oklch(0.5 0.18 258);
+  --string-color: oklch(0.3 0.1 256);
+  --variable-color: oklch(0.65 0.18 46);
+  --comment-color: oklch(0.55 0.02 250);
+  --tag-color: oklch(0.55 0.15 147);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,5 +52,12 @@ html {
       0 1px 2px oklch(0 0 0);
     --add-text-background: oklch(0.25 0.032 163);
     --remove-text-background: oklch(0.25 0.032 359);
+    --keyword-color: oklch(0.7 0.17 25);
+    --entity-color: oklch(0.8 0.12 305);
+    --constant-color: oklch(0.8 0.1 246);
+    --string-color: oklch(0.84 0.08 246);
+    --variable-color: oklch(0.8 0.14 60);
+    --comment-color: oklch(0.65 0.03 250);
+    --tag-color: oklch(0.85 0.2 145);
   }
 }

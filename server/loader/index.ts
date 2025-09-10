@@ -1,20 +1,22 @@
+import { parse } from 'diff2html'
+
 import {
   addChangelogAction,
-  addDiffAction,
+  addFileDiffsAction,
   replaceChangesAction,
   updateChangeAction
 } from '../../common/api.ts'
 import {
+  $changelogs,
   $changes,
+  $diffs,
+  $fileDiffs,
   $step,
-  addToChangelogs,
-  addToDiffs,
   type ChangeLog,
   updateChange
 } from '../../common/stores.ts'
 import {
   change,
-  type Diff,
   type DiffSize,
   type FilePath,
   isLoaded
@@ -98,17 +100,17 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
           break
         }
       }
-      addToChangelogs(i.id, changelog)
+      $changelogs.setKey(i.id, changelog)
       send(addChangelogAction({ changelog, id: i.id }))
     }),
     ...changes.map(async i => {
-      let diff = await diffLoaders[i.type].loadDiff(i)
-      if (diff.length > 2 * 1024 * 1024) {
-        diff = ('The diff file is too big. It could be a binary. ' +
-          'We will support it in next releases.') as Diff
-      }
-      addToDiffs(i.id, diff)
-      send(addDiffAction({ diff, id: i.id }))
+      let diff = await diffLoaders[i.type].loadDiff(root, i)
+      let fileDiffs = parse(diff, {
+        renderNothingWhenEmpty: false
+      })
+      $diffs.setKey(i.id, diff)
+      $fileDiffs.setKey(i.id, fileDiffs)
+      send(addFileDiffsAction({ fileDiffs, id: i.id }))
 
       let update = change({
         size: calcSize(diff),

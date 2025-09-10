@@ -1,4 +1,5 @@
-import { atom, computed } from 'nanostores'
+import type { parse } from 'diff2html'
+import { atom, computed, map } from 'nanostores'
 
 import type {
   ChangeId,
@@ -36,17 +37,18 @@ export type Change = {
     }
 )
 
-export type ChangeDiffs = Record<ChangeId, Diff>
-
 export const $changes = atom<Change[]>([])
 
-export const $diffs = atom<ChangeDiffs>({})
+export type ChangeDiffs = Record<ChangeId, Diff>
+export const $diffs = map<ChangeDiffs>({})
+
+export type FileDiffs = ReturnType<typeof parse>
+export type ChangeFileDiffs = Record<ChangeId, FileDiffs>
+export const $fileDiffs = map<ChangeFileDiffs>({})
 
 export type ChangeLog = [ChangeLogTitle, ChangeLogContent][]
-
 export type ChangeLogs = Record<ChangeId, ChangeLog>
-
-export const $changelogs = atom<ChangeLogs>({})
+export const $changelogs = map<ChangeLogs>({})
 
 export const $sortedChanges = computed($changes, changes =>
   [...changes].sort((a, b) => {
@@ -109,20 +111,6 @@ export function updateChange(id: ChangeId, update: Partial<Change>): void {
       }
     })
   )
-}
-
-export function addToDiffs(id: ChangeId, diff: Diff): void {
-  $diffs.set({
-    ...$diffs.get(),
-    [id]: diff
-  })
-}
-
-export function addToChangelogs(id: ChangeId, changelog: ChangeLog): void {
-  $changelogs.set({
-    ...$changelogs.get(),
-    [id]: changelog
-  })
 }
 
 export function getChangeId(

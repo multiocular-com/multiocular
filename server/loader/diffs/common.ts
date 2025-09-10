@@ -6,18 +6,5 @@ export interface DiffLoader {
     root: FilePath,
     change: Change
   ): Promise<RepositoryURL> | RepositoryURL
-  loadDiff(version: Change): Promise<Diff>
-}
-
-export function getDiffPrefixes(change: Change): {
-  diffDstPrefix: string
-  diffSrcPrefix: string
-} {
-  let beforeVersion = change.before === false ? 'new' : change.before
-  let afterVersion = change.after
-
-  return {
-    diffDstPrefix: `${change.type}:${change.name}@${afterVersion}/`,
-    diffSrcPrefix: `${change.type}:${change.name}@${beforeVersion}/`
-  }
+  loadDiff(root: FilePath, change: Change): Promise<Diff>
 }

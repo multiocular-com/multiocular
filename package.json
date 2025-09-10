@@ -49,7 +49,8 @@
   "dependencies": {
     "@logux/server": "^0.14.0",
     "@npmcli/arborist": "^9.1.4",
-    "libnpmdiff": "^8.0.7",
+    "diff2html": "^3.4.52",
+    "highlight.js": "^11.11.1",
     "nanostores": "^1.0.1",
     "pacote": "^21.0.1",
     "remove": "^0.1.5",

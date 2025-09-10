@@ -1,18 +1,20 @@
 <script lang="ts">
+  import { parse } from 'diff2html'
   import type { Snippet } from 'svelte'
 
   import {
     type Change,
-    type ChangeDiffs,
     type ChangeLogs,
     $changelogs as changelogsStore,
     $changes as changesStore,
-    $diffs as diffsStore,
+    type FileDiffs,
+    $fileDiffs as fileDiffsStore,
     getChangeId,
     $step as stepStore,
     type StepValue
   } from '../../common/stores.ts'
   import { change, type Debrand } from '../../common/types.ts'
+  import { $dark as darkStore } from '../stores/dark.ts'
   import { $hash as hashStore } from '../stores/router.ts'
 
   function mockChange(partial: Partial<Debrand<Change>>): Change {
@@ -53,17 +55,34 @@
   } = $props()
 
   $effect.pre(() => {
+    let fileDiffs: Record<string, FileDiffs> = {}
+    for (let k in diffs) fileDiffs[k] = parse(diffs[k]!)
+
     stepStore.set(step)
     changesStore.set(changes.map(i => mockChange(i)))
     hashStore.set(hash)
-    diffsStore.set(diffs as ChangeDiffs)
+    fileDiffsStore.set(fileDiffs)
     changelogsStore.set(changelogs as ChangeLogs)
+
+    function updateTheme(): void {
+      darkStore.set(document.documentElement.classList.contains('is-dark'))
+    }
+    updateTheme()
+    let htmlObserver = new MutationObserver(() => {
+      updateTheme()
+    })
+    htmlObserver.observe(document.documentElement, {
+      attributeFilter: ['class'],
+      attributes: true
+    })
+
     return () => {
       hashStore.set('settings')
       stepStore.set('done')
       changesStore.set([])
-      diffsStore.set({})
+      fileDiffsStore.set({})
       changelogsStore.set({})
+      htmlObserver.disconnect()
     }
   })
 </script>

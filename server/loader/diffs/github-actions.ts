@@ -4,7 +4,7 @@ import {
   type GitHubRepositoryURL
 } from '../../../common/types.ts'
 import { githubApi } from '../github.ts'
-import { type DiffLoader, getDiffPrefixes } from './common.ts'
+import type { DiffLoader } from './common.ts'
 
 interface GitHubContent {
   download_url: string
@@ -27,9 +27,7 @@ export const githubActions = {
     return `https://github.com/${change.name}` as GitHubRepositoryURL
   },
 
-  async loadDiff(change) {
-    let { diffDstPrefix, diffSrcPrefix } = getDiffPrefixes(change)
-
+  async loadDiff(root, change) {
     if (change.before === false) {
       // For new actions, show all files by getting initial commit diff
       let contents = await githubApi<GitHubContent[]>(
@@ -38,7 +36,7 @@ export const githubActions = {
       )
       if (!contents) return diff('')
 
-      let fileDiffs = []
+      let fileDiffs: string[] = []
       for (let item of contents) {
         if (item.type === 'file') {
           let fileResponse = await fetch(item.download_url)
@@ -46,11 +44,11 @@ export const githubActions = {
             let content = await fileResponse.text()
             let lines = content.split('\n')
             fileDiffs.push(
-              `diff --git /dev/null ${diffDstPrefix}${item.name}\n` +
+              `diff --git /dev/null /b/${item.name}\n` +
                 `new file mode 100644\n` +
                 `index 0000000..${change.after.substring(0, 7)}\n` +
                 `--- /dev/null\n` +
-                `+++ ${diffDstPrefix}${item.name}\n` +
+                `+++ /b/${item.name}\n` +
                 `@@ -0,0 +1,${lines.length} @@\n` +
                 lines.map(line => `+${line}`).join('\n')
             )
@@ -65,15 +63,7 @@ export const githubActions = {
         `https://github.com/${change.name}/compare/` +
           `${beforeRef}...${afterRef}.diff`
       )
-      return diff(
-        (await response.text())
-          .replace(
-            /^diff --git a\/(.+) b\/(.+)$/gm,
-            `diff --git ${diffSrcPrefix}$1 ${diffDstPrefix}$2`
-          )
-          .replace(/^\+\+\+ b\//gm, `+++ ${diffDstPrefix}`)
-          .replace(/^--- a\//gm, `--- ${diffSrcPrefix}`)
-      )
+      return diff(await response.text())
     }
   }
 } satisfies DiffLoader

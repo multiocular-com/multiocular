@@ -3,7 +3,7 @@ import { CrossTabClient, log } from '@logux/client'
 
 import {
   addChangelogAction,
-  addDiffAction,
+  addFileDiffsAction,
   changeStepAction,
   replaceChangesAction,
   reviewChangeAction,
@@ -11,10 +11,10 @@ import {
   updateChangeAction
 } from '../../common/api.ts'
 import {
+  $changelogs,
   $changes,
+  $fileDiffs,
   $step,
-  addToChangelogs,
-  addToDiffs,
   updateChange
 } from '../../common/stores.ts'
 
@@ -47,10 +47,10 @@ client.on('add', action => {
     updateChange(action.id, action.update)
   } else if (reviewChangeAction.match(action)) {
     updateChange(action.id, { status: action.value })
-  } else if (addDiffAction.match(action)) {
-    addToDiffs(action.id, action.diff)
+  } else if (addFileDiffsAction.match(action)) {
+    $fileDiffs.setKey(action.id, action.fileDiffs)
   } else if (addChangelogAction.match(action)) {
-    addToChangelogs(action.id, action.changelog)
+    $changelogs.setKey(action.id, action.changelog)
   }
 })
 

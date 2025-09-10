@@ -42,10 +42,10 @@
   ] satisfies Partial<Debrand<Change>>[]
 
   const DIFFS = {
-    'npm:typescript-eslint@8.40.0>8.41.0': `diff --git npm:typescript-eslint@8.40.0/package.json npm:typescript-eslint@8.41.0/package.json
+    'npm:typescript-eslint@8.40.0>8.41.0': `diff --git package.json package.json
 index v8.40.0..v8.41.0 100644
---- npm:typescript-eslint@8.40.0/package.json
-+++ npm:typescript-eslint@8.41.0/package.json
+--- package.json
++++ package.json
 @@ -1,6 +1,6 @@
 {
   "name": "typescript-eslint",

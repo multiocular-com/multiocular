@@ -1,13 +1,34 @@
-import Arborist from '@npmcli/arborist'
-import libnpmdiff from 'libnpmdiff'
+import { spawn } from 'node:child_process'
 import { readFileSync } from 'node:fs'
-import { mkdtemp, rm, writeFile } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { join, sep } from 'node:path'
 
 import { diff, type RepositoryURL } from '../../../common/types.ts'
-import { getNpmContent } from '../npm.ts'
-import { type DiffLoader, getDiffPrefixes } from './common.ts'
+import { createEmptyDir, getNpmContent } from '../npm.ts'
+import type { DiffLoader } from './common.ts'
+
+function runDiff(...args: string[]): Promise<string> {
+  return new Promise((resolve, reject) => {
+    let child = spawn('git', ['diff', ...args], { stdio: 'pipe' })
+    let stdout = ''
+    let stderr = ''
+    child.stdout.on('data', data => {
+      stdout += `${data}`
+    })
+    child.stderr.on('data', data => {
+      stderr += `${data}`
+    })
+    child.on('close', code => {
+      if (code === 0 || code === 1) {
+        resolve(stdout)
+      } else {
+        reject(new Error(`Command failed with exit code ${code}\n${stderr}`))
+      }
+    })
+    child.on('error', error => {
+      reject(error)
+    })
+  })
+}
 
 interface PackageJson {
   bugs?: { url: string } | string
@@ -81,35 +102,22 @@ export const npm = {
     return `https://www.npmjs.com/package/${change.name}` as RepositoryURL
   },
 
-  async loadDiff(change) {
-    let { diffDstPrefix, diffSrcPrefix } = getDiffPrefixes(change)
-
-    if (change.before === false) {
-      let tempDir = await mkdtemp(join(tmpdir(), 'empty-npm-'))
-      try {
-        let emptyPackagePath = join(tempDir, 'package.json')
-        await writeFile(emptyPackagePath, '{}')
-        return diff(
-          await libnpmdiff([tempDir, `${change.name}@${change.after}`], {
-            Arborist,
-            diffDstPrefix,
-            diffSrcPrefix
-          })
-        )
-      } finally {
-        await rm(tempDir, { force: true, recursive: true })
-      }
-    } else {
-      return diff(
-        await libnpmdiff(
-          [`${change.name}@${change.before}`, `${change.name}@${change.after}`],
-          {
-            Arborist,
-            diffDstPrefix,
-            diffSrcPrefix
-          }
+  async loadDiff(root, change) {
+    let after = await getNpmContent(root, change.name, change.after)
+    let before = change.before
+      ? await getNpmContent(root, change.name, change.before)
+      : await createEmptyDir()
+    return diff(
+      (
+        await runDiff(
+          '--no-index',
+          '--no-ext-diff',
+          `${before}${sep}`,
+          `${after}${sep}`
         )
       )
-    }
+        .replaceAll(before, '')
+        .replaceAll(after, '')
+    )
   }
 } satisfies DiffLoader

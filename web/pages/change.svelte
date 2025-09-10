@@ -2,7 +2,7 @@
   import {
     $changelogs as changelogsStore,
     $changes as changesStore,
-    $diffs as diffsStore
+    $fileDiffs as fileDiffsStore
   } from '../../common/stores.ts'
   import type { ChangeId } from '../../common/types.ts'
   import {
@@ -24,7 +24,7 @@
   let { id }: { id: ChangeId } = $props()
 
   let change = $derived(getChange(id))
-  let diff = $derived(getById(diffsStore, id))
+  let fileDiffs = $derived(getById(fileDiffsStore, id))
   let changelog = $derived(getById(changelogsStore, id))
   let next = $derived(getNextUrl($changesStore, id))
 </script>
@@ -41,10 +41,10 @@
       <Changelog content={$changelog.value} />
     {/if}
   {/if}
-  {#if $diff.isLoading}
+  {#if $fileDiffs.isLoading}
     <InlinePlaceholder text="Loading diff…" />
   {:else}
-    <Diff content={$diff.value} />
+    <Diff content={$fileDiffs.value} />
   {/if}
   <ReviewFooter current={id} {next} status={$change.status} />
 </Page>

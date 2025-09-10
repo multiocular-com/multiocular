@@ -21,6 +21,7 @@ test('shows dependency changes with pnpm', async () => {
   await run('git add .')
   await run('git commit -m "Add nanoid"')
   await run('pnpm add nanoid@5.1.5')
+  await run('rm -r ./node_modules/nanoid/node_modules/.bin')
 
   await cliJsonEqual([
     {
@@ -30,10 +31,10 @@ test('shows dependency changes with pnpm', async () => {
         ['5.1.5', '* Fixed latest version on npm after 3.x release.']
       ],
       diff:
-        'diff --git npm:nanoid@5.1.4/package.json npm:nanoid@5.1.5/package.json\n' +
-        'index v5.1.4..v5.1.5 100644\n' +
-        '--- npm:nanoid@5.1.4/package.json\n' +
-        '+++ npm:nanoid@5.1.5/package.json\n' +
+        'diff --git a/package.json b/package.json\n' +
+        'index 351777b..032de3b 100644\n' +
+        '--- a/package.json\n' +
+        '+++ b/package.json\n' +
         '@@ -1,6 +1,6 @@\n' +
         ' {\n' +
         '   "name": "nanoid",\n' +
@@ -41,7 +42,7 @@ test('shows dependency changes with pnpm', async () => {
         '+  "version": "5.1.5",\n' +
         '   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n' +
         '   "keywords": [\n' +
-        '     "uuid",',
+        '     "uuid",\n',
       from: 'pnpm',
       name: 'nanoid',
       repository: 'https://github.com/ai/nanoid',

@@ -1,7 +1,7 @@
 import { defineAction } from '@logux/actions'
 
-import type { Change, ChangeLog, StepValue } from './stores.ts'
-import type { ChangeId, Diff } from './types.ts'
+import type { Change, ChangeLog, FileDiffs, StepValue } from './stores.ts'
+import type { ChangeId } from './types.ts'
 
 export const subprotocol = 0
 
@@ -27,11 +27,11 @@ export const updateChangeAction = defineAction<{
   update: Partial<Change>
 }>('changes/update')
 
-export const addDiffAction = defineAction<{
-  diff: Diff
+export const addFileDiffsAction = defineAction<{
+  fileDiffs: FileDiffs
   id: ChangeId
-  type: 'diffs/add'
-}>('diffs/add')
+  type: 'file-diffs/add'
+}>('file-diffs/add')
 
 export const addChangelogAction = defineAction<{
   changelog: ChangeLog

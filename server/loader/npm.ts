@@ -62,10 +62,20 @@ export async function getNpmContent(
   return OPENED_PACKAGES.get(spec)!
 }
 
+let emptyPackage: FilePath | undefined
+
+export async function createEmptyDir(): Promise<FilePath> {
+  if (!emptyPackage) {
+    emptyPackage = (await mkdtemp(join(tmpdir(), 'empty-npm-'))) as FilePath
+  }
+  return emptyPackage
+}
+
 export async function deleteTemporary(): Promise<void> {
   for (let folder of DOWNLOADED_PACKAGES.values()) {
     await rm(folder, { force: true, recursive: true })
   }
+  if (emptyPackage) await rm(emptyPackage, { force: true, recursive: true })
   DOWNLOADED_PACKAGES.clear()
   OPENED_PACKAGES.clear()
 }
