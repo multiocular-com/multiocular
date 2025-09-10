@@ -95,7 +95,7 @@
     "svgo": "4.0.0",
     "ts-blank-space": "0.6.2",
     "typescript": "5.9.2",
-    "vite": "7.1.4"
+    "vite": "7.1.5"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
