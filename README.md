@@ -31,7 +31,18 @@ It supports: `npm`, `pnpm`, `yarn 1`, `yarn berry`, GitHub Actions.
 
 ## Usage
 
-Install tool:
+First, reduce risk of exposing system to malware during the update.
+
+Disable `postinstall` for npm:
+
+```sh
+npm config set ignore-scripts true
+# We also recommend switching to pnpm where postinstall is disabled by default
+```
+
+It is also recommended of using [Dev Container](https://code.visualstudio.com/docs/devcontainers/containers) or at least run shell in container.
+
+Install Multiocular:
 
 ```sh
 npm install multiocular
