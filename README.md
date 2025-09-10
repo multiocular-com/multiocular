@@ -1,9 +1,9 @@
 # ꙮ Multiocular
 
 <picture >
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/1d99c3c5-6f52-453e-974a-7845c2e21100">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39">
-  <img width="100" height="100" alt="Multiocular logo" align="right" src="https://github.com/user-attachments/assets/e5f22175-153f-4b9a-b2fb-b7837d75db39" />
+  <source media="(prefers-color-scheme: dark)" srcset="./images/logo-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="./images/logo-light.png">
+  <img width="100" height="100" alt="Multiocular logo" align="right" src="./images/logo-light.png" />
 </picture>
 
 A Node.js tool to **review dependencies** changes to:
@@ -17,9 +17,9 @@ In general, it adds **open dependencies** practice to your project and stop trea
 It supports: `npm`, `pnpm`, `yarn 1`, `yarn berry`, GitHub Actions.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/07ed01ee-694a-4553-bd7d-dbb248a08385">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/beb86f60-772e-4c01-9de7-99613b354d67">
-  <img alt="Fallback image description" src="https://github.com/user-attachments/assets/beb86f60-772e-4c01-9de7-99613b354d67">
+  <source media="(prefers-color-scheme: dark)" srcset="./images/screenshot-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="./images/screenshot-light.png">
+  <img alt="Fallback image description" src="./images/screenshot-light.png">
 </picture>
 
 ---

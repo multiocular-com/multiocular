@@ -19,6 +19,7 @@ const IGNORE = new Set([
   'CHANGELOG.md',
   'dist',
   'docs',
+  'images',
   'node_modules',
   'scripts',
   'server/test',
