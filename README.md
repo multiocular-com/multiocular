@@ -70,6 +70,8 @@ Start web UI to review changes:
 npx multiocular
 ```
 
+If you have GitHub API limit, define `GITHUB_TOKEN` environment variable with [personal token](https://github.com/settings/personal-access-tokens/new) with access to public repositories.
+
 ## Motivation
 
 Current practice of treating dependencies and free **black boxes** is creating a lot of issues in our industries.
