@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { exec, spawn } from 'node:child_process'
+import { existsSync, readFileSync } from 'node:fs'
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
@@ -10,6 +11,18 @@ import type { CliArg } from '../index.ts'
 
 let currentProject: string | undefined
 let currentDirectory: string | undefined
+
+if (!process.env.GITHUB_TOKEN) {
+  let envFile = join(import.meta.dirname, '..', '..', '.env')
+  if (existsSync(envFile)) {
+    let token = readFileSync(envFile)
+      .toString()
+      .match(/GITHUB_TOKEN=(.*)/)
+    if (token) {
+      process.env.GITHUB_TOKEN = token[1]
+    }
+  }
+}
 
 const TEST_ENV = {
   ...process.env,
