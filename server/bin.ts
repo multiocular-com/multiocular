@@ -3,7 +3,7 @@
 import {
   $step,
   deleteTemporary,
-  filePath,
+  filePathType,
   findProjectRoot,
   getVersion,
   loadDiffs,
@@ -16,7 +16,7 @@ import {
 
 try {
   let config = await parseArgs(process.argv.slice(2))
-  let root = findProjectRoot(filePath(process.cwd()))
+  let root = findProjectRoot(filePathType(process.cwd()))
   if (config.debug) printDebugInfo(getVersion(), config, root)
 
   loadDiffs(root, config)

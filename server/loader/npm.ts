@@ -10,8 +10,8 @@ import { extract } from 'tar'
 import {
   type DependencyName,
   type DependencyVersion,
-  filePath,
-  type FilePath
+  type FilePath,
+  filePathType
 } from '../../common/types.ts'
 
 const OPENED_PACKAGES = new Map<string, FilePath>()
@@ -25,7 +25,7 @@ export async function getNpmContent(
 ): Promise<FilePath> {
   let spec = `${name}@${version}`
   if (!OPENED_PACKAGES.has(spec)) {
-    let localPath = filePath(join(root, 'node_modules', name))
+    let localPath = filePathType(join(root, 'node_modules', name))
     if (existsSync(localPath)) {
       let packageJsonPath = join(localPath, 'package.json')
       if (existsSync(packageJsonPath)) {
@@ -45,7 +45,7 @@ export async function getNpmContent(
     }
     let manifest = await pacote.manifest(spec, npmOpts)
     let tarballBuffer = await pacote.tarball(manifest._resolved, npmOpts)
-    let tempDir = filePath(await mkdtemp(join(tmpdir(), 'multiocular-')))
+    let tempDir = filePathType(await mkdtemp(join(tmpdir(), 'multiocular-')))
     await new Promise<void>((resolve, reject) => {
       let stream = Readable.from(tarballBuffer)
       let extractor = extract({

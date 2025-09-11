@@ -42,7 +42,8 @@ export const $changes = atom<Change[]>([])
 export type ChangeDiffs = Record<ChangeId, Diff>
 export const $diffs = map<ChangeDiffs>({})
 
-export type FileDiffs = ReturnType<typeof parse>
+export type FileDiff = ReturnType<typeof parse>[number]
+export type FileDiffs = FileDiff[]
 export type ChangeFileDiffs = Record<ChangeId, FileDiffs>
 export const $fileDiffs = map<ChangeFileDiffs>({})
 

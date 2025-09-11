@@ -16,7 +16,7 @@ import {
   updateChange
 } from '../../common/stores.ts'
 import {
-  change,
+  changeType,
   type DiffSize,
   type FilePath,
   isLoaded
@@ -103,24 +103,24 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
       $changelogs.setKey(i.id, changelog)
       send(addChangelogAction({ changelog, id: i.id }))
     }),
-    ...changes.map(async i => {
-      let diff = await diffLoaders[i.type].loadDiff(root, i)
+    ...changes.map(async change => {
+      let diff = await diffLoaders[change.type].loadDiff(root, change)
       let fileDiffs = parse(diff, {
         diffMaxLineLength: 20000,
         diffTooBigMessage: () =>
           'Diff is too big. See changes on project GitHub',
         renderNothingWhenEmpty: true
       })
-      $diffs.setKey(i.id, diff)
-      $fileDiffs.setKey(i.id, fileDiffs)
-      send(addFileDiffsAction({ fileDiffs, id: i.id }))
+      $diffs.setKey(change.id, diff)
+      $fileDiffs.setKey(change.id, fileDiffs)
+      send(addFileDiffsAction({ fileDiffs, id: change.id }))
 
-      let update = change({
+      let update = changeType({
         size: calcSize(diff),
         status: 'loaded'
       })
-      updateChange(i.id, update)
-      send(updateChangeAction({ id: i.id, update }))
+      updateChange(change.id, update)
+      send(updateChangeAction({ id: change.id, update }))
     })
   ])
 

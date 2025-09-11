@@ -2,9 +2,9 @@ import { basename, dirname } from 'node:path'
 import { parse } from 'yaml'
 
 import {
-  dependency,
   type Dependency,
   type DependencyName,
+  dependencyType,
   type DependencyVersion
 } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
@@ -113,7 +113,7 @@ export const githubActions = {
         let key = `${action.name}@${action.version}`
         if (!seen.has(key)) {
           seen.add(key)
-          let dep = dependency({
+          let dep = dependencyType({
             from: 'github-actions',
             name: action.name,
             source: file.path,

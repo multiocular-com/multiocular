@@ -1,5 +1,5 @@
 import {
-  diff,
+  diffType,
   type GitHubRepository,
   type GitHubRepositoryURL
 } from '../../../common/types.ts'
@@ -34,7 +34,7 @@ export const githubActions = {
         change.name as GitHubRepository,
         '/contents'
       )
-      if (!contents) return diff('')
+      if (!contents) return diffType('')
 
       let fileDiffs: string[] = []
       for (let item of contents) {
@@ -55,7 +55,7 @@ export const githubActions = {
           }
         }
       }
-      return diff(fileDiffs.join('\n'))
+      return diffType(fileDiffs.join('\n'))
     } else {
       let beforeRef = change.realBefore || change.before
       let afterRef = change.realAfter || change.after
@@ -63,7 +63,7 @@ export const githubActions = {
         `https://github.com/${change.name}/compare/` +
           `${beforeRef}...${afterRef}.diff`
       )
-      return diff(await response.text())
+      return diffType(await response.text())
     }
   }
 } satisfies DiffLoader

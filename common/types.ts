@@ -52,11 +52,11 @@ export function isLoaded(file: File): file is LoadedFile {
   return !('missing' in file)
 }
 
-export function filePath(value: string): FilePath {
+export function filePathType(value: string): FilePath {
   return value as FilePath
 }
 
-export function diff(value: string): Diff {
+export function diffType(value: string): Diff {
   return value as Diff
 }
 
@@ -68,13 +68,13 @@ export function missingFile(path: string): MissingFile {
   return { missing: true, path } as MissingFile
 }
 
-export function dependency(object: Debrand<Dependency>): Dependency {
+export function dependencyType(object: Debrand<Dependency>): Dependency {
   return object as Dependency
 }
 
-export function change(object: Debrand<Change>): Change
-export function change(object: Partial<Debrand<Change>>): Partial<Change>
-export function change(
+export function changeType(object: Debrand<Change>): Change
+export function changeType(object: Partial<Debrand<Change>>): Partial<Change>
+export function changeType(
   object: Partial<Debrand<Change>>
 ): Change | Partial<Change> {
   return object as Change | Partial<Change>

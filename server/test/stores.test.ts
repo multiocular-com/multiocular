@@ -3,11 +3,11 @@ import { test } from 'node:test'
 
 import { $changes, $progress, $sortedChanges } from '../../common/stores.ts'
 import type { Change } from '../../common/stores.ts'
-import { change } from '../../common/types.ts'
+import { changeType } from '../../common/types.ts'
 import type { Debrand } from '../../common/types.ts'
 
 function mockChange(partial: Partial<Debrand<Change>>): Change {
-  return change({
+  return changeType({
     after: '2.0.0',
     before: '1.0.0',
     from: 'npm',

@@ -1,7 +1,7 @@
 import { basename } from 'node:path'
 import { parse } from 'yaml'
 
-import { dependency, type Dependency } from '../../../common/types.ts'
+import { type Dependency, dependencyType } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
 import { splitPackage } from './common.ts'
 
@@ -124,7 +124,7 @@ export const yarn = {
         }
 
         dependencies.push(
-          dependency({
+          dependencyType({
             from: 'yarn',
             name: dep.name,
             source: file.path,

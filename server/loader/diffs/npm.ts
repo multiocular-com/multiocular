@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { join, sep } from 'node:path'
 
-import { diff, type RepositoryURL } from '../../../common/types.ts'
+import { diffType, type RepositoryURL } from '../../../common/types.ts'
 import { createEmptyDir, getNpmContent } from '../npm.ts'
 import type { DiffLoader } from './common.ts'
 
@@ -107,7 +107,7 @@ export const npm = {
     let before = change.before
       ? await getNpmContent(root, change.name, change.before)
       : await createEmptyDir()
-    return diff(
+    return diffType(
       (
         await runDiff(
           '--no-index',

@@ -1,6 +1,6 @@
 import { basename } from 'node:path'
 
-import { dependency, type Dependency } from '../../../common/types.ts'
+import { type Dependency, dependencyType } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
 
 interface NpmLock3 {
@@ -57,7 +57,7 @@ export const npm = {
           }
 
           dependencies.push(
-            dependency({
+            dependencyType({
               from: 'npm',
               name,
               source: file.path,

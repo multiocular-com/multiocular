@@ -13,12 +13,12 @@
     $step as stepStore,
     type StepValue
   } from '../../common/stores.ts'
-  import { change, type Debrand } from '../../common/types.ts'
+  import { changeType, type Debrand } from '../../common/types.ts'
   import { $dark as darkStore } from '../stores/dark.ts'
   import { $hash as hashStore } from '../stores/router.ts'
 
   function mockChange(partial: Partial<Debrand<Change>>): Change {
-    let idless = change({
+    let idless = changeType({
       after: '2.0.0',
       before: '1.0.0',
       from: 'npm',

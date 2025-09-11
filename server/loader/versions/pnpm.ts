@@ -1,7 +1,7 @@
 import { basename } from 'node:path'
 import { parse } from 'yaml'
 
-import { dependency, type Dependency } from '../../../common/types.ts'
+import { type Dependency, dependencyType } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
 import { splitPackage } from './common.ts'
 
@@ -32,7 +32,7 @@ export const pnpm = {
         for (let pkg in lock.packages) {
           let { name, version } = splitPackage(pkg)
           dependencies.push(
-            dependency({
+            dependencyType({
               from: 'pnpm',
               name,
               source: file.path,
