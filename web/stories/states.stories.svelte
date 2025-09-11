@@ -16,6 +16,7 @@
     {
       after: '9.0.0',
       before: '8.0.0',
+      direct: true,
       name: 'nanoevents',
       size: 10
     },
@@ -147,7 +148,7 @@ index v8.40.0..v8.41.0 100644
 >
   <Scene
     changelogs={CHANGELOGS}
-    changes={CHANGES}
+    changes={CHANGES.map(i => ({ ...i, direct: false }))}
     diffs={DIFFS}
     hash="change/npm:typescript-eslint@8.40.0%3E8.41.0"
     step="diffs"

@@ -5,12 +5,19 @@
   import Sidebar from '../sidebar.svelte'
 
   let { current }: { current: ChangeId } = $props()
+  let firstIndirect = $derived($sortedChangesStore.findIndex(i => !i.direct))
 </script>
 
 <Sidebar position="left">
   <nav>
     <ul>
-      {#each $sortedChangesStore as change (change.id)}
+      {#if firstIndirect > 0}
+        <li class="is-category">Direct dependencies</li>
+      {/if}
+      {#each $sortedChangesStore as change, index (change.id)}
+        {#if firstIndirect === index && firstIndirect > 0}
+          <li class="is-category">Other</li>
+        {/if}
         <li class:is-loading={change.status === 'loading'}>
           <a
             class:is-reviewed={change.status === 'reviewed'}
@@ -35,6 +42,13 @@
 
     &.is-loading {
       cursor: wait;
+    }
+
+    &.is-category {
+      padding-top: var(--safe-padding);
+      padding-left: calc(var(--safe-padding) + 0.25rem);
+      font: var(--secondary-font);
+      color: var(--secondary-text-color);
     }
   }
 
