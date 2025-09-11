@@ -11,7 +11,7 @@
 
   let { content }: { content: FileDiffs } = $props()
 
-  let root: HTMLSectionElement
+  let root: HTMLElement
 
   $effect(() => {
     let diff = new Diff2HtmlUI(root, content, {
