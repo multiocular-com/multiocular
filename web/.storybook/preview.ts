@@ -4,6 +4,9 @@ import { withThemeByClassName } from '@storybook/addon-themes'
 import type { Preview } from '@storybook/svelte'
 import { INITIAL_VIEWPORTS, MINIMAL_VIEWPORTS } from 'storybook/viewport'
 
+// @ts-expect-error Emulating Vite define
+globalThis.__SERVER_URL__ = 'offline'
+
 export default {
   decorators: [
     withThemeByClassName({

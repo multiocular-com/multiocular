@@ -54,4 +54,6 @@ client.on('add', action => {
   }
 })
 
-client.start()
+if (__SERVER_URL__ !== 'offline') {
+  client.start()
+}
