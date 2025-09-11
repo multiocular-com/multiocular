@@ -19,7 +19,8 @@
       drawFileList: false,
       highlight: true,
       maxLineLengthHighlight: 5000,
-      renderNothingWhenEmpty: true
+      renderNothingWhenEmpty: true,
+      stickyFileHeaders: true
     })
     diff.draw()
   })
@@ -30,8 +31,8 @@
 <style>
   section {
     :global(.d2h-file-header) {
-      position: sticky;
-      top: var(--panel-height);
+      /* stylelint-disable-next-line unit-disallowed-list */
+      top: -1px;
       font: var(--title-font);
     }
 

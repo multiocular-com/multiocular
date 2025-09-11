@@ -32,7 +32,7 @@
 <Page title={getChangeIndex($changesStore, id)}>
   <ProgressHeader current={id} />
   <ChangesSidebar current={id} />
-  <FilesSidebar />
+  <FilesSidebar content={$fileDiffs} />
   <Dependency change={$change} />
   {#if $change.before}
     {#if $changelog.isLoading}

@@ -1,28 +1,44 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
+  import { MediaQuery } from 'svelte/reactivity'
 
   let {
     children,
+    maxWidth,
     padding,
     position
-  }: { children: Snippet; padding?: boolean; position: 'left' | 'right' } =
-    $props()
+  }: {
+    children: Snippet
+    maxWidth?: number
+    padding?: boolean
+    position: 'left' | 'right'
+  } = $props()
+
+  let hide = $derived(
+    maxWidth ? new MediaQuery(`(max-width: ${maxWidth}px)`) : undefined
+  )
 
   $effect(() => {
-    document.body.classList.add(`is-${position}-sidebar`)
+    if (!hide?.current) {
+      document.body.classList.add(`is-${position}-sidebar`)
+    } else {
+      document.body.classList.remove(`is-${position}-sidebar`)
+    }
     return () => {
       document.body.classList.remove(`is-${position}-sidebar`)
     }
   })
 </script>
 
-<aside
-  class:is-padding={padding}
-  class:is-right={position === 'right'}
-  tabindex="-1"
->
-  {@render children()}
-</aside>
+{#if !hide?.current}
+  <aside
+    class:is-padding={padding}
+    class:is-right={position === 'right'}
+    tabindex="-1"
+  >
+    {@render children()}
+  </aside>
+{/if}
 
 <style>
   aside {
