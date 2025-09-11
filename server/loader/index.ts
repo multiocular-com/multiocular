@@ -117,7 +117,7 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
       let fileDiffs = parse(diff, {
         diffMaxLineLength: 10000,
         diffTooBigMessage: () =>
-          'Diff is too big. See changes on project GitHub',
+          'Diff is too big. See changes on project GitHub.',
         renderNothingWhenEmpty: true
       })
       $diffs.setKey(change.id, diff)

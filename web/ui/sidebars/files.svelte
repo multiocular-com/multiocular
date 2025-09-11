@@ -54,9 +54,11 @@
 
 <style>
   button {
+    position: relative;
     display: block;
     width: 100%;
     padding: 0.25rem var(--safe-padding);
+    padding-left: calc(1rem + var(--safe-padding));
     color: var(--text-color);
     text-align: left;
     overflow-wrap: break-word;
@@ -79,6 +81,9 @@
   }
 
   span {
+    position: absolute;
+    top: 0.25rem;
+    left: var(--safe-padding);
     display: inline-block;
     width: 0.6rem;
     font-weight: bold;
