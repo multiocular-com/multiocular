@@ -44,6 +44,7 @@ test('shows dependency changes with yarn berry', async () => {
         '   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n' +
         '   "keywords": [\n' +
         '     "uuid",\n',
+      direct: true,
       from: 'yarn',
       name: 'nanoid',
       repository: 'https://github.com/ai/nanoid',

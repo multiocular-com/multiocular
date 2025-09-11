@@ -41,6 +41,7 @@ export type MissingFile = { missing: true; path: FilePath }
 export type File = LoadedFile | MissingFile
 
 export interface Dependency {
+  direct: boolean
   from: 'github-actions' | 'npm' | 'pnpm' | 'yarn'
   name: DependencyName
   realVersion?: string

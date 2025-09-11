@@ -49,6 +49,7 @@ export function outputProcess(config: Config): void {
           before: change.before,
           changelog: changelogs[change.id]!,
           diff: diffs[change.id]!,
+          direct: change.direct,
           from: change.from,
           name: change.name,
           repository: change.repository,

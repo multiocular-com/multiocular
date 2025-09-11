@@ -10,6 +10,7 @@ function mockChange(partial: Partial<Debrand<Change>>): Change {
   return changeType({
     after: '2.0.0',
     before: '1.0.0',
+    direct: false,
     from: 'npm',
     id: 'mock-change',
     name: 'mock-package',

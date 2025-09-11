@@ -8,6 +8,7 @@ function createChange(
   let change: Change = {
     after: after.version,
     before: before ? before.version : false,
+    direct: after.direct,
     from: after.from,
     id: getChangeId(after.type, after.name, before?.version, after.version),
     name: after.name,

@@ -2,6 +2,7 @@ import { basename } from 'node:path'
 
 import { type Dependency, dependencyType } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
+import { getDirectDependencies, separateFiles } from './common.ts'
 
 interface NpmLock3 {
   lockfileVersion: number
@@ -20,10 +21,18 @@ function isLockFile3(obj: unknown): obj is NpmLock3 {
 
 export const npm = {
   findFiles(changed) {
-    return changed.filter(file => basename(file) === 'package-lock.json')
+    return changed.filter(file => {
+      let name = basename(file)
+      return name === 'package.json' || name === 'package-lock.json'
+    })
   },
-  load(lockFiles) {
+  load(files) {
     let dependencies: Dependency[] = []
+    let { lockFiles, packageJsonFiles } = separateFiles(
+      files,
+      'package-lock.json'
+    )
+    let directDeps = getDirectDependencies(packageJsonFiles)
 
     for (let file of lockFiles) {
       let lock = JSON.parse(file.content)
@@ -58,6 +67,7 @@ export const npm = {
 
           dependencies.push(
             dependencyType({
+              direct: directDeps.has(name),
               from: 'npm',
               name,
               source: file.path,

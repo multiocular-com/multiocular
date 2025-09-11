@@ -21,6 +21,7 @@
     let idless = changeType({
       after: '2.0.0',
       before: '1.0.0',
+      direct: false,
       from: 'npm',
       id: '',
       name: 'mock-package',

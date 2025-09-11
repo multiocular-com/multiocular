@@ -114,6 +114,7 @@ export const githubActions = {
         if (!seen.has(key)) {
           seen.add(key)
           let dep = dependencyType({
+            direct: true,
             from: 'github-actions',
             name: action.name,
             source: file.path,

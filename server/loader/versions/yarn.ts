@@ -3,7 +3,7 @@ import { parse } from 'yaml'
 
 import { type Dependency, dependencyType } from '../../../common/types.ts'
 import type { VersionsLoader } from './common.ts'
-import { splitPackage } from './common.ts'
+import { getDirectDependencies, separateFiles, splitPackage } from './common.ts'
 
 type ParsedDependency = {
   name: string
@@ -103,10 +103,15 @@ function parseYarnBerryLock(content: string): ParsedDependency[] {
 
 export const yarn = {
   findFiles(changed) {
-    return changed.filter(file => basename(file) === 'yarn.lock')
+    return changed.filter(file => {
+      let name = basename(file)
+      return name === 'package.json' || name === 'yarn.lock'
+    })
   },
-  load(lockFiles) {
+  load(files) {
     let dependencies: Dependency[] = []
+    let { lockFiles, packageJsonFiles } = separateFiles(files, 'yarn.lock')
+    let directDeps = getDirectDependencies(packageJsonFiles)
 
     for (let file of lockFiles) {
       let parsedDeps = isYarnBerry(file.content)
@@ -125,6 +130,7 @@ export const yarn = {
 
         dependencies.push(
           dependencyType({
+            direct: directDeps.has(dep.name),
             from: 'yarn',
             name: dep.name,
             source: file.path,

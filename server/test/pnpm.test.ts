@@ -43,6 +43,7 @@ test('shows dependency changes with pnpm', async () => {
         '   "description": "A tiny (118 bytes), secure URL-friendly unique string ID generator",\n' +
         '   "keywords": [\n' +
         '     "uuid",\n',
+      direct: true,
       from: 'pnpm',
       name: 'nanoid',
       repository: 'https://github.com/ai/nanoid',

@@ -21,6 +21,7 @@ export const $step = atom<StepValue>('initialize')
 export type Change = {
   after: DependencyVersion
   before: DependencyVersion | false
+  direct: boolean
   from: Dependency['from']
   id: ChangeId
   name: DependencyName
