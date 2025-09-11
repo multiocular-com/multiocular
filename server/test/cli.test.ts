@@ -78,7 +78,6 @@ test('allows to change output format', async () => {
   await run('git add .')
   await run('git commit -m "Add nanoid"')
   await run('pnpm add nanoid@5.1.5')
-  await run('rm -r ./node_modules/nanoid/node_modules/.bin')
   assert.equal(
     await cliGood('--text'),
     'diff --git a/package.json b/package.json\n' +

@@ -21,7 +21,6 @@ test('shows dependency changes with pnpm', async () => {
   await run('git add .')
   await run('git commit -m "Add nanoid"')
   await run('pnpm add nanoid@5.1.5')
-  await run('rm -r ./node_modules/nanoid/node_modules/.bin')
 
   await cliJsonEqual([
     {
