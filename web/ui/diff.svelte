@@ -37,7 +37,9 @@
     }
 
     :global(.d2h-file-wrapper) {
+      margin-bottom: 0;
       border-inline: none;
+      border-bottom: none;
       border-radius: 0;
     }
 
