@@ -1,8 +1,5 @@
 import type { ChangeLog } from '../../../common/stores.ts'
-import type {
-  ChangeLogContent,
-  GitHubRepositoryURL
-} from '../../../common/types.ts'
+import type { GitHubRepositoryURL, Markdown } from '../../../common/types.ts'
 import { githubApi, isGitHubUrl } from '../github.ts'
 import type { ChangeLogLoader } from './common.ts'
 import { filterChangelogByVersionRange, normalizeVersion } from './common.ts'
@@ -21,7 +18,7 @@ async function fetchGitHubReleases(
   for (let release of releases) {
     if (release.tag_name && release.body) {
       let version = normalizeVersion(release.tag_name)
-      changelog.push([version, release.body.trim() as ChangeLogContent])
+      changelog.push([version, release.body.trim() as Markdown])
     }
   }
   return changelog
