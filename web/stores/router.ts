@@ -62,6 +62,8 @@ function redirect(route: Route, step: StepValue, changes: Change[]): Page {
   } else if (route.route === 'change') {
     if (changes.some(change => change.id === route.id)) {
       return { id: route.id, page: 'change' }
+    } else if (step !== 'done') {
+      return { page: 'waiting' }
     } else {
       return { page: 'notFound' }
     }
