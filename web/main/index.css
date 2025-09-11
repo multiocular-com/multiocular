@@ -24,6 +24,7 @@ html {
 body,
 input {
   font: var(--base-font);
+  tab-size: 2;
 }
 
 pre,
