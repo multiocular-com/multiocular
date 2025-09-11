@@ -22,4 +22,5 @@
 ## Testing
 
 - Always run `./scripts/format.sh` and `pnpm test`.
+- Before running `pnpm test` always run `./scripts/format.sh` and `pnpm test:types` first.
 - Run specific test by `pnpm bnt path/to/test.test.ts -t 'test name'`
