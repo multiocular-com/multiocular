@@ -8,7 +8,6 @@
     display: grid;
     flex-grow: 1;
     height: calc(2 * var(--loading-size));
-    animation: --loading 0.5s infinite linear;
 
     &::before {
       --g:
@@ -27,6 +26,7 @@
         radial-gradient(var(--r) top var(--g)) calc(50% + var(--loading-size))
           calc(50% + var(--loading-size)) / calc(4 * var(--loading-size))
           calc(2 * var(--loading-size));
+      animation: --loading 0.5s infinite linear;
     }
   }
 
