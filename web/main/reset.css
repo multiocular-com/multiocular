@@ -21,16 +21,9 @@ fieldset {
   margin: 0;
 }
 
-/* Use screen height */
-
-html {
-  height: 100%;
-}
-
 /* Prevent font size change after orientation changes in iOS */
 
 body {
-  min-height: 100%;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

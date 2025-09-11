@@ -86,5 +86,13 @@
     flex-grow: 1;
     gap: 0.5rem;
     justify-content: flex-end;
+
+    :global(body.is-left-sidebar) & {
+      padding-left: var(--sidebar-width);
+    }
+
+    :global(body.is-right-sidebar) & {
+      padding-right: var(--sidebar-width);
+    }
   }
 </style>

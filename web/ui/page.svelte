@@ -38,19 +38,21 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    padding-top: var(--panel-height);
+    height: calc(100vh - var(--panel-height));
+    margin-top: var(--panel-height);
+    overflow: auto;
 
     :global(body.is-footer) & {
-      padding-bottom: var(--panel-height);
+      height: calc(100vh - 2 * var(--panel-height));
+      margin-bottom: var(--panel-height);
     }
 
     :global(body.is-left-sidebar) & {
-      padding-left: var(--sidebar-width);
+      margin-left: var(--sidebar-width);
     }
 
     :global(body.is-right-sidebar) & {
-      padding-right: var(--sidebar-width);
+      margin-right: var(--sidebar-width);
     }
   }
 </style>

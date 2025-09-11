@@ -11,7 +11,7 @@
 
   let { content }: { content: FileDiffs } = $props()
 
-  let root: HTMLDivElement
+  let root: HTMLSectionElement
 
   $effect(() => {
     let diff = new Diff2HtmlUI(root, content, {
@@ -25,10 +25,10 @@
   })
 </script>
 
-<div bind:this={root} class="diff"></div>
+<section bind:this={root}></section>
 
 <style>
-  .diff {
+  section {
     :global(.d2h-file-header) {
       position: sticky;
       top: var(--panel-height);
