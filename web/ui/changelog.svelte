@@ -56,5 +56,10 @@
         color: var(--visited-color);
       }
     }
+
+    :global(hr) {
+      border: 1px solid var(--panel-border-color);
+      border-bottom: none;
+    }
   }
 </style>
