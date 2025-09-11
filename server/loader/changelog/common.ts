@@ -68,17 +68,12 @@ export function parseChangelog(content: string): ChangeLog {
   return entries
 }
 
-function isEqual(
-  a: ChangeLogTitle | DependencyVersion,
-  b: ChangeLogTitle | DependencyVersion
-): boolean {
-  return String(a) === String(b) || normalizeVersion(a) === normalizeVersion(b)
-}
-
 function parseVersion(
   version: ChangeLogTitle | DependencyVersion
 ): [number, number, number] {
-  let [major, minor, patch] = version.split('.').map(i => parseInt(i))
+  let [major, minor, patch] = normalizeVersion(version)
+    .split('.')
+    .map(i => parseInt(i))
   return [major ?? 0, minor ?? 0, patch ?? 0]
 }
 
@@ -92,13 +87,13 @@ function isBetween(
   let [versionMajor, versionMinor, versionPatch] = parseVersion(version)
 
   return (
-    (versionMajor >= startMajor ||
-      (versionMajor === startMajor && versionMinor >= startMinor) ||
+    (versionMajor > startMajor ||
+      (versionMajor === startMajor && versionMinor > startMinor) ||
       (versionMajor === startMajor &&
         versionMinor === startMinor &&
-        versionPatch >= startPatch)) &&
-    (versionMajor <= endMajor ||
-      (versionMajor === endMajor && versionMinor <= endMinor) ||
+        versionPatch > startPatch)) &&
+    (versionMajor < endMajor ||
+      (versionMajor === endMajor && versionMinor < endMinor) ||
       (versionMajor === endMajor &&
         versionMinor === endMinor &&
         versionPatch <= endPatch))
@@ -111,14 +106,9 @@ export function filterChangelogByVersionRange(
   before?: DependencyVersion | false
 ): ChangeLog {
   if (!before) return []
-  let afterFound = false
   let filtered: ChangeLog = []
   for (let [version, content] of changelog) {
-    if (isEqual(version, after)) afterFound = true
-    if (afterFound) {
-      if (isEqual(version, before)) break
-      if (isBetween(version, before, after)) filtered.push([version, content])
-    }
+    if (isBetween(version, before, after)) filtered.push([version, content])
   }
   return filtered
 }
