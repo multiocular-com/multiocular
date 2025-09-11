@@ -70,6 +70,12 @@ export const $sortedChanges = computed($changes, changes =>
   [...changes].sort((a, b) => {
     if (a.status === 'loading' && b.status !== 'loading') return 1
     if (a.status !== 'loading' && b.status === 'loading') return -1
+
+    if (a.direct && !b.direct) return -1
+    if (!a.direct && b.direct) return 1
+
+    if (a.update !== b.update) return a.update - b.update
+
     return a.id.localeCompare(b.id)
   })
 )
