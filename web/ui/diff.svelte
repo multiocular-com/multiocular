@@ -17,10 +17,11 @@
     let diff = new Diff2HtmlUI(root, content, {
       colorScheme: ($darkStore ? 'dark' : 'light') as ColorSchemeType,
       drawFileList: false,
-      highlight: true
+      highlight: true,
+      maxLineLengthHighlight: 5000,
+      renderNothingWhenEmpty: true
     })
     diff.draw()
-    diff.highlightCode()
   })
 </script>
 
