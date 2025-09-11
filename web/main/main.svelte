@@ -3,7 +3,6 @@
   import EmptyPage from '../pages/empty.svelte'
   import FinishPage from '../pages/finish.svelte'
   import NotFoundPage from '../pages/not-found.svelte'
-  import SettingsPage from '../pages/settings.svelte'
   import WaitingPage from '../pages/waiting.svelte'
   import { $page as pageStore } from '../stores/router.ts'
 
@@ -20,8 +19,6 @@
   <EmptyPage />
 {:else if $pageStore.page === 'change'}
   <ChangePage id={$pageStore.id} />
-{:else if $pageStore.page === 'settings'}
-  <SettingsPage />
 {:else if $pageStore.page === 'finish'}
   <FinishPage />
 {/if}

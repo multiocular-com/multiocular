@@ -21,13 +21,10 @@ export type Route =
   | { route: 'finish' }
   | { route: 'home' }
   | { route: 'notFound' }
-  | { route: 'settings' }
 
 function parseHash(hash: string): Route {
   if (hash === '') {
     return { route: 'home' }
-  } else if (hash === 'settings') {
-    return { route: 'settings' }
   } else if (hash === 'finish') {
     return { route: 'finish' }
   } else {
@@ -46,17 +43,16 @@ export type Page =
   | { page: 'empty' }
   | { page: 'finish' }
   | { page: 'notFound' }
-  | { page: 'settings' }
   | { page: 'waiting' }
 
 function redirect(route: Route, step: StepValue, changes: Change[]): Page {
   if (route.route === 'home') {
     if (step === 'initialize' || step === 'versions') {
       return { page: 'waiting' }
+    } else if (changes[0]) {
+      location.hash = getChangeUrl(changes[0].id)
+      return { page: 'waiting' }
     } else {
-      if (changes[0]) {
-        location.hash = getChangeUrl(changes[0].id)
-      }
       return { page: 'empty' }
     }
   } else if (route.route === 'change') {

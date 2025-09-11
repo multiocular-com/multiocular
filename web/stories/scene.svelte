@@ -80,7 +80,7 @@
     })
 
     return () => {
-      hashStore.set('settings')
+      hashStore.set('404')
       stepStore.set('done')
       changesStore.set([])
       fileDiffsStore.set({})

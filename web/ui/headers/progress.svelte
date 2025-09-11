@@ -28,7 +28,7 @@
 
 <Panel position="top">
   <div style:--move={moveEyes / 100} class="eyes">
-    <Home href="#settings" />
+    <Home href="#" />
   </div>
   {#if $stepStore === 'initialize' || $stepStore === 'versions'}
     <Loading />
