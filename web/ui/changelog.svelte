@@ -1,19 +1,21 @@
 <script lang="ts">
-  import type { ChangeLog } from '../../common/stores.ts'
+  import type { ChangeLogHtml } from '../../common/stores.ts'
 
-  let { content }: { content: ChangeLog } = $props()
+  let { content }: { content: ChangeLogHtml } = $props()
 </script>
 
 <section>
   {#each content as log (log[0])}
     <h2>{log[0]}</h2>
-    <p>{log[1]}</p>
+    <div class="changelog">
+      {@html log[1]}
+    </div>
   {/each}
 </section>
 
 <style>
   section {
-    padding: var(--safe-padding);
+    padding: 0 var(--safe-padding);
   }
 
   h2 {
@@ -25,9 +27,34 @@
     }
   }
 
-  p {
-    font: var(--code-font);
+  .changelog {
     word-wrap: break-word;
-    white-space: pre-wrap;
+
+    :global(p) {
+      margin-bottom: var(--safe-padding);
+    }
+
+    :global(h1, h2, h3, h4, h5, h6) {
+      margin-top: 1rem;
+      margin-bottom: var(--safe-padding);
+      font: var(--subtitle-font);
+    }
+
+    :global(strong, b) {
+      font-weight: bold;
+    }
+
+    :global(ul, ol) {
+      padding-left: 1rem;
+      margin-bottom: var(--safe-padding);
+    }
+
+    :global(a) {
+      color: var(--link-color);
+
+      &:visited {
+        color: var(--visited-color);
+      }
+    }
   }
 </style>

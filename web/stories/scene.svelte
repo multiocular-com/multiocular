@@ -4,8 +4,8 @@
 
   import {
     type Change,
-    type ChangeLogs,
-    $changelogs as changelogsStore,
+    type ChangeLogHtmls,
+    $changelogHtmls as changelogHtmlsStore,
     $changes as changesStore,
     type FileDiffs,
     $fileDiffs as fileDiffsStore,
@@ -62,7 +62,7 @@
     changesStore.set(changes.map(i => mockChange(i)))
     hashStore.set(hash)
     fileDiffsStore.set(fileDiffs)
-    changelogsStore.set(changelogs as ChangeLogs)
+    changelogHtmlsStore.set(changelogs as ChangeLogHtmls)
 
     function updateTheme(): void {
       darkStore.set(document.documentElement.classList.contains('is-dark'))
@@ -81,7 +81,7 @@
       stepStore.set('done')
       changesStore.set([])
       fileDiffsStore.set({})
-      changelogsStore.set({})
+      changelogHtmlsStore.set({})
       htmlObserver.disconnect()
     }
   })

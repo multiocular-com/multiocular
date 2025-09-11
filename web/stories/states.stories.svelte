@@ -60,8 +60,8 @@ index v8.40.0..v8.41.0 100644
     'npm:typescript-eslint@8.40.0>8.41.0': [
       [
         '8.41.0',
-        '### 🚀 Features\r\n\r\n' +
-          '- tighten `tsconfigRootDir` validation ([#11463](https://github.com/typ…int.netlify.app/users/versioning) and [releases](https://main--typescript-eslint.netlify.app/users/releases) on our website.'
+        '<h3>🚀 Features</h3>\n\n' +
+          '<ul><li>tighten <code>tsconfigRootDir</code> validation (<a href="#">#11463</a>) and <a href="#">releases</a> on our website.</li></ol>'
       ]
     ]
   }

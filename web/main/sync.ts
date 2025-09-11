@@ -2,7 +2,7 @@ import { loguxSubscribe } from '@logux/actions'
 import { CrossTabClient, log } from '@logux/client'
 
 import {
-  addChangelogAction,
+  addChangelogHtmlAction,
   addFileDiffsAction,
   changeStepAction,
   replaceChangesAction,
@@ -11,7 +11,7 @@ import {
   updateChangeAction
 } from '../../common/api.ts'
 import {
-  $changelogs,
+  $changelogHtmls,
   $changes,
   $fileDiffs,
   $step,
@@ -49,8 +49,8 @@ client.on('add', action => {
     updateChange(action.id, { status: action.value })
   } else if (addFileDiffsAction.match(action)) {
     $fileDiffs.setKey(action.id, action.fileDiffs)
-  } else if (addChangelogAction.match(action)) {
-    $changelogs.setKey(action.id, action.changelog)
+  } else if (addChangelogHtmlAction.match(action)) {
+    $changelogHtmls.setKey(action.id, action.changelog)
   }
 })
 

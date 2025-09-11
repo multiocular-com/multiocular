@@ -1,18 +1,20 @@
 import { parse } from 'diff2html'
 
 import {
-  addChangelogAction,
+  addChangelogHtmlAction,
   addFileDiffsAction,
   replaceChangesAction,
   updateChangeAction
 } from '../../common/api.ts'
 import {
+  $changelogHtmls,
   $changelogs,
   $changes,
   $diffs,
   $fileDiffs,
   $step,
   type ChangeLog,
+  type ChangeLogHtml,
   updateChange
 } from '../../common/stores.ts'
 import {
@@ -27,6 +29,7 @@ import { send } from '../web/sync.ts'
 import { changelogLoaders } from './changelog/index.ts'
 import { diffLoaders } from './diffs/index.ts'
 import { getChangedFiles, loadFile } from './git.ts'
+import { markdownToSafeHtml } from './markdown.ts'
 import { calculateVersionDiff } from './versions.ts'
 import { versionsLoaders } from './versions/index.ts'
 
@@ -100,8 +103,14 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
           break
         }
       }
+      let html: ChangeLogHtml = await Promise.all(
+        changelog.map(async ([title, markdown]) => {
+          return [title, await markdownToSafeHtml(markdown)]
+        })
+      )
       $changelogs.setKey(i.id, changelog)
-      send(addChangelogAction({ changelog, id: i.id }))
+      $changelogHtmls.setKey(i.id, html)
+      send(addChangelogHtmlAction({ changelog: html, id: i.id }))
     }),
     ...changes.map(async change => {
       let diff = await diffLoaders[change.type].loadDiff(root, change)

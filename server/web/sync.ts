@@ -1,7 +1,7 @@
 import type { Action, BaseServer } from '@logux/server'
 
 import {
-  addChangelogAction,
+  addChangelogHtmlAction,
   addFileDiffsAction,
   changeStepAction,
   replaceChangesAction,
@@ -9,7 +9,7 @@ import {
   updateChangeAction
 } from '../../common/api.ts'
 import {
-  $changelogs,
+  $changelogHtmls,
   $changes,
   $fileDiffs,
   $step,
@@ -38,8 +38,8 @@ export function syncStores(server: BaseServer): void {
         ...Object.entries($fileDiffs.get()).map(([id, fileDiffs]) => {
           return addFileDiffsAction({ fileDiffs, id: id as ChangeId })
         }),
-        ...Object.entries($changelogs.get()).map(([id, changelog]) => {
-          return addChangelogAction({ changelog, id: id as ChangeId })
+        ...Object.entries($changelogHtmls.get()).map(([id, changelog]) => {
+          return addChangelogHtmlAction({ changelog, id: id as ChangeId })
         })
       ]
     }
@@ -97,7 +97,7 @@ export function syncStores(server: BaseServer): void {
     }
   })
 
-  server.type(addChangelogAction, {
+  server.type(addChangelogHtmlAction, {
     access() {
       // Only server can send this action
       return false

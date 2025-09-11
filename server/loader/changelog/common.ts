@@ -1,9 +1,9 @@
 import type { Change, ChangeLog } from '../../../common/stores.ts'
 import type {
-  ChangeLogContent,
   ChangeLogTitle,
   DependencyVersion,
-  FilePath
+  FilePath,
+  Markdown
 } from '../../../common/types.ts'
 
 export interface ChangeLogLoader {
@@ -47,7 +47,7 @@ export function parseChangelog(content: string): ChangeLog {
       if (current) {
         entries.push([
           current.title as ChangeLogTitle,
-          current.content.join('\n').trim() as ChangeLogContent
+          current.content.join('\n').trim() as Markdown
         ])
       }
       current = {
@@ -62,7 +62,7 @@ export function parseChangelog(content: string): ChangeLog {
   if (current && current.content.length > 0) {
     entries.push([
       current.title as ChangeLogTitle,
-      current.content.join('\n').trim() as ChangeLogContent
+      current.content.join('\n').trim() as Markdown
     ])
   }
   return entries

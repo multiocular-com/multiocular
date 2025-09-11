@@ -1,6 +1,6 @@
 import { defineAction } from '@logux/actions'
 
-import type { Change, ChangeLog, FileDiffs, StepValue } from './stores.ts'
+import type { Change, ChangeLogHtml, FileDiffs, StepValue } from './stores.ts'
 import type { ChangeId } from './types.ts'
 
 export const subprotocol = 0
@@ -33,8 +33,8 @@ export const addFileDiffsAction = defineAction<{
   type: 'file-diffs/add'
 }>('file-diffs/add')
 
-export const addChangelogAction = defineAction<{
-  changelog: ChangeLog
+export const addChangelogHtmlAction = defineAction<{
+  changelog: ChangeLogHtml
   id: ChangeId
-  type: 'changelogs/add'
-}>('changelogs/add')
+  type: 'changelog-htmls/add'
+}>('changelog-htmls/add')

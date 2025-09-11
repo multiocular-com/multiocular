@@ -33,7 +33,7 @@
 
   h1 {
     flex-grow: 1;
-    font: var(--title-font);
+    font: var(--base-font);
     overflow-wrap: break-word;
   }
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import {
-    $changelogs as changelogsStore,
+    $changelogHtmls as changelogHtmlsStore,
     $changes as changesStore,
     $fileDiffs as fileDiffsStore
   } from '../../common/stores.ts'
@@ -25,7 +25,7 @@
 
   let change = $derived(getChange(id))
   let fileDiffs = $derived(getById(fileDiffsStore, id))
-  let changelog = $derived(getById(changelogsStore, id))
+  let changelog = $derived(getById(changelogHtmlsStore, id))
   let next = $derived(getNextUrl($changesStore, id))
 </script>
 

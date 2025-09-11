@@ -3,14 +3,15 @@ import { atom, computed, map } from 'nanostores'
 
 import type {
   ChangeId,
-  ChangeLogContent,
   ChangeLogTitle,
   Dependency,
   DependencyName,
   DependencyVersion,
   Diff,
   DiffSize,
-  RepositoryURL
+  Markdown,
+  RepositoryURL,
+  SafeHTML
 } from './types.ts'
 
 export type StepValue = 'diffs' | 'done' | 'initialize' | 'versions'
@@ -47,9 +48,13 @@ export type FileDiffs = FileDiff[]
 export type ChangeFileDiffs = Record<ChangeId, FileDiffs>
 export const $fileDiffs = map<ChangeFileDiffs>({})
 
-export type ChangeLog = [ChangeLogTitle, ChangeLogContent][]
+export type ChangeLog = [ChangeLogTitle, Markdown][]
 export type ChangeLogs = Record<ChangeId, ChangeLog>
 export const $changelogs = map<ChangeLogs>({})
+
+export type ChangeLogHtml = [ChangeLogTitle, SafeHTML][]
+export type ChangeLogHtmls = Record<ChangeId, ChangeLogHtml>
+export const $changelogHtmls = map<ChangeLogHtmls>({})
 
 export const $sortedChanges = computed($changes, changes =>
   [...changes].sort((a, b) => {
