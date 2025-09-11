@@ -18,14 +18,14 @@
       before: '8.0.0',
       direct: true,
       name: 'nanoevents',
-      size: 10
+      size: 10,
+      status: 'reviewed'
     },
     {
       after: '8.41.0',
       before: '8.40.0',
       name: '@typescript-eslint/project-service',
-      size: 100,
-      status: 'reviewed'
+      size: 100
     },
     {
       after: '8.41.0',
@@ -37,8 +37,7 @@
       after: '8.0.1',
       before: '8.0.0',
       name: 'postcss',
-      size: 50,
-      status: 'reviewed'
+      size: 50
     }
   ] satisfies Partial<Debrand<Change>>[]
 

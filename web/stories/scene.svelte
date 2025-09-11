@@ -26,7 +26,7 @@
       from: 'npm',
       id: '',
       name: 'mock-package',
-      repository: 'https://www.npmjs.com/package/mock-package',
+      repository: 'https://github.com/example/mock-package',
       size: 100,
       status: 'loaded',
       type: 'npm',
