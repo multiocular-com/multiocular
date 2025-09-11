@@ -1,8 +1,8 @@
 <script lang="ts">
   import {
     $changelogHtmls as changelogHtmlsStore,
-    $changes as changesStore,
-    $fileDiffs as fileDiffsStore
+    $fileDiffs as fileDiffsStore,
+    $sortedChanges as sortedChangesStore
   } from '../../common/stores.ts'
   import type { ChangeId } from '../../common/types.ts'
   import {
@@ -26,10 +26,10 @@
   let change = $derived(getChange(id))
   let fileDiffs = $derived(getById(fileDiffsStore, id))
   let changelog = $derived(getById(changelogHtmlsStore, id))
-  let next = $derived(getNextUrl($changesStore, id))
+  let next = $derived(getNextUrl($sortedChangesStore, id))
 </script>
 
-<Page title={getChangeIndex($changesStore, id)}>
+<Page title={getChangeIndex($sortedChangesStore, id)}>
   <ProgressHeader current={id} />
   <ChangesSidebar current={id} />
   <FilesSidebar content={$fileDiffs} />
