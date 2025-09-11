@@ -2,6 +2,14 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.0
+
+- Improved diff UI.
+- Added ChangeLog Markdown render.
+- Added files list to UI.
+- Added direct/indirect dependencies grouping.
+- Fixed ChangeLog loading.
+
 ## 0.5.0
 
 - Added ChangeLog extracting.
