@@ -11,7 +11,8 @@
     $fileDiffs as fileDiffsStore,
     getChangeId,
     $step as stepStore,
-    type StepValue
+    type StepValue,
+    UpdateType
   } from '../../common/stores.ts'
   import { changeType, type Debrand } from '../../common/types.ts'
   import { $dark as darkStore } from '../stores/dark.ts'
@@ -29,6 +30,7 @@
       size: 100,
       status: 'loaded',
       type: 'npm',
+      update: UpdateType.MAJOR,
       ...partial
     })
     return {

@@ -1,10 +1,15 @@
 import { strict as assert } from 'node:assert'
 import { test } from 'node:test'
 
-import { $changes, $progress, $sortedChanges } from '../../common/stores.ts'
-import type { Change } from '../../common/stores.ts'
-import { changeType } from '../../common/types.ts'
-import type { Debrand } from '../../common/types.ts'
+import {
+  $changes,
+  $progress,
+  $sortedChanges,
+  type Change,
+  changeType,
+  type Debrand,
+  UpdateType
+} from '../index.ts'
 
 function mockChange(partial: Partial<Debrand<Change>>): Change {
   return changeType({
@@ -17,6 +22,7 @@ function mockChange(partial: Partial<Debrand<Change>>): Change {
     size: 100,
     status: 'loaded',
     type: 'npm',
+    update: UpdateType.MAJOR,
     ...partial
   })
 }

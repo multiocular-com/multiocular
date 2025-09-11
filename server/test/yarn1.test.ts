@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, test } from 'node:test'
 
+import { UpdateType } from '../index.ts'
 import {
   cliJsonEqual,
   cliJsonMatch,
@@ -47,7 +48,8 @@ test('shows dependency changes with yarn 1', async () => {
       from: 'yarn',
       name: 'nanoid',
       repository: 'https://github.com/ai/nanoid',
-      type: 'npm'
+      type: 'npm',
+      update: UpdateType.PATCH
     }
   ])
 })

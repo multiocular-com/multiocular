@@ -53,7 +53,8 @@ export function outputProcess(config: Config): void {
           from: change.from,
           name: change.name,
           repository: change.repository,
-          type: change.type
+          type: change.type,
+          update: change.update
         })) satisfies MultiocularJSON
         print(JSON.stringify(json, null, 2))
       } else if (config.output === 'text') {

@@ -1,5 +1,27 @@
-import { type Change, getChangeId } from '../../common/stores.ts'
+import {
+  type Change,
+  getChangeId,
+  UpdateType,
+  type UpdateTypeValue
+} from '../../common/stores.ts'
 import type { Dependency } from '../../common/types.ts'
+
+function getUpdateType(
+  before: Dependency | undefined,
+  after: Dependency
+): UpdateTypeValue {
+  if (!before) return UpdateType.MAJOR
+
+  let beforeParts = before.version.split('.').map(Number)
+  let afterParts = after.version.split('.').map(Number)
+  if (beforeParts[0] !== afterParts[0]) {
+    return UpdateType.MAJOR
+  } else if (beforeParts[1] !== afterParts[1]) {
+    return UpdateType.MINOR
+  } else {
+    return UpdateType.PATCH
+  }
+}
 
 function createChange(
   before: Dependency | undefined,
@@ -13,7 +35,8 @@ function createChange(
     id: getChangeId(after.type, after.name, before?.version, after.version),
     name: after.name,
     status: 'loading',
-    type: after.type
+    type: after.type,
+    update: getUpdateType(before, after)
   }
   if (after.realVersion) change.realAfter = after.realVersion
   if (before?.realVersion) change.realBefore = before.realVersion

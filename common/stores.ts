@@ -18,6 +18,14 @@ export type StepValue = 'diffs' | 'done' | 'initialize' | 'versions'
 
 export const $step = atom<StepValue>('initialize')
 
+export const UpdateType = {
+  MAJOR: 1,
+  MINOR: 2,
+  PATCH: 3
+}
+
+export type UpdateTypeValue = (typeof UpdateType)[keyof typeof UpdateType]
+
 export type Change = {
   after: DependencyVersion
   before: DependencyVersion | false
@@ -29,6 +37,7 @@ export type Change = {
   realBefore?: string
   repository?: RepositoryURL
   type: Dependency['type']
+  update: UpdateTypeValue
 } & (
   | {
       size: DiffSize
