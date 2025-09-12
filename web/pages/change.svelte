@@ -17,6 +17,7 @@
   import ReviewFooter from '../ui/footers/review.svelte'
   import ProgressHeader from '../ui/headers/progress.svelte'
   import InlinePlaceholder from '../ui/inline-placeholder.svelte'
+  import Main from '../ui/main.svelte'
   import Page from '../ui/page.svelte'
   import ChangesSidebar from '../ui/sidebars/changes.svelte'
   import FilesSidebar from '../ui/sidebars/files.svelte'
@@ -33,18 +34,20 @@
   <ProgressHeader current={id} />
   <ChangesSidebar current={id} />
   <FilesSidebar content={$fileDiffs} />
-  <Dependency change={$change} />
-  {#if $change.before}
-    {#if $changelog.isLoading}
-      <InlinePlaceholder text="Loading changelog…" />
-    {:else}
-      <Changelog content={$changelog.value} />
+  <Main>
+    <Dependency change={$change} />
+    {#if $change.before}
+      {#if $changelog.isLoading}
+        <InlinePlaceholder text="Loading changelog…" />
+      {:else}
+        <Changelog content={$changelog.value} />
+      {/if}
     {/if}
-  {/if}
-  {#if $fileDiffs.isLoading}
-    <InlinePlaceholder text="Loading diff…" />
-  {:else}
-    <Diff content={$fileDiffs.value} />
-  {/if}
+    {#if $fileDiffs.isLoading}
+      <InlinePlaceholder text="Loading diff…" />
+    {:else}
+      <Diff content={$fileDiffs.value} />
+    {/if}
+  </Main>
   <ReviewFooter current={id} {next} status={$change.status} />
 </Page>
