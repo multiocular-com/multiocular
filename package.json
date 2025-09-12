@@ -49,10 +49,10 @@
   "dependencies": {
     "@logux/server": "^0.14.0",
     "diff2html": "^3.4.52",
+    "dompurify": "^3.2.6",
     "highlight.js": "^11.11.1",
     "marked": "^16.2.1",
     "nanostores": "^1.0.1",
-    "sanitize-html": "^2.17.0",
     "yaml": "^2.8.1"
   },
   "devDependencies": {
@@ -69,7 +69,6 @@
     "@sveltejs/vite-plugin-svelte": "6.2.0",
     "@types/libnpmdiff": "2.0.3",
     "@types/node": "24.3.1",
-    "@types/sanitize-html": "2.16.0",
     "@types/ws": "8.18.1",
     "actions-up": "1.3.1",
     "autoprefixer": "10.4.21",

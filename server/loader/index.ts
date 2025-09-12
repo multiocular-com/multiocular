@@ -29,7 +29,7 @@ import { send } from '../web/sync.ts'
 import { changelogLoaders } from './changelog/index.ts'
 import { diffLoaders } from './diffs/index.ts'
 import { getChangedFiles, loadFile } from './git.ts'
-import { markdownToSafeHtml } from './markdown.ts'
+import { markdownToDangerousHtml } from './markdown.ts'
 import { calculateVersionDiff } from './versions.ts'
 import { versionsLoaders } from './versions/index.ts'
 
@@ -105,7 +105,7 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
       }
       let html: ChangeLogHtml = await Promise.all(
         changelog.map(async ([title, markdown]) => {
-          return [title, await markdownToSafeHtml(markdown)]
+          return [title, await markdownToDangerousHtml(markdown)]
         })
       )
       $changelogs.setKey(i.id, changelog)

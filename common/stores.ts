@@ -4,14 +4,14 @@ import { atom, computed, map } from 'nanostores'
 import type {
   ChangeId,
   ChangeLogTitle,
+  DangerousHTML,
   Dependency,
   DependencyName,
   DependencyVersion,
   Diff,
   DiffSize,
   Markdown,
-  RepositoryURL,
-  SafeHTML
+  RepositoryURL
 } from './types.ts'
 
 export type StepValue = 'diffs' | 'done' | 'initialize' | 'versions'
@@ -62,7 +62,7 @@ export type ChangeLog = [ChangeLogTitle, Markdown][]
 export type ChangeLogs = Record<ChangeId, ChangeLog>
 export const $changelogs = map<ChangeLogs>({})
 
-export type ChangeLogHtml = [ChangeLogTitle, SafeHTML][]
+export type ChangeLogHtml = [ChangeLogTitle, DangerousHTML][]
 export type ChangeLogHtmls = Record<ChangeId, ChangeLogHtml>
 export const $changelogHtmls = map<ChangeLogHtmls>({})
 

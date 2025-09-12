@@ -1,4 +1,6 @@
 <script lang="ts">
+  import DOMPurify from 'dompurify'
+
   import type { ChangeLogHtml } from '../../common/stores.ts'
 
   let { content }: { content: ChangeLogHtml } = $props()
@@ -8,7 +10,7 @@
   {#each content as log (log[0])}
     <h2>{log[0]}</h2>
     <div class="changelog">
-      {@html log[1]}
+      {@html DOMPurify.sanitize(log[1])}
     </div>
   {/each}
 </section>

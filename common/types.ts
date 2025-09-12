@@ -34,7 +34,7 @@ export type GitHubRepositoryURL = { [__extra]: 'GitHub' } & RepositoryURL
 export type GitHubRepository = { [__extra]: 'GitHub' } & DependencyName
 export type ChangeLogTitle = Brand<string, 'ChangeLogTitle'>
 export type Markdown = Brand<string, 'Markdown'>
-export type SafeHTML = Brand<string, 'SafeHTML'>
+export type DangerousHTML = Brand<string, 'DangerousHTML'>
 
 export type LoadedFile = { content: FileContent; path: FilePath }
 export type MissingFile = { missing: true; path: FilePath }

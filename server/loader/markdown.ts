@@ -1,10 +1,9 @@
 import { marked } from 'marked'
-import sanitizeHtml from 'sanitize-html'
 
-import type { Markdown, SafeHTML } from '../../common/types.ts'
+import type { DangerousHTML, Markdown } from '../../common/types.ts'
 
-export async function markdownToSafeHtml(
+export async function markdownToDangerousHtml(
   markdown: Markdown
-): Promise<SafeHTML> {
-  return sanitizeHtml(await marked(markdown)) as SafeHTML
+): Promise<DangerousHTML> {
+  return (await marked(markdown)) as DangerousHTML
 }
