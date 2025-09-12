@@ -5,6 +5,7 @@ import type {
   FilePath,
   Markdown
 } from '../../../common/types.ts'
+import { normalizeVersion, parseVersion } from '../versions.ts'
 
 export interface ChangeLogLoader {
   (root: FilePath, change: Change): Promise<ChangeLog | null>
@@ -21,18 +22,6 @@ export const CHANGELOG_NAMES = [
   'CHANGES.md',
   'CHANGES.txt'
 ]
-
-export function normalizeVersion(version: string): ChangeLogTitle {
-  let versionMatch = version.match(/\d+\.\d+(?:\.\d+)?(?:-[\w.]+)?/)
-  if (versionMatch) {
-    return versionMatch[0] as ChangeLogTitle
-  } else {
-    return version
-      .trim()
-      .replace(/^\s*v?/i, '')
-      .replace(/\s.*$/, '') as ChangeLogTitle
-  }
-}
 
 export function parseChangelog(content: string): ChangeLog {
   let lines = content.split('\n')
@@ -66,15 +55,6 @@ export function parseChangelog(content: string): ChangeLog {
     ])
   }
   return entries
-}
-
-function parseVersion(
-  version: ChangeLogTitle | DependencyVersion
-): [number, number, number] {
-  let [major, minor, patch] = normalizeVersion(version)
-    .split('.')
-    .map(i => parseInt(i))
-  return [major ?? 0, minor ?? 0, patch ?? 0]
 }
 
 function isBetween(

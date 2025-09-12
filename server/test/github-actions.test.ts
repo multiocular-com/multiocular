@@ -39,7 +39,7 @@ test('shows GitHub Actions changes in workflows', async () => {
       test: {
         'runs-on': 'ubuntu-latest',
         'steps': [
-          { uses: 'actions/checkout@v4.2.1' },
+          { uses: 'actions/checkout@v5.0.0' },
           { uses: 'actions/setup-node@v3.8.1' }
         ]
       }
@@ -49,7 +49,7 @@ test('shows GitHub Actions changes in workflows', async () => {
 
   await cliJsonMatch([
     {
-      after: 'v4.2.1',
+      after: 'v5.0.0',
       before: 'v4.2.0',
       diff: /Check out other refs.*by commit if provided/,
       from: 'github-actions',

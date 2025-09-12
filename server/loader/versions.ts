@@ -4,7 +4,32 @@ import {
   UpdateType,
   type UpdateTypeValue
 } from '../../common/stores.ts'
-import type { Dependency } from '../../common/types.ts'
+import type {
+  ChangeLogTitle,
+  Dependency,
+  DependencyVersion
+} from '../../common/types.ts'
+
+export function normalizeVersion(version: string): string {
+  let versionMatch = version.match(/\d+\.\d+(?:\.\d+)?(?:-[\w.]+)?/)
+  if (versionMatch) {
+    return versionMatch[0]
+  } else {
+    return version
+      .trim()
+      .replace(/^\s*v?/i, '')
+      .replace(/\s.*$/, '')
+  }
+}
+
+export function parseVersion(
+  version: ChangeLogTitle | DependencyVersion
+): [number, number, number] {
+  let [major, minor, patch] = normalizeVersion(version)
+    .split('.')
+    .map(i => parseInt(i))
+  return [major ?? 0, minor ?? 0, patch ?? 0]
+}
 
 function getUpdateType(
   before: Dependency | undefined,
@@ -43,9 +68,15 @@ function createChange(
   return change
 }
 
-function compareVersions(a: string, b: string): number {
-  let aParts = a.split('.').map(Number)
-  let bParts = b.split('.').map(Number)
+function compareVersions(a: DependencyVersion, b: DependencyVersion): number {
+  let aIsGit = /^[a-f0-9]{40}$/.test(a)
+  let bIsGit = /^[a-f0-9]{40}$/.test(b)
+  if (aIsGit && bIsGit) return a.localeCompare(b)
+  if (aIsGit && !bIsGit) return 1
+  if (!aIsGit && bIsGit) return -1
+
+  let aParts = parseVersion(a)
+  let bParts = parseVersion(b)
   for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
     let aPart = aParts[i] || 0
     let bPart = bParts[i] || 0
