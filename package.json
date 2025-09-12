@@ -48,12 +48,10 @@
   },
   "dependencies": {
     "@logux/server": "^0.14.0",
-    "@npmcli/arborist": "^9.1.4",
     "diff2html": "^3.4.52",
     "highlight.js": "^11.11.1",
     "marked": "^16.2.1",
     "nanostores": "^1.0.1",
-    "pacote": "^21.0.1",
     "sanitize-html": "^2.17.0",
     "tar": "^7.4.3",
     "yaml": "^2.8.1"
@@ -72,8 +70,6 @@
     "@sveltejs/vite-plugin-svelte": "6.2.0",
     "@types/libnpmdiff": "2.0.3",
     "@types/node": "24.3.1",
-    "@types/npmcli__arborist": "6.3.1",
-    "@types/pacote": "11.1.8",
     "@types/sanitize-html": "2.16.0",
     "@types/ws": "8.18.1",
     "actions-up": "1.3.1",
