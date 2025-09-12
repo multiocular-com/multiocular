@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.1
+
+- Reduced dependencies.
+
 ## 0.6.0
 
 - Improved diff UI.
