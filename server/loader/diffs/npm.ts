@@ -111,6 +111,7 @@ export const npm = {
       (
         await runDiff(
           '--no-index',
+          '--ignore-space-change',
           '--no-ext-diff',
           `${before}${sep}`,
           `${after}${sep}`
