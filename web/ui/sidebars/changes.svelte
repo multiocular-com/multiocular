@@ -1,6 +1,7 @@
 <script lang="ts">
   import { $sortedChanges as sortedChangesStore } from '../../../common/stores.ts'
   import type { ChangeId } from '../../../common/types.ts'
+  import { formatVersion } from '../../stores/change.ts'
   import { getChangeUrl } from '../../stores/router.ts'
   import Sidebar from '../sidebar.svelte'
 
@@ -27,7 +28,9 @@
           >
             <div class="name">{change.name}</div>
             <div class="versions">
-              {change.before || 'none'} → {change.after}
+              {change.before ? formatVersion(change.before) : 'none'}
+              →
+              {formatVersion(change.after)}
             </div>
           </a>
         </li>

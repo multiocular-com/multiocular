@@ -68,9 +68,11 @@ function createChange(
   return change
 }
 
+const IS_GIT_HASH = /^[a-f0-9]{40}$/
+
 function compareVersions(a: DependencyVersion, b: DependencyVersion): number {
-  let aIsGit = /^[a-f0-9]{40}$/.test(a)
-  let bIsGit = /^[a-f0-9]{40}$/.test(b)
+  let aIsGit = IS_GIT_HASH.test(a)
+  let bIsGit = IS_GIT_HASH.test(b)
   if (aIsGit && bIsGit) return a.localeCompare(b)
   if (aIsGit && !bIsGit) return 1
   if (!aIsGit && bIsGit) return -1

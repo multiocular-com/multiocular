@@ -2,7 +2,7 @@ import { computed, type ReadableAtom } from 'nanostores'
 
 import { reviewChangeAction } from '../../common/api.ts'
 import { $changes, type Change } from '../../common/stores.ts'
-import type { ChangeId } from '../../common/types.ts'
+import type { ChangeId, DependencyVersion } from '../../common/types.ts'
 import { client } from '../main/sync.ts'
 import { getChangeUrl } from './router.ts'
 
@@ -66,4 +66,13 @@ export function getById<Value>(
       return { isLoading: true } as const
     }
   })
+}
+
+export function formatVersion(version: DependencyVersion): string {
+  let match = version.match(/\/([a-f0-9]{40})$/)
+  if (match) {
+    return match[1]!.slice(0, 10)
+  } else {
+    return version
+  }
 }

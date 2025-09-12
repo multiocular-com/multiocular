@@ -128,7 +128,21 @@ index v8.40.0..v8.41.0 100644
 <Story name="New Dependency" asChild parameters={{ layout: 'fullscreen' }}>
   <Scene
     changelogs={{}}
-    changes={CHANGES.map(i => ({ ...i, before: false }))}
+    changes={CHANGES.map(i => {
+      if (i.name === 'nanoid') {
+        return {
+          ...i,
+          after:
+            'https://codeload.github.com/logux/client/tar.gz/' +
+            '2839aac29e10b5e40d8da8839f74ef804bb73f0e',
+          before:
+            'https://codeload.github.com/logux/client/tar.gz/' +
+            '50b6d96aa3e473958c6b3e5f1c585a2888a795b1'
+        }
+      } else {
+        return { ...i, before: false }
+      }
+    })}
     diffs={{
       'npm:typescript-eslint@8.41.0':
         DIFFS['npm:typescript-eslint@8.40.0>8.41.0']
