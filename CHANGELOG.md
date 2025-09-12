@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.3
+
+- Added whitespace ignoring in the diff.
+
 ## 0.6.2
 
 - Reduced dependencies.

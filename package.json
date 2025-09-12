@@ -1,6 +1,6 @@
 {
   "name": "multiocular",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Review dependencies changes to prevent supply chain attack",
   "type": "module",
   "engines": {
