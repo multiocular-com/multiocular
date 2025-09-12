@@ -33,5 +33,10 @@ export const githubReleases = (async (root, change) => {
   if (!isGitHubUrl(change.repository)) return null
   let releases = await fetchGitHubReleases(change.repository)
   if (!releases || releases.length === 0) return null
-  return filterChangelogByVersionRange(releases, change.after, change.before)
+  return filterChangelogByVersionRange(
+    false,
+    releases,
+    change.after,
+    change.before
+  )
 }) satisfies ChangeLogLoader

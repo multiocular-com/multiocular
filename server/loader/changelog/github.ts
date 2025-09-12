@@ -48,10 +48,15 @@ export const github = (async (root, change) => {
   if (!isGitHubUrl(change.repository)) return null
 
   try {
-    let changelogContent = await fetchGitHubChangelog(change.repository)
-    if (!changelogContent) return null
-    let changelog = parseChangelog(changelogContent)
-    return filterChangelogByVersionRange(changelog, change.after, change.before)
+    let text = await fetchGitHubChangelog(change.repository)
+    if (!text) return null
+    let parsed = parseChangelog(text)
+    return filterChangelogByVersionRange(
+      text,
+      parsed,
+      change.after,
+      change.before
+    )
   } catch {
     return null
   }

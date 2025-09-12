@@ -81,14 +81,22 @@ function isBetween(
 }
 
 export function filterChangelogByVersionRange(
-  changelog: ChangeLog,
+  text: false | string,
+  parsed: ChangeLog,
   after: DependencyVersion,
   before?: DependencyVersion | false
 ): ChangeLog {
   if (!before) return []
   let filtered: ChangeLog = []
-  for (let [version, content] of changelog) {
+  for (let [version, content] of parsed) {
     if (isBetween(version, before, after)) filtered.push([version, content])
   }
+
+  if (text && filtered.length === 0) {
+    if (text.length < 1000) {
+      return [['Changelog' as ChangeLogTitle, text as Markdown]]
+    }
+  }
+
   return filtered
 }

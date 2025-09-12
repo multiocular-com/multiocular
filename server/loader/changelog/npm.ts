@@ -17,8 +17,13 @@ export const npm = (async (root, change) => {
   for (let filename of CHANGELOG_NAMES) {
     let filePath = join(packageDir, filename)
     if (!existsSync(filePath)) continue
-    let changelog = parseChangelog(await readFile(filePath, 'utf-8'))
-    return filterChangelogByVersionRange(changelog, change.after, change.before)
+    let text = await readFile(filePath, 'utf-8')
+    return filterChangelogByVersionRange(
+      text,
+      parseChangelog(text),
+      change.after,
+      change.before
+    )
   }
   return null
 }) satisfies ChangeLogLoader
