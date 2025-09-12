@@ -44,7 +44,7 @@ export const githubActions = {
             let content = await fileResponse.text()
             let lines = content.split('\n')
             fileDiffs.push(
-              `diff --git /dev/null /b/${item.name}\n` +
+              `diff --git /dev/null ${item.name}\n` +
                 `new file mode 100644\n` +
                 `index 0000000..${change.after.substring(0, 7)}\n` +
                 `--- /dev/null\n` +
