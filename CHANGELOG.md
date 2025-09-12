@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.4
+
+- Fixed short changelog with external link support.
+- Fixed loading previous version for GitHub actions.
+- Fixed git dependencies version in UI.
+
 ## 0.6.3
 
 - Added whitespace ignoring in the diff.
