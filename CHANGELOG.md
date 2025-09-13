@@ -2,6 +2,11 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.5
+
+- Fixed scroll reset after page change.
+- Fixed minimal Node.js version.
+
 ## 0.6.4
 
 - Fixed short changelog with external link support.
