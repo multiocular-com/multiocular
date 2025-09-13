@@ -7,7 +7,8 @@
   import { $page as pageStore } from '../stores/router.ts'
 
   pageStore.listen(() => {
-    document.querySelector('.page')!.scrollTop = 0
+    let main = document.querySelector('main')
+    if (main) main.scrollTop = 0
   })
 </script>
 
