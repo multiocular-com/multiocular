@@ -1,13 +1,31 @@
-// Script to update Node.js and pnpm everywhere
+// Script to update Node.js and pnpm everywhere.
+//
 // By default it will keep Node.js major version, but can update to next major
-// by `pnpm update-env --major` argument.
+// by `pnpm update-env --major` argument. You can specify version `--major 22`.
+//
+// If you change script and need to update result without new Node.js version
+// run it with `pnpm update-env --major` argument.
 
 import { createHash } from 'node:crypto'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { styleText } from 'node:util'
 
-const KEEP_MAJOR = !process.argv.includes('--major')
+const FORCE = process.argv.includes('--force')
+
+function getMajor(current: string): string | undefined {
+  for (let i = 0; i < process.argv.length; i++) {
+    if (process.argv[i] === '--major') {
+      let next = process.argv[i + 1]
+      if (next && /^[\d+.]+$/.test(next)) {
+        return next
+      } else {
+        return undefined
+      }
+    }
+  }
+  return current
+}
 
 const ROOT = join(import.meta.dirname, '..')
 
@@ -17,10 +35,12 @@ interface Release {
 
 type Architectures = { arm64: string; x64: string }
 
-async function getLatestNodeVersion(major: string): Promise<string> {
+async function getLatestNodeVersion(
+  major: string | undefined
+): Promise<string> {
   let response = await fetch('https://nodejs.org/dist/index.json')
   let data: Release[] = await response.json()
-  let filtered = KEEP_MAJOR
+  let filtered = major
     ? data.filter(i => i.version.startsWith(`v${major}.`))
     : data
   return filtered[0]!.version.slice(1)
@@ -39,7 +59,7 @@ async function getNodeSha256(version: string): Promise<Architectures> {
   let text = await data.text()
   let lines = text.split('\n')
   return {
-    arm64: lines.find(i => i.endsWith('-linux-x64.tar.xz'))!.split(' ')[0]!,
+    arm64: lines.find(i => i.endsWith('-linux-arm64.tar.xz'))!.split(' ')[0]!,
     x64: lines.find(i => i.endsWith('-linux-x64.tar.xz'))!.split(' ')[0]!
   }
 }
@@ -94,18 +114,18 @@ let currentNode = dockerfile.match(/NODE_VERSION=(\S+)/)![1]!
 let currentPnpm = dockerfile.match(/PNPM_VERSION=(\S+)/)![1]!
 
 let latestNode = await getLatestNodeVersion(
-  process.argv[2] ?? currentNode.split('.')[0]!
+  getMajor(currentNode.split('.')[0]!)
 )
 let latestPnpm = await getLatestPnpmVersion()
 
-if (currentNode !== latestNode) {
+if (currentNode !== latestNode || FORCE) {
   printUpdate('Node.js', currentNode, latestNode)
   let checksums = await getNodeSha256(latestNode)
   dockerfile = replaceVersionEnv(dockerfile, 'NODE', latestNode, checksums)
   writeFileSync(join(ROOT, '.devcontainer', 'Dockerfile'), dockerfile)
 }
 
-if (currentPnpm !== latestPnpm) {
+if (currentPnpm !== latestPnpm || FORCE) {
   printUpdate('pnpm', currentPnpm, latestPnpm)
   let [checksumArm, checksumX86] = await Promise.all([
     getPnpmSha256(latestPnpm, 'arm64'),
@@ -118,7 +138,7 @@ if (currentPnpm !== latestPnpm) {
   writeFileSync(join(ROOT, '.devcontainer', 'Dockerfile'), dockerfile)
 }
 
-if (currentNode === latestNode && currentPnpm === latestPnpm) {
+if (currentNode === latestNode && currentPnpm === latestPnpm && !FORCE) {
   process.stderr.write(
     styleText('gray', 'No Node.js or pnpm updates available\n')
   )
