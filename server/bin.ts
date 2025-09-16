@@ -14,6 +14,9 @@ import {
   startWebServerIfNecessary
 } from './index.ts'
 
+process.on('SIGINT', deleteTemporary)
+process.on('SIGTERM', deleteTemporary)
+
 try {
   let config = await parseArgs(process.argv.slice(2))
   let root = findProjectRoot(filePathType(process.cwd()))
