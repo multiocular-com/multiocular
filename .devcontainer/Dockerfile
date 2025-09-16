@@ -14,10 +14,6 @@ ENV PNPM_VERSION=10.15.1 \
   PNPM_CHECKSUM_X64=d4ac2a22e45b50da881855ea6a3734cf83f984eb5fba7163c3f07492fa43c2b0 \
   PNPM_CHECKSUM_ARM64=19bfe962692d285b0186a7305a0fc8b45dd7f1aeabfa61fc70f039ff8b74829a
 
-ENV PINACT_VERSION=3.0.1 \
-  PINACT_CHECKSUM_X64=f4f35e2dc4cf1243cd0e8d3bc0b49c8b30c388d1dcae5907afcd97b00ddb556e \
-  PINACT_CHECKSUM_ARM64=b319fc572c3fae75a2744732d9c943d1b7402e1a43a3aabd8ab72f2feb1454f7
-
 RUN dnf install -yq zsh micro git tig psmisc procps-ng awk openssh-server \
   && dnf clean all \
   && rm -rf /var/cache/dnf \
@@ -54,13 +50,6 @@ RUN <<EOF
     --fail --show-error --location --silent --output /usr/local/bin/pnpm
   echo "$PNPM_CHECKSUM /usr/local/bin/pnpm" | sha256sum -c
   chmod a+rx /usr/local/bin/pnpm
-
-  curl "https://github.com/suzuki-shunsuke/pinact/releases/download/v${PINACT_VERSION}/pinact_linux_${PINACT_ARCH}.tar.gz" \
-    --fail --show-error --location --silent --output /pinact.tar.gz
-  echo "$PINACT_CHECKSUM /pinact.tar.gz" | sha256sum -c
-  tar -xf /pinact.tar.gz -C /usr/local/bin --remove-files \
-    --exclude='LICENSE' --exclude='*.md'
-  rm /pinact.tar.gz
 EOF
 
 RUN useradd -s /bin/zsh developer
