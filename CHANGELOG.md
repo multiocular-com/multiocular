@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.6
+
+- Fixed cleaning temporary files on Ctrl+C.
+
 ## 0.6.5
 
 - Fixed scroll reset after page change.
