@@ -1,4 +1,5 @@
 import { exec } from 'node:child_process'
+import { rmSync } from 'node:fs'
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -110,10 +111,10 @@ export async function createEmptyDir(): Promise<FilePath> {
   return emptyPackage
 }
 
-export async function deleteTemporary(): Promise<void> {
+export function deleteTemporary(): void {
   for (let folder of DOWNLOADED_PACKAGES.values()) {
-    await rm(folder, { force: true, recursive: true })
+    rmSync(folder, { force: true, recursive: true })
   }
-  if (emptyPackage) await rm(emptyPackage, { force: true, recursive: true })
+  if (emptyPackage) rmSync(emptyPackage, { force: true, recursive: true })
   DOWNLOADED_PACKAGES.clear()
 }

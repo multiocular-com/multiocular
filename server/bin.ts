@@ -14,8 +14,10 @@ import {
   startWebServerIfNecessary
 } from './index.ts'
 
-process.on('SIGINT', deleteTemporary)
-process.on('SIGTERM', deleteTemporary)
+process.on('SIGTERM', () => {
+  deleteTemporary()
+  process.exit(0)
+})
 
 try {
   let config = await parseArgs(process.argv.slice(2))
@@ -27,10 +29,10 @@ try {
   let url = await startWebServerIfNecessary(config)
   if (url && !config.noOpen) openBrowser(url)
 
-  $step.subscribe(async step => {
-    if (step === 'done') await deleteTemporary()
+  $step.subscribe(step => {
+    if (step === 'done') deleteTemporary()
   })
 } catch (e) {
-  await deleteTemporary()
+  deleteTemporary()
   throw e
 }

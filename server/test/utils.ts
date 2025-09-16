@@ -312,19 +312,20 @@ export function killBackgroundProcess(): Promise<void> {
       return
     }
 
+    function end(): void {
+      clearTimeout(timeout)
+      backgroundProcess = undefined
+      resolve()
+    }
+
     backgroundProcess.kill('SIGTERM')
     let timeout = setTimeout(() => {
       if (backgroundProcess && !backgroundProcess.killed) {
         backgroundProcess.kill('SIGKILL')
       }
-      backgroundProcess = undefined
-      resolve()
+      end()
     }, 2000)
 
-    backgroundProcess.once('exit', () => {
-      clearTimeout(timeout)
-      backgroundProcess = undefined
-      resolve()
-    })
+    backgroundProcess.once('exit', end)
   })
 }
