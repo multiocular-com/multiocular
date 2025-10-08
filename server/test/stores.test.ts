@@ -21,6 +21,7 @@ function mockChange(partial: Partial<Debrand<Change>>): Change {
     name: 'mock-package',
     size: 100,
     status: 'loaded',
+    statusChangedAt: undefined,
     type: 'npm',
     update: UpdateType.MAJOR,
     ...partial

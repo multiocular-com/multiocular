@@ -15,7 +15,10 @@ export type MultiocularJSON = Debrand<
   ({
     changelog: [string, string][]
     diff: string
-  } & Omit<Extract<Change, { status: string }>, 'id' | 'size' | 'status'>)[]
+  } & Omit<
+    Extract<Change, { status: string }>,
+    'id' | 'size' | 'status' | 'statusChangedAt'
+  >)[]
 >
 
 function colorizedDiff(diffText: string): string {

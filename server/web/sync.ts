@@ -13,7 +13,7 @@ import {
   $changes,
   $fileDiffs,
   $step,
-  updateChange
+  updateChangeStatus
 } from '../../common/stores.ts'
 import type { ChangeId } from '../../common/types.ts'
 import { LOCAL } from '../env.ts'
@@ -79,8 +79,8 @@ export function syncStores(server: BaseServer): void {
     access() {
       return LOCAL
     },
-    process(ctx, action) {
-      updateChange(action.id, { status: action.value })
+    process(ctx, action, meta) {
+      updateChangeStatus(action.id, action.value, meta.time)
     },
     resend() {
       return 'projects/main'

@@ -60,6 +60,7 @@ function createChange(
     id: getChangeId(after.type, after.name, before?.version, after.version),
     name: after.name,
     status: 'loading',
+    statusChangedAt: undefined,
     type: after.type,
     update: getUpdateType(before, after)
   }

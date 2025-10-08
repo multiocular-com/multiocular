@@ -36,7 +36,9 @@ export type Change = {
   realAfter?: string
   realBefore?: string
   repository?: RepositoryURL
+  statusChangedAt: number | undefined
   type: Dependency['type']
+
   update: UpdateTypeValue
 } & (
   | {
@@ -133,6 +135,20 @@ export function updateChange(id: ChangeId, update: Partial<Change>): void {
       }
     })
   )
+}
+
+export function updateChangeStatus(
+  id: ChangeId,
+  status: Change['status'],
+  changedAt: number
+): void {
+  let change = $changes.get().find(i => i.id === id)
+  if (
+    change &&
+    (!change.statusChangedAt || change.statusChangedAt < changedAt)
+  ) {
+    updateChange(id, { status, statusChangedAt: changedAt })
+  }
 }
 
 export function getChangeId(

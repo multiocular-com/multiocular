@@ -15,7 +15,8 @@ import {
   $changes,
   $fileDiffs,
   $step,
-  updateChange
+  updateChange,
+  updateChangeStatus
 } from '../../common/stores.ts'
 
 let server = __SERVER_URL__
@@ -38,7 +39,7 @@ if (import.meta.env.DEV) log(client)
 
 client.log.add(loguxSubscribe({ channel: 'projects/main' }), { sync: true })
 
-client.on('add', action => {
+client.on('add', (action, meta) => {
   if (changeStepAction.match(action)) {
     $step.set(action.value)
   } else if (replaceChangesAction.match(action)) {
@@ -46,7 +47,7 @@ client.on('add', action => {
   } else if (updateChangeAction.match(action)) {
     updateChange(action.id, action.update)
   } else if (reviewChangeAction.match(action)) {
-    updateChange(action.id, { status: action.value })
+    updateChangeStatus(action.id, action.value, meta.time)
   } else if (addFileDiffsAction.match(action)) {
     $fileDiffs.setKey(action.id, action.fileDiffs)
   } else if (addChangelogHtmlAction.match(action)) {
