@@ -1,7 +1,11 @@
 import { computed, type ReadableAtom } from 'nanostores'
 
 import { reviewChangeAction } from '../../common/api.ts'
-import { $changes, type Change } from '../../common/stores.ts'
+import {
+  $changes,
+  type Change,
+  type ChangeLogHtml
+} from '../../common/stores.ts'
 import type { ChangeId, DependencyVersion } from '../../common/types.ts'
 import { client } from '../main/sync.ts'
 import { getChangeUrl } from './router.ts'
@@ -74,5 +78,13 @@ export function formatVersion(version: DependencyVersion): string {
     return match[1]!.slice(0, 10)
   } else {
     return version
+  }
+}
+
+export function hasChangelog(changelog: LoadingValue<ChangeLogHtml>): boolean {
+  if (changelog.isLoading) {
+    return true
+  } else {
+    return changelog.value.length > 0
   }
 }

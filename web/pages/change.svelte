@@ -9,7 +9,8 @@
     getById,
     getChange,
     getChangeIndex,
-    getNextUrl
+    getNextUrl,
+    hasChangelog
   } from '../stores/change.ts'
   import Changelog from '../ui/changelog.svelte'
   import Dependency from '../ui/dependency.svelte'
@@ -33,7 +34,10 @@
 <Page title={getChangeIndex($sortedChangesStore, id)}>
   <ProgressHeader current={id} />
   <ChangesSidebar current={id} />
-  <FilesSidebar content={$fileDiffs} />
+  <FilesSidebar
+    content={$fileDiffs}
+    hasChanelog={$change.before && hasChangelog($changelog)}
+  />
   <Main>
     <Dependency change={$change} />
     {#if $change.before}

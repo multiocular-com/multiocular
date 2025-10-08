@@ -15,21 +15,26 @@
     }
   }
 
-  let { content }: { content: LoadingValue<FileDiffs> } = $props()
+  let {
+    content,
+    hasChanelog
+  }: { content: LoadingValue<FileDiffs>; hasChanelog: boolean } = $props()
 </script>
 
 <Sidebar maxWidth={1200} position="right">
   {#if !content.isLoading}
     <ul>
-      <li>
-        <button
-          onclick={() => {
-            scrollTo(undefined)
-          }}
-        >
-          <span></span> Changelog
-        </button>
-      </li>
+      {#if hasChanelog}
+        <li>
+          <button
+            onclick={() => {
+              scrollTo(undefined)
+            }}
+          >
+            <span></span> Changelog
+          </button>
+        </li>
+      {/if}
       {#each content.value as file (file.newName + file.oldName)}
         {#if !file.isDeleted}
           <li>
