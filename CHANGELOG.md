@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.7
+
+- Fixed `cjs` syntax highlight (by @vangata-ve).
+
 ## 0.6.6
 
 - Fixed cleaning temporary files on Ctrl+C.
