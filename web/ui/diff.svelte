@@ -18,11 +18,11 @@
       colorScheme: ($darkStore ? 'dark' : 'light') as ColorSchemeType,
       drawFileList: false,
       highlight: true,
-      highlightLanguages: {
-        cjs: 'javascript',
-        cts: 'typescript',
-        mts: 'typescript'
-      },
+      highlightLanguages: new Map([
+        ['cjs', 'javascript'],
+        ['cts', 'typescript'],
+        ['mts', 'typescript']
+      ]),
       maxLineLengthHighlight: 5000,
       renderNothingWhenEmpty: true,
       stickyFileHeaders: true
