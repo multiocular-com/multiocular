@@ -125,18 +125,6 @@ export const $progress = computed($sortedChanges, changes => {
   return result
 })
 
-export function updateChange(id: ChangeId, update: Partial<Change>): void {
-  $changes.set(
-    $changes.get().map(change => {
-      if (change.id === id) {
-        return { ...change, ...update } as Change
-      } else {
-        return change
-      }
-    })
-  )
-}
-
 export function updateChangeStatus(
   id: ChangeId,
   status: Change['status'],
@@ -148,6 +136,29 @@ export function updateChangeStatus(
     (!change.statusChangedAt || change.statusChangedAt < changedAt)
   ) {
     updateChange(id, { status, statusChangedAt: changedAt })
+  }
+}
+
+type ChangeUpdateListener = (id: ChangeId, update: Partial<Change>) => void
+
+let changeUpdateListeners: ChangeUpdateListener[] = []
+
+export function onChangeUpdate(listener: ChangeUpdateListener): void {
+  changeUpdateListeners.push(listener)
+}
+
+export function updateChange(id: ChangeId, update: Partial<Change>): void {
+  $changes.set(
+    $changes.get().map(change => {
+      if (change.id === id) {
+        return { ...change, ...update } as Change
+      } else {
+        return change
+      }
+    })
+  )
+  for (let listener of changeUpdateListeners) {
+    listener(id, update)
   }
 }
 

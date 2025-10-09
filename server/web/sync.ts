@@ -13,6 +13,7 @@ import {
   $changes,
   $fileDiffs,
   $step,
+  onChangeUpdate,
   updateChangeStatus
 } from '../../common/stores.ts'
 import type { ChangeId } from '../../common/types.ts'
@@ -109,5 +110,9 @@ export function syncStores(server: BaseServer): void {
 
   $step.listen(value => {
     server.process(changeStepAction({ value }))
+  })
+
+  onChangeUpdate((id, update) => {
+    server.process(updateChangeAction({ id, update }))
   })
 }

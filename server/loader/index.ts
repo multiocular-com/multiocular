@@ -3,8 +3,7 @@ import { parse } from 'diff2html'
 import {
   addChangelogHtmlAction,
   addFileDiffsAction,
-  replaceChangesAction,
-  updateChangeAction
+  replaceChangesAction
 } from '../../common/api.ts'
 import {
   $changelogHtmls,
@@ -124,12 +123,16 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
       $fileDiffs.setKey(change.id, fileDiffs)
       send(addFileDiffsAction({ fileDiffs, id: change.id }))
 
-      let update = changeType({
-        size: calcSize(diff),
-        status: 'loaded'
-      })
-      updateChange(change.id, update)
-      send(updateChangeAction({ id: change.id, update }))
+      let actual = $changes.get().find(i => i.id === change.id)!
+      if (!actual.statusChangedAt) {
+        updateChange(
+          change.id,
+          changeType({
+            size: calcSize(diff),
+            status: 'loaded'
+          })
+        )
+      }
     })
   ])
 

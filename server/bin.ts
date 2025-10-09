@@ -13,6 +13,7 @@ import {
   printDebugInfo,
   startWebServerIfNecessary
 } from './index.ts'
+import { getUserFolder, syncWithFileStorage } from './storage/file.ts'
 
 process.on('SIGTERM', () => {
   deleteTemporary()
@@ -26,6 +27,7 @@ try {
 
   loadDiffs(root, config)
   outputProcess(config)
+  await syncWithFileStorage(getUserFolder())
   let url = await startWebServerIfNecessary(config)
   if (url && !config.noOpen) openBrowser(url)
 

@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { promisify } from 'node:util'
 
+import { type FilePath, filePathType } from '../../common/types.ts'
 import { getUserFolder } from '../storage/file.ts'
 import { format, print, printError } from './print.ts'
 import { getVersion } from './version.ts'
@@ -31,7 +32,7 @@ export type Config = {
   noOpen: boolean
   output: 'json' | 'text' | 'web'
   port: number
-  storage: false | string
+  storage: false | FilePath
 } & (
   | { commit: string; source: 'commit' }
   | { source: 'changed' | 'last-commit' }
@@ -56,7 +57,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
   let noOpen = false
   let output: Config['output'] | undefined
   let port = 31337
-  let storage: false | string | undefined
+  let storage: false | FilePath | undefined
   let source:
     | { commit: string; source: 'commit' }
     | { source: 'changed' | 'last-commit' }
@@ -110,7 +111,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
         printError(format('--storage requires a folder path'))
         process.exit(1)
       }
-      storage = storageArg
+      storage = filePathType(storageArg)
     } else if (arg === '--version' || arg === '-v') {
       print('v' + getVersion())
       process.exit(0)
