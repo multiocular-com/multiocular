@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { promisify } from 'node:util'
 
+import { getUserFolder } from '../storage/file.ts'
 import { format, print, printError } from './print.ts'
 import { getVersion } from './version.ts'
 
@@ -15,6 +16,7 @@ export type CliArg =
   | '--json'
   | '--last-commit'
   | '--no-open'
+  | '--no-storage'
   | '--text'
   | '--version'
   | '--web'
@@ -22,12 +24,14 @@ export type CliArg =
   | '-v'
   | `--commit ${string}`
   | `--port ${number}`
+  | `--storage ${string}`
 
 export type Config = {
   debug: boolean
   noOpen: boolean
   output: 'json' | 'text' | 'web'
   port: number
+  storage: false | string
 } & (
   | { commit: string; source: 'commit' }
   | { source: 'changed' | 'last-commit' }
@@ -52,6 +56,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
   let noOpen = false
   let output: Config['output'] | undefined
   let port = 31337
+  let storage: false | string | undefined
   let source:
     | { commit: string; source: 'commit' }
     | { source: 'changed' | 'last-commit' }
@@ -97,6 +102,15 @@ export async function parseArgs(args: string[]): Promise<Config> {
       output = 'web'
     } else if (arg === '--text') {
       output = 'text'
+    } else if (arg === '--no-storage') {
+      storage = false
+    } else if (arg === '--storage') {
+      let storageArg = args[++i]
+      if (!storageArg || storageArg.startsWith('-')) {
+        printError(format('--storage requires a folder path'))
+        process.exit(1)
+      }
+      storage = storageArg
     } else if (arg === '--version' || arg === '-v') {
       print('v' + getVersion())
       process.exit(0)
@@ -108,6 +122,7 @@ export async function parseArgs(args: string[]): Promise<Config> {
 
   if (!source) source = { source: await detectModeFromGit() }
   if (output === undefined) output = 'web'
+  if (storage === undefined) storage = getUserFolder()
 
-  return { debug, noOpen, output, port, ...source }
+  return { debug, noOpen, output, port, storage, ...source }
 }

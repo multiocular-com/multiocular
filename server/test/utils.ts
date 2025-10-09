@@ -127,6 +127,8 @@ function processArgs(args: CliArg[]): string[] {
       processed.push('--commit', arg.slice('--commit '.length))
     } else if (arg.startsWith('--port ')) {
       processed.push('--port', arg.slice('--port '.length))
+    } else if (arg.startsWith('--storage ')) {
+      processed.push('--storage', arg.slice('--storage '.length))
     } else {
       processed.push(arg)
     }

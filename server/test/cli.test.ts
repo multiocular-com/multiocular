@@ -112,3 +112,10 @@ test('shows debug information with --debug', async () => {
   assert.equal(code, 0)
   assert.match(stderr, /Multiocular version: v\d+\.\d+\.\d+/)
 })
+
+test('exits with error when --storage has no value', async () => {
+  // @ts-expect-error We are testing invalid argument
+  let result = await runCli('--storage')
+  assert.notEqual(result.code, 0)
+  assert.match(result.stderr, /--storage requires a folder path/)
+})
