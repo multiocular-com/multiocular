@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
 
 import {
   $changes,
@@ -24,8 +24,11 @@ export function getUserFolder(): FilePath {
   }
 }
 
-function sanitizeFileName(fileName: string): string {
-  return fileName.replace(/[<>:"/\\|?*]/g, '_')
+function changeToFile(folder: FilePath, change: Change): FilePath {
+  let safe = encodeURIComponent(change.name.replaceAll('.', '%2E'))
+  return filePathType(
+    join(folder, `${change.type}_${safe}`, encodeURIComponent(change.after))
+  )
 }
 
 async function checkFileStatus(change: Change, file: string): Promise<void> {
@@ -45,23 +48,16 @@ async function checkFileStatus(change: Change, file: string): Promise<void> {
   }
 }
 
-export async function syncWithFileStorage(
-  folder: false | FilePath
-): Promise<void> {
+export function syncWithFileStorage(folder: false | FilePath): void {
   if (!folder) return
 
-  try {
-    await mkdir(folder, { recursive: true })
-  } catch (error) {
-    warn(`Failed to create folder ${folder}:`, String(error))
-    return
-  }
-
   onChangeUpdate(async (id, update) => {
-    let file = join(folder, sanitizeFileName(id))
+    let change = $changes.get().find(i => i.id === id)!
+    let file = changeToFile(folder, change)
 
     if (update.status === 'reviewed' && update.statusChangedAt) {
       try {
+        await mkdir(dirname(file), { recursive: true })
         await writeFile(file, `${update.status},${update.statusChangedAt}`)
       } catch (error: unknown) {
         warn(`Failed to write file ${file}:`, String(error))
@@ -94,11 +90,10 @@ export async function syncWithFileStorage(
     }
 
     for (let change of changesToCheck) {
-      checkFileStatus(change, join(folder, sanitizeFileName(change.id))).catch(
-        (error: unknown) => {
-          warn(`Failed to check file status for ${change.id}:`, String(error))
-        }
-      )
+      let file = changeToFile(folder, change)
+      checkFileStatus(change, file).catch((error: unknown) => {
+        warn(`Failed to read ${file}:`, String(error))
+      })
     }
   })
 }

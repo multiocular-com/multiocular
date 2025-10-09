@@ -27,7 +27,7 @@ try {
 
   loadDiffs(root, config)
   outputProcess(config)
-  await syncWithFileStorage(config.storage)
+  syncWithFileStorage(config.storage)
   let url = await startWebServerIfNecessary(config)
   if (url && !config.noOpen) openBrowser(url)
 
