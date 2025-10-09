@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.0
+
+- Moved to new storage format to keep only final version of change.
+
 ## 0.7.0
 
 - Added review file storage to re-use it between projects.
