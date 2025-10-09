@@ -68,7 +68,7 @@
     "@storybook/svelte-vite": "9.1.10",
     "@sveltejs/vite-plugin-svelte": "6.2.1",
     "@types/libnpmdiff": "2.0.3",
-    "@types/node": "24.7.0",
+    "@types/node": "24.7.1",
     "@types/ws": "8.18.1",
     "actions-up": "1.4.1",
     "autoprefixer": "10.4.21",
