@@ -45,7 +45,11 @@ async function checkFileStatus(change: Change, file: string): Promise<void> {
   }
 }
 
-export async function syncWithFileStorage(folder: FilePath): Promise<void> {
+export async function syncWithFileStorage(
+  folder: false | FilePath
+): Promise<void> {
+  if (!folder) return
+
   try {
     await mkdir(folder, { recursive: true })
   } catch (error) {
