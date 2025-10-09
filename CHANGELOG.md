@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.0
+
+- Added review file storage to re-use it between projects.
+
 ## 0.6.7
 
 - Fixed `cjs` syntax highlight (by @vangata-ve).
