@@ -42,7 +42,7 @@
   ] satisfies Partial<Debrand<Change>>[]
 
   const DIFFS = {
-    'npm:typescript-eslint@8.40.0>8.41.0': `diff --git package.json package.json
+    'npm_typescript-eslint@8.40.0,8.41.0': `diff --git package.json package.json
 index v8.40.0..v8.41.0 100644
 --- package.json
 +++ package.json
@@ -57,7 +57,7 @@ index v8.40.0..v8.41.0 100644
   }
 
   const CHANGELOGS = {
-    'npm:typescript-eslint@8.40.0>8.41.0': [
+    'npm_typescript-eslint@8.40.0,8.41.0': [
       [
         '8.41.0',
         '<h3>🚀 Features</h3>\n\n' +
@@ -95,7 +95,7 @@ index v8.40.0..v8.41.0 100644
         return i
       }
     })}
-    hash="change/npm:nanoevents@8.0.0%3E9.0.0"
+    hash="change/npm_nanoevents@8.0.0%2C9.0.0"
     step="diffs"
   >
     <Main />
@@ -106,7 +106,7 @@ index v8.40.0..v8.41.0 100644
   <Scene
     changes={CHANGES.map(i => ({ ...i, status: 'loaded' }))}
     diffs={DIFFS}
-    hash="#change/npm:typescript-eslint@8.40.0%3E8.41.0"
+    hash="#change/npm_typescript-eslint@8.40.0%2C8.41.0"
     step="diffs"
   >
     <Main />
@@ -118,7 +118,7 @@ index v8.40.0..v8.41.0 100644
     changelogs={CHANGELOGS}
     changes={CHANGES}
     diffs={DIFFS}
-    hash="#change/npm:typescript-eslint@8.40.0%3E8.41.0"
+    hash="#change/npm_typescript-eslint@8.40.0%2C8.41.0"
     step="diffs"
   >
     <Main />
@@ -144,10 +144,10 @@ index v8.40.0..v8.41.0 100644
       }
     })}
     diffs={{
-      'npm:typescript-eslint@8.41.0':
-        DIFFS['npm:typescript-eslint@8.40.0>8.41.0']
+      'npm_typescript-eslint@8.41.0':
+        DIFFS['npm_typescript-eslint@8.40.0,8.41.0']
     }}
-    hash="#change/npm:typescript-eslint@8.41.0"
+    hash="#change/npm_typescript-eslint@8.41.0"
     step="diffs"
   >
     <Main />
@@ -163,7 +163,7 @@ index v8.40.0..v8.41.0 100644
     changelogs={CHANGELOGS}
     changes={CHANGES.map(i => ({ ...i, direct: false }))}
     diffs={DIFFS}
-    hash="change/npm:typescript-eslint@8.40.0%3E8.41.0"
+    hash="change/npm_typescript-eslint@8.40.0%2C8.41.0"
     step="diffs"
   >
     <Main />
@@ -207,7 +207,7 @@ index v8.40.0..v8.41.0 100644
 <Story name="Unloaded Change" asChild parameters={{ layout: 'fullscreen' }}>
   <Scene
     changes={[]}
-    hash="change/npm:@typescript-eslint/project-service@8.40.0%3E8.41.0"
+    hash="change/npm_@typescript-eslint%2Fproject-service@8.40.0%2C8.41.0"
     step="versions"
   >
     <Main />
