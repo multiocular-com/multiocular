@@ -24,6 +24,10 @@ export function getUserFolder(): FilePath {
   }
 }
 
+function sanitizeFileName(fileName: string): string {
+  return fileName.replace(/[<>:"/\\|?*]/g, '_')
+}
+
 async function checkFileStatus(change: Change, file: string): Promise<void> {
   if (!existsSync(file)) {
     return
@@ -54,7 +58,7 @@ export async function syncWithFileStorage(
   }
 
   onChangeUpdate(async (id, update) => {
-    let file = join(folder, id)
+    let file = join(folder, sanitizeFileName(id))
 
     if (update.status === 'reviewed' && update.statusChangedAt) {
       try {
@@ -90,9 +94,11 @@ export async function syncWithFileStorage(
     }
 
     for (let change of changesToCheck) {
-      checkFileStatus(change, join(folder, change.id)).catch((e: unknown) => {
-        warn(`Failed to check file status for ${change.id}:`, String(e))
-      })
+      checkFileStatus(change, join(folder, sanitizeFileName(change.id))).catch(
+        (error: unknown) => {
+          warn(`Failed to check file status for ${change.id}:`, String(error))
+        }
+      )
     }
   })
 }

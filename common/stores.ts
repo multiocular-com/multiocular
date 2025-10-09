@@ -168,10 +168,9 @@ export function getChangeId(
   before: DependencyVersion | false | undefined,
   after: DependencyVersion
 ): ChangeId {
-  let safe = encodeURIComponent
   if (before) {
-    return `${type}_${safe(name)}@${safe(before)},${safe(after)}` as ChangeId
+    return `${type}:${name}@${before}>${after}` as ChangeId
   } else {
-    return `${type}_${safe(name)}@${safe(after)}` as ChangeId
+    return `${type}:${name}@${after}` as ChangeId
   }
 }
