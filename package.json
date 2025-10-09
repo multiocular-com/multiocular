@@ -28,7 +28,7 @@
     "test": "FORCE_COLOR=1 pnpm run /^test:/",
     "start": "pnpm run /^start:/",
     "build": "rm -Rf dist && pnpm run /^build:/",
-    "visual": "storybook dev -c web/.storybook -p 6006 --no-open --host 0.0.0.0",
+    "visual": "STORYBOOK=1 storybook dev -c web/.storybook -p 6006 --no-open --host 0.0.0.0",
     "format": "pnpm run /^format:/",
     "update-env": "node ./scripts/update-env.ts",
     "build-visual": "NODE_ENV=test storybook build -c web/.storybook",

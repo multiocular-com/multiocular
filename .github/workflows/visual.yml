@@ -75,3 +75,5 @@ jobs:
           buildScriptName: build-visual
           exitZeroOnChanges: true
           exitOnceUploaded: true
+        env:
+          STORYBOOK: '1'
