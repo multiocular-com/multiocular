@@ -55,5 +55,6 @@ EOF
 RUN useradd -s /bin/zsh developer
 USER developer
 
-RUN pnpm config set store-dir /home/developer/.local/share/pnpm/store
+RUN mkdir -p /home/developer/.local/share/pnpm \
+  && pnpm config set store-dir /home/developer/.local/share/pnpm/store
 RUN echo 'PS1="%d$ "' > ~/.zshrc
