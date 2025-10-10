@@ -16,6 +16,7 @@ eslint.config.ts
 nano-staged.json
 tsconfig.*
 AGENTS.md
+.env
 
 web/assets/*.woff
 web/assets/*-math-*.woff2

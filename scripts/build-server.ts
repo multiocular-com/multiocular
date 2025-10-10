@@ -27,14 +27,45 @@ const IGNORE = new Set([
   'web'
 ])
 
-async function compileTypeScript(dir: string, to: string): Promise<void> {
+type IgnoreFunction = (filePath: string) => boolean
+
+async function loadNpmIgnorePatterns(): Promise<IgnoreFunction> {
+  let npmIgnore = await readFile(join(ROOT, '.npmignore'), 'utf8')
+  let patterns = npmIgnore
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line && !line.startsWith('#'))
+
+  return (path: string): boolean => {
+    let file = relative(ROOT, path)
+    if (IGNORE.has(file)) return true
+    return patterns.some(pattern => {
+      if (pattern.endsWith('/')) {
+        return file.startsWith(pattern) || file === pattern.slice(0, -1)
+      }
+
+      if (pattern.includes('*')) {
+        let regexPattern = pattern.replace(/\./g, '\\.').replace(/\*/g, '.*')
+        return new RegExp(`^${regexPattern}$`).test(file)
+      }
+
+      return file === pattern
+    })
+  }
+}
+
+async function compileTypeScript(
+  dir: string,
+  to: string,
+  shouldIgnore: IgnoreFunction
+): Promise<void> {
   let entries = await readdir(dir)
   for (let entry of entries) {
     let path = join(dir, entry)
-    if (IGNORE.has(path)) continue
+    if (shouldIgnore(path)) continue
     let stats = await stat(path)
     if (stats.isDirectory()) {
-      await compileTypeScript(path, to)
+      await compileTypeScript(path, to, shouldIgnore)
     } else if (entry.endsWith('.ts')) {
       let compiled = tsBlankSpace((await readFile(path)).toString())
         .replace(/from\s+['"]([^'"]+)\.ts['"]/g, "from '$1.js'")
@@ -57,19 +88,19 @@ async function compileTypeScript(dir: string, to: string): Promise<void> {
 async function copyNonTsFiles(
   dir: string,
   from: string,
-  to: string
+  to: string,
+  shouldIgnore: IgnoreFunction
 ): Promise<void> {
   let entries = await readdir(dir)
   for (let entry of entries) {
     let path = join(dir, entry)
-    if (IGNORE.has(path)) continue
+    if (shouldIgnore(path)) continue
     let stats = await stat(path)
     if (entry.startsWith('.') && stats.isDirectory()) continue
     if (stats.isDirectory()) {
-      await copyNonTsFiles(path, from, to)
+      await copyNonTsFiles(path, from, to, shouldIgnore)
     } else if (!entry.endsWith('.ts')) {
-      let relativePath = relative(from, path)
-      let toPath = join(to, relativePath)
+      let toPath = join(to, relative(from, path))
       await mkdir(dirname(toPath), { recursive: true })
       await copyFile(path, toPath)
     }
@@ -93,9 +124,10 @@ async function preparePackageJson(): Promise<void> {
   )
 }
 
+const shouldIgnore = await loadNpmIgnorePatterns()
 await rm(DIST, { force: true, recursive: true })
-await compileTypeScript('server', DIST)
-await compileTypeScript('common', DIST)
+await compileTypeScript('server', DIST, shouldIgnore)
+await compileTypeScript('common', DIST, shouldIgnore)
 await chmod(join(DIST, 'server', 'bin.js'), 0o755)
-await copyNonTsFiles('.', ROOT, DIST)
+await copyNonTsFiles('.', ROOT, DIST, shouldIgnore)
 await preparePackageJson()
