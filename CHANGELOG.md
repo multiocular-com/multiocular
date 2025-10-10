@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.1
+
+- Reduced npm package.
+
 ## 0.8.0
 
 - Moved to new storage format to keep only final version of change.
