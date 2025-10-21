@@ -38,12 +38,12 @@ function colorizedDiff(diffText: string): string {
 }
 
 export function outputProcess(config: Config): void {
-  let unbindStep = $step.listen(step => {
+  let unbindStep = $step.subscribe(step => {
     if (step === 'done') {
       unbindStep()
       let changes = $sortedChanges
         .get()
-        .filter(change => change.status === 'loaded')
+        .filter(change => change.status !== 'loading')
       if (config.output === 'json') {
         let diffs = $diffs.get()
         let changelogs = $changelogs.get()

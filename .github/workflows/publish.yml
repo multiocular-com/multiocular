@@ -31,7 +31,7 @@ jobs:
         with:
           version: 10
       - name: Install Node.js
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: 24
           cache: pnpm
@@ -73,7 +73,7 @@ jobs:
           name: build-artifacts
           path: dist/
       - name: Install npm
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
@@ -120,7 +120,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Create the release
         if: steps.changelog.outputs.changelog_content != ''
-        uses: softprops/action-gh-release@aec2ec56f94eb8180ceec724245f64ef008b89f5 # v2.4.0
+        uses: softprops/action-gh-release@6da8fa9354ddfdc4aeace5fc48d7f679b5214090 # v2.4.1
         with:
           name: ${{ github.ref_name }}
           body: '${{ steps.changelog.outputs.changelog_content }}'
