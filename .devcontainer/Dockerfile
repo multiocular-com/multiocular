@@ -1,18 +1,18 @@
 # Creates development machine inside docker
 # so every developer will have the same environment
 
-# registry.fedoraproject.org/fedora:42
-FROM registry.fedoraproject.org/fedora@sha256:41478e10b3424b0ff9c8ed0542277df3ceacc9fb6460edab17d088712f4589ce
+# registry.fedoraproject.org/fedora:43
+FROM registry.fedoraproject.org/fedora@sha256:b68fe2b12cddd68c687290ecc8314757de12b06c3fc4cc002deef497e2ee6128
 
 ARG TARGETARCH
 
-ENV NODE_VERSION=24.10.0 \
-  NODE_CHECKSUM_X64=2642f4428869aca32443660fd71b3918e2be1277a899bdcaeb64c93b54b5af17 \
-  NODE_CHECKSUM_ARM64=07f0558316ebb8977dd6fb29b4de8d369a639d3d8cef544293852a6f5eea6af8
+ENV NODE_VERSION=24.11.1 \
+  NODE_CHECKSUM_X64=60e3b0a8500819514aca603487c254298cd776de0698d3cd08f11dba5b8289a8 \
+  NODE_CHECKSUM_ARM64=6b0863fb9f627bf4a6c5948dce1de4398174a2e05dbe717503d828e211ca01f0
 
-ENV PNPM_VERSION=10.18.3 \
-  PNPM_CHECKSUM_X64=042fdc373cccacbc9a305c7578bd13862512760bc7ed47c0edc1e3bd7bdc35e1 \
-  PNPM_CHECKSUM_ARM64=4af25f6d19c7e1aad4f0d1ca14844b65c9fb45d93d4ef37fb61cac903b477de0
+ENV PNPM_VERSION=10.22.0 \
+  PNPM_CHECKSUM_X64=6730cd0d7a247133e971b8d0b85d6d5de5b9d6a05fc099b2d72540b36725b328 \
+  PNPM_CHECKSUM_ARM64=792d16f93d0898fa910c6ebf7626a1a9d098c8ca112d877a1a4e84eb4c24904c
 
 RUN dnf install -yq zsh micro git tig psmisc procps-ng awk openssh-server \
   && dnf clean all \
