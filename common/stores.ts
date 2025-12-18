@@ -38,7 +38,6 @@ export type Change = {
   repository?: RepositoryURL
   statusChangedAt: number | undefined
   type: Dependency['type']
-
   update: UpdateTypeValue
 } & (
   | {
