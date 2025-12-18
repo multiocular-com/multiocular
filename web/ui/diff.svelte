@@ -10,11 +10,11 @@
   import { $dark as darkStore } from '../stores/dark.ts'
 
   let { content }: { content: FileDiffs } = $props()
+</script>
 
-  let root: HTMLElement
-
-  $effect(() => {
-    let diff = new Diff2HtmlUI(root, content, {
+<section
+  {@attach section => {
+    let diff = new Diff2HtmlUI(section, content, {
       colorScheme: ($darkStore ? 'dark' : 'light') as ColorSchemeType,
       drawFileList: false,
       highlight: true,
@@ -28,10 +28,8 @@
       stickyFileHeaders: true
     })
     diff.draw()
-  })
-</script>
-
-<section bind:this={root}></section>
+  }}
+></section>
 
 <style>
   section {
