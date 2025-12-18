@@ -78,6 +78,12 @@ export const $page: ReadableAtom<Page> = computed(
   redirect
 )
 
+export const $currentChangeId = computed($page, page => {
+  if (page.page === 'change') {
+    return page.id
+  }
+})
+
 export function getChangeUrl(id: ChangeId): string {
   return `#change/${encodeURI(id)}`
 }

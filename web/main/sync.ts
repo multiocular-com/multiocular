@@ -1,4 +1,4 @@
-import { loguxSubscribe } from '@logux/actions'
+import { loguxSubscribe, loguxUnsubscribe } from '@logux/actions'
 import { CrossTabClient, log } from '@logux/client'
 
 import {
@@ -18,6 +18,7 @@ import {
   updateChange,
   updateChangeStatus
 } from '../../common/stores.ts'
+import { $currentChangeId } from '../stores/router.ts'
 
 let server = __SERVER_URL__
 
@@ -52,6 +53,28 @@ client.on('add', (action, meta) => {
     $fileDiffs.setKey(action.id, action.fileDiffs)
   } else if (addChangelogHtmlAction.match(action)) {
     $changelogHtmls.setKey(action.id, action.changelog)
+  }
+})
+
+let subscribed: string[] = []
+function subscribe(...channels: (string | undefined)[]): void {
+  for (let channel of subscribed) {
+    client.log.add(loguxUnsubscribe({ channel }), { sync: true })
+  }
+  subscribed = []
+  for (let channel of channels) {
+    if (channel) {
+      client.log.add(loguxSubscribe({ channel }), { sync: true })
+      subscribed.push(channel)
+    }
+  }
+}
+
+$currentChangeId.subscribe(id => {
+  if (id) {
+    subscribe(`changes/${id}`)
+  } else {
+    subscribe()
   }
 })
 

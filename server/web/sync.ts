@@ -35,14 +35,23 @@ export function syncStores(server: BaseServer): void {
     load() {
       return [
         changeStepAction({ value: $step.get() }),
-        replaceChangesAction({ changes: $changes.get() }),
-        ...Object.entries($fileDiffs.get()).map(([id, fileDiffs]) => {
-          return addFileDiffsAction({ fileDiffs, id: id as ChangeId })
-        }),
-        ...Object.entries($changelogHtmls.get()).map(([id, changelog]) => {
-          return addChangelogHtmlAction({ changelog, id: id as ChangeId })
-        })
+        replaceChangesAction({ changes: $changes.get() })
       ]
+    }
+  })
+
+  server.channel(/^changes\/(.*)$/, {
+    access() {
+      return LOCAL
+    },
+    load(ctx) {
+      let actions: Action[] = []
+      let id = ctx.params[1] as ChangeId
+      let fileDiffs = $fileDiffs.get()[id]
+      if (fileDiffs) actions.push(addFileDiffsAction({ fileDiffs, id }))
+      let changelog = $changelogHtmls.get()[id]
+      if (changelog) actions.push(addChangelogHtmlAction({ changelog, id }))
+      return actions
     }
   })
 
@@ -93,8 +102,8 @@ export function syncStores(server: BaseServer): void {
       // Only server can send this action
       return false
     },
-    resend() {
-      return 'projects/main'
+    resend(ctx, action) {
+      return `changes/${action.id}`
     }
   })
 
@@ -103,8 +112,8 @@ export function syncStores(server: BaseServer): void {
       // Only server can send this action
       return false
     },
-    resend() {
-      return 'projects/main'
+    resend(ctx, action) {
+      return `changes/${action.id}`
     }
   })
 
