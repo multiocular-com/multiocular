@@ -2,6 +2,7 @@ import { parse } from 'diff2html'
 
 import {
   addChangelogHtmlAction,
+  addFileDiffsAction,
   replaceChangesAction
 } from '../../common/api.ts'
 import {
@@ -121,6 +122,7 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
       })
       $diffs.setKey(change.id, diff)
       $fileDiffs.setKey(change.id, fileDiffs)
+      send(addFileDiffsAction({ fileDiffs, id: change.id }))
 
       let actual = $changes.get().find(i => i.id === change.id)!
       if (!actual.statusChangedAt) {
