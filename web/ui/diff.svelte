@@ -23,7 +23,7 @@
         ['cts', 'typescript'],
         ['mts', 'typescript']
       ]),
-      maxLineLengthHighlight: 5000,
+      maxLineLengthHighlight: 2000,
       renderNothingWhenEmpty: true,
       stickyFileHeaders: true
     })
