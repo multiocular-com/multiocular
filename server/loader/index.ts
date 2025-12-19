@@ -114,8 +114,8 @@ export async function loadDiffs(root: FilePath, config: Config): Promise<void> {
     ...changes.map(async change => {
       let diff = await diffLoaders[change.type].loadDiff(root, change)
       let fileDiffs = parse(diff, {
-        diffMaxChanges: 1000,
-        diffMaxLineLength: 1000,
+        diffMaxChanges: 1500,
+        diffMaxLineLength: 1500,
         diffTooBigMessage: () =>
           'Diff is too big. See changes on project GitHub.',
         renderNothingWhenEmpty: true

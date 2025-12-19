@@ -2,17 +2,17 @@
 # so every developer will have the same environment
 
 # registry.fedoraproject.org/fedora:43
-FROM registry.fedoraproject.org/fedora@sha256:b68fe2b12cddd68c687290ecc8314757de12b06c3fc4cc002deef497e2ee6128
+FROM registry.fedoraproject.org/fedora@sha256:d2b7aebba3cb091ebebf2c826296b532db9fc76b99f1bda1e288f3feb3d0f279
 
 ARG TARGETARCH
 
-ENV NODE_VERSION=24.11.1 \
-  NODE_CHECKSUM_X64=60e3b0a8500819514aca603487c254298cd776de0698d3cd08f11dba5b8289a8 \
-  NODE_CHECKSUM_ARM64=6b0863fb9f627bf4a6c5948dce1de4398174a2e05dbe717503d828e211ca01f0
+ENV NODE_VERSION=24.12.0 \
+  NODE_CHECKSUM_X64=bdebee276e58d0ef5448f3d5ac12c67daa963dd5e0a9bb621a53d1cefbc852fd \
+  NODE_CHECKSUM_ARM64=a06d42807fb500f7459e5f3fa6cb431447352826ee6f07e14adfeec58a1b3210
 
-ENV PNPM_VERSION=10.22.0 \
-  PNPM_CHECKSUM_X64=6730cd0d7a247133e971b8d0b85d6d5de5b9d6a05fc099b2d72540b36725b328 \
-  PNPM_CHECKSUM_ARM64=792d16f93d0898fa910c6ebf7626a1a9d098c8ca112d877a1a4e84eb4c24904c
+ENV PNPM_VERSION=10.26.0 \
+  PNPM_CHECKSUM_X64=9610a7389ed89c1bea815e273a754fadb236d259f4ff7c7f3ac4d7f1922c2791 \
+  PNPM_CHECKSUM_ARM64=57567a0cf9e7b3b8f067435b56651a0fb7ae9f44e1062764885d90aa79b09645
 
 RUN dnf install -yq zsh micro git tig psmisc procps-ng awk openssh-server \
   && dnf clean all \
