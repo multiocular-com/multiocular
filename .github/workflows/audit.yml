@@ -9,7 +9,7 @@ on:
     paths:
       - '.github/workflows/audit.yml'
   schedule:
-    - cron: '00 23 * * *' # Runs at midnight UTC every day
+    - cron: '00 23 * * 3' # Runs at midnight UTC every Wednesday
 permissions:
   contents: read
 jobs:
